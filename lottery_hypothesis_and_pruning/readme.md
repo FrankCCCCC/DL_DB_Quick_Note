@@ -1,11 +1,16 @@
 # Lottery Hypothesis & Model Compression
+
 ### Can we get a better and compact model?
+
+---
 
 ### Proving the Lottery Ticket Hypothesis Pruning is All You Need
 
 [Notes](./Proving_the_Lottery_Ticket_Hypothesis_Pruning_is_All_You_Need.pdf)
   
 Try to prove Lottery Hypothesis with math
+
+---
 
 ### The Lottery Ticket Hypothesis Finding Sparse Trainable Neural Networks
 
@@ -18,9 +23,7 @@ Try to prove Lottery Hypothesis with math
 #### Theorem: Lottery Hypothesis
 
 The lottery ticket hypothesis predicts that ∃ m for which j
-0 ≤ j (commensurate
-training time), a
-0 ≥ a (commensurate accuracy), and kmk0  |$\theta$| (fewer parameters
+0 ≤ j (commensurate training time), a 0 ≥ a (commensurate accuracy), and kmk0  |$\theta$| (fewer parameters)
 
 給定任一神經網路$\theta$，Exist 一個神經網路$\theta$'，及Mask m = {0, 1}，使 = m * $\theta$，$\theta$ >> $\theta$'，分別訓練神經網路$\theta$' j' iteration、$\theta$ j iteration，在同量的(commensurate)且訓練量下j' <= j，神經網路$\theta$, $\theta$'可以達到Test Accuracy a, a'，且a' >= a
 
@@ -28,14 +31,25 @@ training time), a
 
 #### Identifying winning tickets
 
-Steps:
+**Steps:**
 
 1. Randomly initialize a neural network f(x; $\theta$_0) (where $\theta$_0 ∼ D_$\theta$).
+   
 2. Train the network for j iterations, arriving at parameters $\theta$_j .
+   
 3. Prune p% of the parameters in $\theta$_j , creating a mask m.
+   
 4. Reset the remaining parameters to their values in $\theta$0, creating the winning ticket f(x; m * $\theta$_0).
 
-每次Train神經網路j個iteration後，prune p%的神經元，如此反覆訓練、修剪(Iterative Pruning)for n round，就可以得到Lottery Tickets
+> 每次Train神經網路j個iteration後，prune p%的神經元，如此反覆訓練、修剪(Iterative Pruning)for n round，就可以得到Lottery Tickets
+
+#### Winning Tickets in Fully-Connected Networks
+
+**Iterative Pruning**
+
+#### Winning Tickets in Convolutional Networks
+
+#### VGG and ResNet for CIFAR10
 
 #### Result
 
@@ -45,7 +59,7 @@ its success
 
 > Random Init會使的Winning Ticket學習速度較慢且得到較差的Test Accuracy，因此Initialization是相當重要的
 
-- Usually, the winning tickets we find are 10-20% (or less) of the size of the original network
+2. Usually, the winning tickets we find are 10-20% (or less) of the size of the original network
  
 ---
 
@@ -117,15 +131,15 @@ In this section, the authors do some experiments and get different results that 
 
 1. 在非結構化剪枝(Unstructured Pruning)中，LR(Learning Rate)較大的時候(0.1)，Lottery Ticket相比於Random Init沒有太多優勢。如果LR(Learning Rate)較小(0.1)，結果誠如Lottery Hypothesis所言，Lottery Ticket 確實比Random Init好。但是在小LR的狀況下，無論是Lottery Ticket和Random Init結果都比大LR的結果差
 
-![Compare to lottery ticket in unstructured pruning1](unstructured_prune_res.png)
+![Compare to lottery ticket in unstructured pruning1](imgs/rethink/unstructured_prune_res.png)
 *LR(Learning Rate)較大的時候(0.1)，Lottery Ticket相比於Random Init沒有太多優勢；反之如果LR(Learning Rate)較小(0.1)，Lottery Ticket 確實比Random Init好*
 
-![Compare to lottery ticket in unstructured pruning1](unstructured_prune_res2.png)
+![Compare to lottery ticket in unstructured pruning1](imgs/rethink/unstructured_prune_res2.png)
 *小LR使Lottery Ticket比大LR的兩者(Lottery Ticket, Random Init)都更差*
    
 2. 而在結構化剪枝(Structured Pruning)中，Lottery Ticket並不會帶來比Random Init更好的Test Accuracy
 
-![Compare to lottery ticket in structured pruning2](structured_prune_res.png)
+![Compare to lottery ticket in structured pruning2](imgs/rethink/structured_prune_res.png)
 
 
 引述Paper結論
