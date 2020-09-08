@@ -2,17 +2,20 @@
 ### Can we get a better and compact model?
 
 ### Proving the Lottery Ticket Hypothesis Pruning is All You Need
+
 [Notes](./Proving%20the%20Lottery%20Ticket%20Hypothesis%20Pruning%20is%20All%20You%20Need.pdf)
   
-  Try to prove Lottery Hypothesis with math
+Try to prove Lottery Hypothesis with math
 
 ### The Lottery Ticket Hypothesis Finding Sparse Trainable Neural Networks
 
 [Notes](./THE_LOTTERY_TICKET_HYPOTHESIS_FINDING_SPARSE_TRAINABLE_NEURAL_NETWORKS.pdf)
 
+#### Introduction
+
 提出Lottery Hypothesis的原論文
 
-**Theorem: Lottery Hypothesis**
+#### Theorem: Lottery Hypothesis
 
 The lottery ticket hypothesis predicts that ∃ m for which j
 0 ≤ j (commensurate
@@ -23,7 +26,7 @@ training time), a
 
 commensurate: 同量的，相稱的
 
-**Identifying winning tickets**
+#### Identifying winning tickets
 
 Steps:
 
@@ -32,11 +35,13 @@ Steps:
 3. Prune p% of the parameters in θ_j , creating a mask m.
 4. Reset the remaining parameters to their values in θ0, creating the winning ticket f(x; m * θ_0).
 
-每次Train神經網路j個iteration後，prune p%的神經元，如此反覆訓練、修剪(Repeated train & prune)for n round，就可以得到Lottery Tickets
+每次Train神經網路j個iteration後，prune p%的神經元，如此反覆訓練、修剪(Iterative Pruning)for n round，就可以得到Lottery Tickets
 
-**Result**
+#### Result
 
 - Usually, the winning tickets we find are 10-20% (or less) of the size of the original network
+ 
+---
 
 ### Rethinking The Value of Network Pruning
 
