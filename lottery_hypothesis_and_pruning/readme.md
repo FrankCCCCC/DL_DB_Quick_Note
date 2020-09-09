@@ -1,10 +1,10 @@
 # Lottery Hypothesis & Model Compression
 
-### Can we get a better and compact model?
+## Can we get a better and compact model?
 
 ---
 
-### Proving the Lottery Ticket Hypothesis Pruning is All You Need
+## Proving the Lottery Ticket Hypothesis Pruning is All You Need
 
 [Notes](./Proving_the_Lottery_Ticket_Hypothesis_Pruning_is_All_You_Need.pdf)
   
@@ -12,15 +12,15 @@ Try to prove Lottery Hypothesis with math
 
 ---
 
-### The Lottery Ticket Hypothesis Finding Sparse Trainable Neural Networks
+## The Lottery Ticket Hypothesis Finding Sparse Trainable Neural Networks
 
 [Notes](./THE_LOTTERY_TICKET_HYPOTHESIS_FINDING_SPARSE_TRAINABLE_NEURAL_NETWORKS.pdf)
 
-#### Introduction
+### Introduction
 
 提出Lottery Hypothesis，在一個神經網路中，存在一個較小的網路(called Lottery Ticket or Winning Ticket, 10-20% or less of the original network size)，且以原網路的方式Initialize後並Retrain可以得到比原網路同等或是更好的Test Accuracy。然而，若用Random Initialize的並訓練，則學習速度和Test Accuracy都會下降。
 
-#### Theorem: Lottery Hypothesis
+### Theorem: Lottery Hypothesis
 
 The lottery ticket hypothesis predicts that ∃ m for which j
 0 ≤ j (commensurate training time), a 0 ≥ a (commensurate accuracy), and kmk0  |θ| (fewer parameters)
@@ -29,7 +29,7 @@ The lottery ticket hypothesis predicts that ∃ m for which j
 
 > commensurate: 同量的，相稱的
 
-#### Identifying winning tickets
+### Identifying winning tickets
 
 **Steps:**
 
@@ -43,15 +43,15 @@ The lottery ticket hypothesis predicts that ∃ m for which j
 
 > 每次Train神經網路j個iteration後，prune p%的神經元，如此反覆訓練、修剪(Iterative Pruning)for n round，就可以得到Lottery Tickets
 
-#### Winning Tickets in Fully-Connected Networks
+### Winning Tickets in Fully-Connected Networks
 
 **Iterative Pruning**
 
-#### Winning Tickets in Convolutional Networks
+### Winning Tickets in Convolutional Networks
 
-#### VGG and ResNet for CIFAR10
+### VGG and ResNet for CIFAR10
 
-#### Result
+### Result
 
 1. When randomly reinitialized, a winning ticket
 learns more slowly and achieves lower test accuracy, suggesting that initialization is important to
@@ -63,11 +63,11 @@ its success
  
 ---
 
-### Rethinking The Value of Network Pruning
+## Rethinking The Value of Network Pruning
 
 [Note](./RETHINKING_THE_VALUE_OF_NETWORK_PRUNING.pdf)
 
-#### Introduction
+### Introduction
 
 **針對Pruning 提出三個結論**
 
@@ -101,7 +101,7 @@ predefined target network architectures, directly training the small target mode
 
 Pruning算法最後得到的小模型其實重點在於Pruning完後的"Network Architecture"，大模型訓練出的Weight其實並不重要，在得到小模型後直接Random Init在訓練也可以得到相同甚至更好的Test Accuracy。
 
-#### Sructured Pruning & Unstructured Pruning
+### Sructured Pruning & Unstructured Pruning
 
 - Sructured Pruning:
   Predefine p% pruning rate(pruned nodes / all nodes) for each layers
@@ -112,7 +112,7 @@ Pruning算法最後得到的小模型其實重點在於Pruning完後的"Network 
 ![Pruning methods](imgs/rethink/pruning_methods.png)
 *Sructured Pruning & Unstructured Pruning*
 
-#### EXPERIMENTS ON THE LOTTERY TICKET HYPOTHESIS 
+### EXPERIMENTS ON THE LOTTERY TICKET HYPOTHESIS 
 
 In this section, the authors do some experiments and get different results that "random initialization is enough for the pruned model to achieve competitive performance".
 
@@ -148,15 +148,15 @@ To summarize, in our evaluated settings, the winning ticket only brings improvem
 
 ---
 
-### Dawing Early-Bird Tickets More Efficient Training of Deep Networks
+## Dawing Early-Bird Tickets More Efficient Training of Deep Networks
 
 [Note](./DRAWING_EARLY-BIRD_TICKETS_TOWARDS_MORE_EFFICIENT_TRAINING_OF_DEEP_NETWORKS.pdf)
 
-#### Introduction
+### Introduction
 
 Discover the Early-Bird (EB) tickets phenomenon: the winning tickets can be drawn very early in training(6.25%, 12.5% in experiments), and with aggressively low-cost training algorithms(5.8 ~ 10.7* energy saving)
 
-#### Early-Bird (EB) Tickets Hyppothesis
+### Early-Bird (EB) Tickets Hyppothesis
 
 Consider a dense, randomly-initialized network f(x; θ), f reaches a minimum validation loss floss at the i-th iteration with a test accuracy facc, when optimized with SGD on a training set. 
 
@@ -168,7 +168,7 @@ and sparse m (i.e., much reduced parameters).**
 
 > 存在一個sparse的mask m = {0, 1}，使得EB Ticket subnetwork m' = m ⊙ θ，可以在訓練到第i'-th iteration時，就達到f' accuracy，而i' << i 且 f' >= f，當原network θ 在第i-th iteration達到f accuracy
 
-#### Hypothesis Validation
+### Hypothesis Validation
 
 1. Do EB Ticket Always Exist?
    
@@ -191,34 +191,52 @@ and sparse m (i.e., much reduced parameters).**
     *Learning Rate Schedule & Retrain Accuracy*
   
    - **Low-Precision Training** Dost Not Destroy EB Tickets
-     Train & prune the original model with only 8 bits(for all modle weights, activations, gradients and errors). The EB ticket still emerge at very early stage. Then they retrain the EB ticket with full precision. It aggressively save energy.
+     Train & prune the original model with only 8 bits floating point(for all modle weights, activations, gradients and errors). The EB ticket still emerge at very early stage. Then they retrain the EB ticket with full precision(32 bits floating point). It aggressively save energy.
 
     ![lowPrecision](imgs/eb/lowPrecision.png)
     *Low-Precision Pruning & Retrain Accuracy*
    
-#### Implement EB Ticket Algorithm
+### Implement EB Ticket Algorithm
 
 The difference between EB tickets algo and progressie training is only pruned once with pruning ratio *p%* in very early stage(early stopping) and then the EB ticket model will be retrained. The progressive training will train, prune, and retrain the model iterative until the model size reach the target pruning ratio *p%*. What's more? The EB ticket search is much shorter than one progressive training iteration.
+
+NEB ≪ N (e.g., NEB/N = 12.5% in the experiments
+summarized in Figure1 and NEB/N = 6.25% in the experiment summarized in Table 1)
 
 ![algoFlow](imgs/eb/algoFlow.png)
 *EB Ticket Algorithm Flow Chart*
 
-Here is the pseudo code. The **"mask distance"** will be explained later.
+Here is the pseudo code. The **"mask distance"** will be explained later. Simply to say, the algorithm will train the original network with SGD and **prune the channels in *p%* virtually** to get the mask until **the mask distance < *Ɛ* which means the mask become stable.**
+
+> The prune ratio *p* is given. 
+
+> The author set the threshold *Ɛ* as 0.1 (with normalized mask distance of [0, 1]) and the length of queue *l* as 5
+
+> The author doesn't explain scaling factor *r* very clearly. The scaling factor *r* in batch normalization(BN) is a coefficient that mutiply with the weights of the network and it would be trained with SGD. The scaling factor *r* can increase the magnitude of weight and make it easier to identify the neurons should be pruned. It also be uesd in the paper [*Learning Efficient Convolutional Networks through Network Slimming (Liu et al. 2017)*](https://arxiv.org/abs/1708.06519)
 
 ![pesudo](imgs/eb/pseudo.png)
 *EB Ticket Algorithm Pseudo Code*
 
+![slimmingShot](imgs/eb/slimmingShot.png)
+*The paragraph that mention about the scalling factor r in "Learning Efficient Convolutional Networks through Network Slimming"(Liu et al. 2017)*
+
+The mask is a matrix that determine whether the channel should be pruned or not. The mask is binary that will denote the pruned channels as 0 while keep ones as 1. The **mask distance** represent the **difference** between 2 ticket masks in [**Hamming distance**](https://en.wikipedia.org/wiki/Hamming_distance).
+
+For the following figure, it shows the mask distance drawn from different epoch where **(i, j)-th element in the matrix denotes the mask distance in normalized(by the size of original network) between subnetwork drawn from i-th and j-th epochs.** The warmer, the closer. The red lines denote 0.1 in mask distance. It shows the masks of EB tickets are determined in a very early stage.
+
 ![maskDis](imgs/eb/maskDis.png)
 *Pairwise Mask Distance in Hamming Distance*
 
-#### Experiments
+### Experiments
 
-#### Conclusion
 
-### Learning Efficient Convolutional Networks through Network Slimming
+
+### Conclusion
+
+## Learning Efficient Convolutional Networks through Network Slimming
 
 [Note](./Learning_Efficient_Convolutional_Networks_through_Network_Slimming.pdf)
 
-### Weight Agnostic Neural Networks
+## Weight Agnostic Neural Networks
 
 [Note](./Weight_Agnostic_Neural_Networks.pdf)
