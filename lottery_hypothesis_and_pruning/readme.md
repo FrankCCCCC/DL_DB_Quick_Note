@@ -196,7 +196,20 @@ and sparse m (i.e., much reduced parameters).**
     ![lowPrecision](imgs/eb/lowPrecision.png)
     *Low-Precision Pruning & Retrain Accuracy*
    
-3. How to Implement EB Tickets?
+#### Implement EB Ticket Algorithm
+
+The difference between EB tickets algo and progressie training is only pruned once with pruning ratio *p%* in very early stage(early stopping) and then the EB ticket model will be retrained. The progressive training will train, prune, and retrain the model iterative until the model size reach the target pruning ratio *p%*. What's more? The EB ticket search is much shorter than one progressive training iteration.
+
+![algoFlow](imgs/eb/algoFlow.png)
+*EB Ticket Algorithm Flow Chart*
+
+Here is the pseudo code. The **"mask distance"** will be explained later.
+
+![pesudo](imgs/eb/pseudo.png)
+*EB Ticket Algorithm Pseudo Code*
+
+![maskDis](imgs/eb/maskDis.png)
+*Pairwise Mask Distance in Hamming Distance*
 
 #### Experiments
 
