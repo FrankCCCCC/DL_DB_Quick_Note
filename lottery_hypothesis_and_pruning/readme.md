@@ -23,9 +23,9 @@ Try to prove Lottery Hypothesis with math
 #### Theorem: Lottery Hypothesis
 
 The lottery ticket hypothesis predicts that ∃ m for which j
-0 ≤ j (commensurate training time), a 0 ≥ a (commensurate accuracy), and kmk0  |$\theta$| (fewer parameters)
+0 ≤ j (commensurate training time), a 0 ≥ a (commensurate accuracy), and kmk0  |θ| (fewer parameters)
 
-給定任一神經網路$\theta$，Exist 一個神經網路$\theta$'，及Mask m = {0, 1}，使 = m * $\theta$，$\theta$ >> $\theta$'，分別訓練神經網路$\theta$' j' iteration、$\theta$ j iteration，在同量的(commensurate)且訓練量下j' <= j，神經網路$\theta$, $\theta$'可以達到Test Accuracy a, a'，且a' >= a
+給定任一神經網路θ，Exist 一個神經網路θ'，及Mask m = {0, 1}，使 = m * θ，θ >> θ'，分別訓練神經網路θ' j' iteration、θ j iteration，在同量的(commensurate)且訓練量下j' <= j，神經網路θ, θ'可以達到Test Accuracy a, a'，且a' >= a
 
 > commensurate: 同量的，相稱的
 
@@ -33,13 +33,13 @@ The lottery ticket hypothesis predicts that ∃ m for which j
 
 **Steps:**
 
-1. Randomly initialize a neural network f(x; $\theta$_0) (where $\theta$_0 ∼ D_$\theta$).
+1. Randomly initialize a neural network f(x; θ_0) (where θ_0 ∼ D_θ).
    
-2. Train the network for j iterations, arriving at parameters $\theta$_j .
+2. Train the network for j iterations, arriving at parameters θ_j .
    
-3. Prune p% of the parameters in $\theta$_j , creating a mask m.
+3. Prune p% of the parameters in θ_j , creating a mask m.
    
-4. Reset the remaining parameters to their values in $\theta$0, creating the winning ticket f(x; m * $\theta$_0).
+4. Reset the remaining parameters to their values in θ0, creating the winning ticket f(x; m * θ_0).
 
 > 每次Train神經網路j個iteration後，prune p%的神經元，如此反覆訓練、修剪(Iterative Pruning)for n round，就可以得到Lottery Tickets
 
@@ -152,25 +152,51 @@ To summarize, in our evaluated settings, the winning ticket only brings improvem
 
 [Note](./DRAWING_EARLY-BIRD_TICKETS_TOWARDS_MORE_EFFICIENT_TRAINING_OF_DEEP_NETWORKS.pdf)
 
-### Weight Agnostic Neural Networks
-
-[Note](./Weight_Agnostic_Neural_Networks.pdf)
-
 #### Introduction
+
+Discover the Early-Bird (EB) tickets phenomenon: the winning tickets can be drawn very early in training(6.25%, 12.5% in experiments), and with aggressively low-cost training algorithms(5.8 ~ 10.7* energy saving)
 
 #### Early-Bird (EB) Tickets Hyppothesis
 
-Consider a dense, randomly-initialized network f(x; $\theta$), f reaches a minimum validation loss floss at the i-th iteration with a test accuracy facc, when optimized with SGD on a training set. 
+Consider a dense, randomly-initialized network f(x; θ), f reaches a minimum validation loss floss at the i-th iteration with a test accuracy facc, when optimized with SGD on a training set. 
 
-In addition, consider subnetworks f(x; m ⊙ $\theta$) with a mask m ∈ {0, 1} indicates the pruned and unpruned connections in f(x; $\theta$). When being optimized with SGD on the same training set, f(x; m ⊙ $\theta$) reach a minimum validation loss f′ loss at the i′-th iteration with a test accuracy f′acc. 
+In addition, consider subnetworks f(x; m ⊙ θ) with a mask m ∈ {0, 1} indicates the pruned and unpruned connections in f(x; θ). When being optimized with SGD on the same training set, f(x; m ⊙ θ) reach a minimum validation loss f′ loss at the i′-th iteration with a test accuracy f′acc. 
 
 The EB tickets hypothesis articulates that there **exists m
 such that f′acc ≈ facc (even ≥), i.e., same or better generalization, with i′ ≪ i (e.g., early stopping)
 and sparse m (i.e., much reduced parameters).**
 
-> 存在一個sparse的mask m = {0, 1}，使得EB Ticket subnetwork m' = m ⊙ $\theta$，可以在訓練到第i'-th iteration時，就達到f' accuracy，而i' << i 且 f' >= f，當原network $\theta$ 在第i-th iteration達到f accuracy
+> 存在一個sparse的mask m = {0, 1}，使得EB Ticket subnetwork m' = m ⊙ θ，可以在訓練到第i'-th iteration時，就達到f' accuracy，而i' << i 且 f' >= f，當原network θ 在第i-th iteration達到f accuracy
 
 #### Hypothesis Validation
+
+1. Do EB Ticket Always Exist?
+   
+   p is pruning rate. Sometime over pruning(70% on PreNet101) will make drawing ticket harder
+
+   - EB tickets always emerge at very early stage
+
+   - Some EB tickets are outperform than unpruned full-trained model
+
+   ![ebExist](imgs/eb/ebExist.png)
+   *EB Ticket training epochs & Retrain Accuracy*
+
+2. Do EB Tickets Still Emerge under Low-Cost Training?
+   
+   The meaning of [80, 120] is starting from 0.1, decay to 0.01 at 80-th epoch and further decay to 0.001 at 120 epoch
+   
+   - Appropriate **Large Learning Rate** is important for emerging EB tickets. The EB tickets always emerge at larger learning rate whose retrain accuray is also better
+
+    ![emergeLowCost](imgs/eb/lowCostLR.png)
+    *Learning Rate Schedule & Retrain Accuracy*
+  
+   - **Low-Precision Training** Dost Not Destroy EB Tickets
+     Train & prune the original model with only 8 bits(for all modle weights, activations, gradients and errors). The EB ticket still emerge at very early stage. Then they retrain the EB ticket with full precision. It aggressively save energy.
+
+    ![lowPrecision](imgs/eb/lowPrecision.png)
+    *Low-Precision Pruning & Retrain Accuracy*
+   
+3. How to Implement EB Tickets?
 
 #### Experiments
 
@@ -179,3 +205,7 @@ and sparse m (i.e., much reduced parameters).**
 ### Learning Efficient Convolutional Networks through Network Slimming
 
 [Note](./Learning_Efficient_Convolutional_Networks_through_Network_Slimming.pdf)
+
+### Weight Agnostic Neural Networks
+
+[Note](./Weight_Agnostic_Neural_Networks.pdf)
