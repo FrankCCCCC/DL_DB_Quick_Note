@@ -51,6 +51,40 @@ The lottery ticket hypothesis predicts that ∃ m for which j
 
 ### VGG and ResNet for CIFAR10
 
+**High Learning Rate Failure**
+At the higher learning rate, iterative pruning does not find winning tickets, and performance is no better than when the pruned networks are randomly reinitialized. However, at the lower learning rate, the usual pattern reemerges, with subnetworks that remain within 1 percentage point of the original accuracy while Pm ≥ 3.5%.
+
+To bridge the gap between the lottery ticket behavior of the lower learning rate and the accuracy advantage of the higher learning rate, we explore the effect of linear learning rate warmup from 0 to the initial learning rate over k iterations. Training VGG-19 with warmup (k = 10000, green line) at learning rate 0.1 improves the test accuracy of the unpruned network by about one percentage point.
+
+![High LR Failure](imgs/lottery/fig7.png)
+
+### appendix E
+
+1. Networks found via iterative pruning with the original initializations (blue in Figure 14).
+   
+2. Networks found via iterative pruning that are randomly reinitialized (orange in Figure 14).
+   
+3. Random sparse subnetworks with the same number of parameters as those found via iterative pruning (green in Figure 14).
+
+we find that the randomly reinitialized networks outperform random sparsity. However, for all of the other, convolutional networks studied in this paper, there is no significant difference in performance between the two. We hypothesize that the fully-connected
+network for MNIST sees these benefits because only certain parts of the MNIST images contain useful information for classification, meaning connections in some parts of the network will be more valuable than others.
+
+![fig14](imgs/lottery/fig14.png)
+
+### Appendix F.3
+
+Figure 17 shows the performance of winning tickets whose initializations
+are randomly sampled from the distribution of initializations contained in the winning tickets for adam. More concretely, let Dm = {θ(i)0|m(i) = 1} be the set of initializations found in the winning
+ticket with mask m. We sample a new set of parameters θ00 ∼ Dm and train the network f(x; mθ00). We perform this sampling on a per-layer basis. The results of this experiment are in Figure 17. Winning tickets reinitialized from Dm perform little better than when randomly reinitialized from D
+
+![fig17](imgs/lottery/fig17.png)
+
+### Appendix G.2
+
+According to the graph on the right of Figure 26, several learning rates(SGD) **between 0.0002 and 0.002 achieve similar levels of validation accuracy on the original network and maintain that performance to similar levels as the network is pruned**. Of those learning rates, 0.0012 and 0.002 produce the fastest early-stopping times and maintain them to the smallest network sizes
+
+![appendixG2LR](imgs/lottery/appendixG2LR.png)
+
 ### Result
 
 1. When randomly reinitialized, a winning ticket
