@@ -122,8 +122,7 @@ weights, is more crucial to the efficiency in the final model
 
 **兩個出人預料的觀察**
 
-1. For structured pruning methods with
-predefined target network architectures, directly training the small target model from random initialization can achieve the same
+1. For structured pruning methods with predefined target network architectures, directly training the small target model from random initialization can achieve the same
 
 > 使用Structured Pruning(Predefine 好Pruning Rate)後得到的Model，Random Initialize後訓練可以達到和原本大Model一樣(甚至更好)的Performance
 
