@@ -110,8 +110,7 @@ model is often not necessary to obtain an efficient final model
 
 > (針對3-Stage Network Pruning Pipeline)訓練一個過參數化(Over-parameterized)的模型，對於找到最終小而有效的模型並不必要
 
-2. learned “important” weights of the large model are typically not useful for the small pruned
-model
+2. learned “important” weights of the large model are typically not useful for the small pruned model
 
 > 對於小模型來說，學習大模型訓練出來重要的Weight並沒有幫助，也就是說，傳統Pruning繼承大Model再Prune最後Fine-Tune的做法沒有必要
 
