@@ -8,3 +8,4 @@
 - [線性變換觀點下的奇異值分解](https://ccjou.wordpress.com/2013/01/17/%E7%B7%9A%E6%80%A7%E8%AE%8A%E6%8F%9B%E8%A7%80%E9%BB%9E%E4%B8%8B%E7%9A%84%E5%A5%87%E7%95%B0%E5%80%BC%E5%88%86%E8%A7%A3/)
 - [Moore-Penrose 偽逆矩陣](https://ccjou.wordpress.com/2013/07/03/moore-penrose-%E5%81%BD%E9%80%86%E7%9F%A9%E9%99%A3/)
 - [矩陣運算的基本技巧](https://ccjou.wordpress.com/2010/10/04/%E7%9F%A9%E9%99%A3%E9%81%8B%E7%AE%97%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%8A%80%E5%B7%A7/)
+- [MIT OpenCourseWare Pseudoinverses](https://www.youtube.com/watch?v=hSRcHTafkjE)
