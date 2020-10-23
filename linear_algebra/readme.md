@@ -9,3 +9,5 @@
 - [Moore-Penrose 偽逆矩陣](https://ccjou.wordpress.com/2013/07/03/moore-penrose-%E5%81%BD%E9%80%86%E7%9F%A9%E9%99%A3/)
 - [矩陣運算的基本技巧](https://ccjou.wordpress.com/2010/10/04/%E7%9F%A9%E9%99%A3%E9%81%8B%E7%AE%97%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%8A%80%E5%B7%A7/)
 - [MIT OpenCourseWare Pseudoinverses](https://www.youtube.com/watch?v=hSRcHTafkjE)
+- [特殊矩陣 (6)：正定矩陣](https://ccjou.wordpress.com/2009/10/01/%e7%89%b9%e6%ae%8a%e7%9f%a9%e9%99%a3-%e5%85%ad%ef%bc%9a%e6%ad%a3%e5%ae%9a%e7%9f%a9%e9%99%a3/)
+- [特殊矩陣 (13)：反對稱矩陣](https://ccjou.wordpress.com/2010/08/27/%E7%89%B9%E6%AE%8A%E7%9F%A9%E9%99%A313%EF%BC%9A%E5%8F%8D%E5%B0%8D%E7%A8%B1%E7%9F%A9%E9%99%A3/)
