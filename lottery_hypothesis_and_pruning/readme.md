@@ -6,7 +6,7 @@
 
 ## Proving the Lottery Ticket Hypothesis Pruning is All You Need
 
-[Notes](./Proving_the_Lottery_Ticket_Hypothesis_Pruning_is_All_You_Need.pdf)
+[PDF Highlight](./Proving_the_Lottery_Ticket_Hypothesis_Pruning_is_All_You_Need.pdf)
   
 Try to prove Lottery Hypothesis with math
 
@@ -14,7 +14,7 @@ Try to prove Lottery Hypothesis with math
 
 ## The Lottery Ticket Hypothesis Finding Sparse Trainable Neural Networks
 
-[Notes](./THE_LOTTERY_TICKET_HYPOTHESIS_FINDING_SPARSE_TRAINABLE_NEURAL_NETWORKS.pdf)
+[PDF Highlight](./THE_LOTTERY_TICKET_HYPOTHESIS_FINDING_SPARSE_TRAINABLE_NEURAL_NETWORKS.pdf)
 
 ### Introduction
 
@@ -99,7 +99,7 @@ its success
 
 ## Rethinking The Value of Network Pruning
 
-[Note](./RETHINKING_THE_VALUE_OF_NETWORK_PRUNING.pdf)
+[PDF Highlight](./RETHINKING_THE_VALUE_OF_NETWORK_PRUNING.pdf)
 
 ### Introduction
 
@@ -182,7 +182,7 @@ To summarize, in our evaluated settings, the winning ticket only brings improvem
 
 ## Dawing Early-Bird Tickets More Efficient Training of Deep Networks
 
-[Note](./DRAWING_EARLY-BIRD_TICKETS_TOWARDS_MORE_EFFICIENT_TRAINING_OF_DEEP_NETWORKS.pdf)
+[PDF Highlight](./DRAWING_EARLY-BIRD_TICKETS_TOWARDS_MORE_EFFICIENT_TRAINING_OF_DEEP_NETWORKS.pdf)
 
 ### Introduction
 
@@ -267,8 +267,8 @@ For the following figure, it shows the mask distance drawn from different epoch 
 
 ## Learning Efficient Convolutional Networks through Network Slimming
 
-[Note](./Learning_Efficient_Convolutional_Networks_through_Network_Slimming.pdf)
+[PDF Highlight](./Learning_Efficient_Convolutional_Networks_through_Network_Slimming.pdf)
 
 ## Weight Agnostic Neural Networks
 
-[Note](./Weight_Agnostic_Neural_Networks.pdf)
+[PDF Highlight](./Weight_Agnostic_Neural_Networks.pdf)
