@@ -23,9 +23,9 @@ A collection of papers for DL and DB researchers
   - [Weight Agnostic Neural Networks](lottery_hypothesis_and_pruning/Weight_Agnostic_Neural_Networks.pdf)
   - [Learning Efficient Convolutional Networks through Network Slimming](lottery_hypothesis_and_pruning/Learning_Efficient_Convolutional_Networks_through_Network_Slimming.pdf)
 - Neural Tangent Kerel(NTK)
-  - [Wide Neural Networks of Any Depth Evolve as.pdf](ntk/Wide%20Neural%20Networks%20of%20Any%20Depth%20Evolve%20as.pdf)
-  - [deep_information_propagation.pdf](ntk/deep_information_propagation.pdf)
-  - [The large learning rate phase of deep learning.pdf](ntk/The%20large%20learning%20rate%20phase%20of%20deep%20learning.pdf)
+  - [Wide Neural Networks of Any Depth Evolve as Linear Models Under Gradient Descent](ntk/Wide%20Neural%20Networks%20of%20Any%20Depth%20Evolve%20as.pdf)
+  - [DEEP INFORMATION PROPAGATION](ntk/deep_information_propagation.pdf)
+  - [The large learning rate phase of deep learning: the catapult mechanism](ntk/The%20large%20learning%20rate%20phase%20of%20deep%20learning.pdf)
 - Transforme
 - Meta-Learning
 - BERT
