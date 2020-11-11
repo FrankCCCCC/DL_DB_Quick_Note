@@ -93,6 +93,8 @@ Obtains a **much larger improvement of ≈ 20% for infrequent words**
 
 ## Transformer-XL: Attentive Language Models Beyond a Fixed-Length Context
 
+[PDF Highlight](./Transformer-XL%20Attentive%20Language%20Models%20Beyond%20a%20Fixed-Length%20Context.pdf)
+
 ### Segment-Level Recurrence
 
 Every hidden layer caches the previous state of itself and concatenate to the previous segment.

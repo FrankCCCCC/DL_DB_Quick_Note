@@ -26,7 +26,11 @@ A collection of papers for DL and DB researchers
   - [Wide Neural Networks of Any Depth Evolve as Linear Models Under Gradient Descent](ntk/Wide%20Neural%20Networks%20of%20Any%20Depth%20Evolve%20as.pdf)
   - [DEEP INFORMATION PROPAGATION](ntk/deep_information_propagation.pdf)
   - [The large learning rate phase of deep learning: the catapult mechanism](ntk/The%20large%20learning%20rate%20phase%20of%20deep%20learning.pdf)
-- Transforme
+- Transformer
+  
+  Here is the [Notes](./transformer/readme.md) of papers
+  - [COMPRESSIVE TRANSFORMERS FOR LONG-RANGE SEQUENCE MODELLING](./transformer/Compressive%20Transformers%20For%20Long-Range%20Sequence%20Model.pdf)
+  - [Transformer-XL: Attentive Language Models Beyond a Fixed-Length Context](./transformer/Transformer-XL%20Attentive%20Language%20Models%20Beyond%20a%20Fixed-Length%20Context.pdf)
 - Meta-Learning
 - BERT
 - DL & Cyber Security
