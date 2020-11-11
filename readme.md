@@ -13,7 +13,9 @@ A collection of papers for DL and DB researchers
   - [RL Applications](RL/applications)
   
 - Lottery Hypothesis & Pruning
-  [Notes](lottery_hypothesis_and_pruning/readme.md)
+  
+  Here is the [Notes](lottery_hypothesis_and_pruning/readme.md) of papers
+
   - [Proving the Lottery Ticket Hypothesis Pruning is All You Need](lottery_hypothesis_and_pruning/Proving_the_Lottery_Ticket_Hypothesis_Pruning_is_All_You_Need.pdf)
   - [The Lottery Ticket Hypothesis Finding Sparse Trainable Neural Networks](lottery_hypothesis_and_pruning/THE_LOTTERY_TICKET_HYPOTHESIS_FINDING_SPARSE_TRAINABLE_NEURAL_NETWORKS.pdf)
   - [Rethinking The Value of Network Pruning](lottery_hypothesis_and_pruning/RETHINKING_THE_VALUE_OF_NETWORK_PRUNING.pdf)
