@@ -22,6 +22,13 @@ Deepmind的work，新的東西不多，但是在Blog整理了近五年RL的重�
 
 [Paper](https://lilianweng.github.io/lil-log/2018/04/08/policy-gradient-algorithms.html)
 
+## Real-World Challenges
+
+
+
+### Challenges of Real-World Reinforcement Learning
+### Learning to Adapt in Dynamic, Real-World Environments via Meta-Reinforcement Learning
+
 ## Open-Ended
 
 用這個關鍵字找到的論文很少，如果是針對Multi-Task的話，主要都找到Curriculum Learning居多
