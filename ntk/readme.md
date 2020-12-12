@@ -16,4 +16,10 @@
 ## Reference
 - [深度学习理论之Neural Tangent Kernel第一讲：介绍和文献总结](https://zhuanlan.zhihu.com/p/105871604)
 - [Understanding the Neural Tangent Kernel By Rajat's Blog](https://rajatvd.github.io/NTK/)
+  - Code for the blog [rajatvd/NTK](https://github.com/rajatvd/NTK)
 - [Ultra-Wide Deep Nets and the Neural Tangent Kernel (NTK)](https://blog.ml.cmu.edu/2019/10/03/ultra-wide-deep-nets-and-the-neural-tangent-kernel-ntk/)
+- [A Visual Exploration of Gaussian Processes](https://distill.pub/2019/visual-exploration-gaussian-processes/#GaussianProcesses)
+- [thegregyang/NTK4A](https://github.com/thegregyang/NTK4A)
+- [Some Intuition on the Neural Tangent Kernel](https://www.inference.vc/neural-tangent-kernels-some-intuition-for-kernel-gradient-descent/)
+- [NTK推导的详细过程](https://zhuanlan.zhihu.com/p/166158072)
+- CMU ML Blog: [Ultra-Wide Deep Nets and the Neural Tangent Kernel (NTK)](https://blog.ml.cmu.edu/2019/10/03/ultra-wide-deep-nets-and-the-neural-tangent-kernel-ntk/)
