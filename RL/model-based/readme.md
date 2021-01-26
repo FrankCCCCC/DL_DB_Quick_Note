@@ -98,15 +98,19 @@ objective is to maximize expected imagined rewards with respect to the policy.
 
 ### Learning Behavior By Latent Imagination
 
+***Model Architecture***
+
 Consider imagined trajectories with a finite horizon ***H***. Dreamer uses
 an actor critic approach to learn behaviors that consider rewards beyond the horizon. 
 
 ![](img/dreamer/action_value_model.png)
 
 
-We use dense neural networks for the action and value models with parameters φ and ψ, respectively. The action model outputs a tanh-transformed Gaussia distribution which is allowed for reparamatrization.
+We use dense neural networks for the action and value models with parameters ***φ*** and ***ψ***, respectively. The action model outputs a **tanh-transformed Gaussia distribution** which is **allowed for reparamatrization**.
 
 ![](img/dreamer/act_model_output.png)
+
+***Accumulated Reward Function***
 
 To estimate the state value of imagined trajectory ***{sτ , aτ , rτ } t+H | τ=t***. We define the following values:
 
@@ -115,9 +119,33 @@ To estimate the state value of imagined trajectory ***{sτ , aτ , rτ } t+H | �
 The equation(4) is the sum of reward from time ***t*** to horizon ***t+H***. The equation(5) estimates rewards beyond ***k*** steps
 with the learned value model.
 
-Dreamer uses Vλ as equation(5), an exponentially-weighted average of the estimates for different k to balance bias and variance.
+Dreamer uses ***Vλ*** as equation(5), an **exponentially-weighted average of the estimates for different ***k*** to balance bias and variance.**
+
+***Learning Objective***
+
+The objective for the **action model qφ(aτ | sτ ) is to predict actions that with high value estimates.** 
+
+The objective for the **value model vψ(sτ) is to regress the value estimates**
+
+![](img/dreamer/learning_obj.png)
 
 ### Learning Latent Dynamics
+
+The authors propose 3 different kinds of approaches for learning the representation with Dreamer. The experiment result is the reconstruction method is the best. Thus, I only show the reconstruction method here.
+
+The reconstruction method is improved from PlaNet while **PlaNet only consider how to reconstruct the observation ***ot*** from state ***st*** as much as possible**. Dreamer consider the **information bottleneck** which is aim to **reconstructing from state ***st*** to observation ***ot*** and predicting the reward ***rt*** with as less information as possible**. The adavantage of it is anti-noise of the model since the model will discard the useless information for predicting current reward. The model would get more robust.
+
+The following are the components of reconstruction models. The model is implemented with RSSM model(proposed by PlaNet) , CNN, and RNN.
+
+![](img/dreamer/dreamer_reconst_models.png)
+
+The reconstruction loss is baseed on the theory of variational lower bound(ELBO) and information bottleneck. 
+
+To dive into the information bottleneck, please refer to original paper [The information bottleneck method](https://arxiv.org/abs/physics/0004057), [Deep Variational Information Bottleneck](https://arxiv.org/abs/1612.00410), and [my notes](../statistics/readme.md).
+
+To understand it intuitively, ***JO*** is just like the **loss of autoencoder that we want to reconstruct the original observation from state with more detail as possible.** ***JR*** is to **predict the current value from state as more accurately as possible.** ***JD*** is a **regularize term that contraint the model focus on the features that are related to state transition.**
+
+![](img/dreamer/dreamer_reconst_loss.png)
 
 ## MASTERING ATARI WITH DISCRETE WORLD MODELS
 
