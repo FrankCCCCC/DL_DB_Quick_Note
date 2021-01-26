@@ -1,4 +1,28 @@
-# Reference
+# Model-Based RL
+
+Learning from imagination.
+
+---
+
+## Learning Latent Dynamics for Planning from Pixels
+
+[PDF HighLight](Learning%20Latent%20Dynamics%20for%20Planning%20from%20Pixels.pdf)
+
+It is also known as PlaNet.
+
+### Introdution
+
+They propose the **Deep Planning Network (PlaNet)**, a purely model-based agent that **learns the environment dynamics from images** and chooses actions through **fast online planning in latent space**.
+
+## DREAM TOCONTROL: LEARNING BEHAVIORS BY LATENT IMAGINATION
+
+[PDF HighLight](DREAM%20TO%20CONTROL%20LEARNING%20BEHAVIORS%20BY%20LATENT%20IMAGINATION.pdf)
+
+It is also known as Dreamer.
+
+
+
+## Reference
 - [漫談 Variational Inference (一)](https://odie2630463.github.io/2018/08/21/vi-1/)
 - [Information Bottleneck](https://zhuanlan.zhihu.com/p/102925788)
 - [《Auto-encoding Variational Bayes》阅读笔记](https://zhuanlan.zhihu.com/p/37224492)
