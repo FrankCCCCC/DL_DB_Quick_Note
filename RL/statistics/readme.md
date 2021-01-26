@@ -106,4 +106,7 @@ We can maximize the ELBO and minimize the KL-Divergence to maximize the logp(X).
 
 ## Information Bottleneck
 
+[PDF Highlight](./The%20information%20bottleneck%20method.pdf)
 ## Deep Variational Information Bottleneck
+
+[PDF Highlight](./img/deep_variational_information_bottleneck.pdf)
