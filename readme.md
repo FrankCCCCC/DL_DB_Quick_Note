@@ -8,7 +8,7 @@ A collection of papers for DL and DB researchers
   - [Curricular Learning with RL](RL/curricular_learning_with_rl)
   - [Distributed Training](RL/distributed)
   - [Open-Ended RL](RL/open_ended)
-  - [World-Model Based RL](RL/world_model)
+  - [Model-Based RL](RL/model-based)
   - [RL & Biology](RL/biology)
   - [RL Applications](RL/applications)
   
