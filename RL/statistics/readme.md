@@ -104,9 +104,24 @@ Then we rearrange the equation
 
 We can maximize the ELBO and minimize the KL-Divergence to maximize the logp(X). With KKT, we can rewrite the ***max(logp(X))*** to ***max(logp(X) - β KL[q(Z)||p(Z|X)])***
 
+For more detail, please refer to this [handout](understanding-variational-lower.pdf) and [wikipedia](https://en.wikipedia.org/wiki/Evidence_lower_bound). They've given a great explaination. If you understand Chinese, you can read this [blog](https://odie2630463.github.io/2018/08/21/vi-1/). The author gives a series of blogs discussing about it.
+
 ## Information Bottleneck
 
 [PDF Highlight](./The%20information%20bottleneck%20method.pdf)
 ## Deep Variational Information Bottleneck
 
 [PDF Highlight](./deep_variational_information_bottleneck.pdf)
+
+If you are a Chinese speaker, I recommand to read this [blog](https://zhuanlan.zhihu.com/p/102925788).
+
+
+
+# Reference
+- [漫談 Variational Inference (一)](https://odie2630463.github.io/2018/08/21/vi-1/)
+- [Information Bottleneck](https://zhuanlan.zhihu.com/p/102925788)
+- [《Auto-encoding Variational Bayes》阅读笔记](https://zhuanlan.zhihu.com/p/37224492)
+- [Neural networks [7.8] : Deep learning - variational bound](https://www.youtube.com/watch?v=pStDscJh2Wo)
+- [Wikipedia 互信息](https://zh.wikipedia.org/wiki/%E4%BA%92%E4%BF%A1%E6%81%AF)
+- [Wikipedia 聯合分布](https://zh.wikipedia.org/wiki/%E8%81%94%E5%90%88%E5%88%86%E5%B8%83)
+- [Wikipedia 熵 (信息論)](https://zh.wikipedia.org/wiki/%E7%86%B5_(%E4%BF%A1%E6%81%AF%E8%AE%BA))
