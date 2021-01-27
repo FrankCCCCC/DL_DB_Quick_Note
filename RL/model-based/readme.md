@@ -8,7 +8,7 @@ Learning from imagination.
 
 [PDF Highlight](./alphago/Mastering%20the%20game%20of%20Go%20with%20deep%20neural%20networks%20and%20tree%20search.pdf)
 
-It's the paper that proposes AlphaGo. It is quite famous when I was a freshman of college. It somehow is the reason that I was addicted to Reinforcement Learning. Thus Our journey of model-based RL will start here. Although it is not the first one that propose model-based RL, I still believe it will give an big picture of model-based RL.
+It's the paper that proposes **AlphaGo**. It is quite famous when I was a freshman of college. It somehow is the reason that I was addicted to Reinforcement Learning. Thus Our journey of model-based RL will start here. Although it is not the first one that propose model-based RL, I still believe it will give an big picture of model-based RL.
 
 ### Introduction
 
@@ -75,7 +75,84 @@ But how do we search the optimal value through policy network? There are 5 steps
   The notation ***sLi*** is the leaf node from the ith simulation; ***1(s, a, i)*** indicates whether an edge ***(s, a)*** was traversed during the ith simulation.
 ## Mastering the game of Go without human knowledge
 
-The paper propose AlphaGo Zero which is known as self-playing without human knowledge.
+The paper propose **AlphaGo Zero** which is known as self-playing without human knowledge.
+### Reinforcement learning in AlphaGo Zero
+
+![](img/alphago/alphago_zero_selfplay.png)
+
+![](img/alphago/alphago_zero_loss.png)
+
+## Mastering Chess and Shogi by Self-Play with a General Reinforcement Learning Algorithm
+
+The paper propose **AlphaZero** which is known as self-playing to compete any kinds of board game.
+
+## Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model
+
+[[PDF Highlight](muzero/Mastering%20Atari,%20Go,%20Chess%20and%20Shogi%20by%20Planning%20with%20a.pdf)
+
+It propose **MuZero**. It is quite famous when I write this note(Jan 2021). Lots of people tried to reproduce the incredible performance of this paper. Some of well-known implementations like [muzero-general](https://github.com/werner-duvaud/muzero-general) give a clear code and modular structure of MuZero. 
+
+### Introdution
+
+The main idea is to predict the future that are directly relevant for planning. The **model receives the observation (e.g. an image of the Go board or the Atari screen)** as an input and transforms it into a hidden state. The **hidden state** is then **updated iteratively by a recurrent process** that receives the previous hidden state and a hypothetical next action. At every one of these steps the model predicts the **policy** (e.g. the move to play), **value function** (e.g. the predicted winner), and **immediate reward** (e.g. the points scored by playing a move).
+
+### Algorithm
+
+![](img/muzero/muzero_algo.png)
+
+The MuZero consist of 3 components: dynamic function, prediction function, representation function:
+
+- Dynamic Function ***g(st, at+1)=rt+1, st+1***
+- Prediction Function ***f(st)=pt, vt***
+- Representation Function ***h(o0)=s0***
+
+We denote ***o0*** as the initial observation, ***s0*** as the initial hidden state, ***pt*** as the policy function, ***vt*** as value function, and ***rt*** as reward function at time step ***t***. These 3 components compose the **deterministic** latent dynamic model for MuZero. (The authors say stochastic transitions is left for future works)
+
+The MuZero plan like part A of Figure1. Given a previous
+hidden state ***sk−1*** and a candidate action ***ak***, the dynamics function ***g*** produces an immediate reward ***rk*** and a new hidden state ***sk***. The policy ***pk*** and value function ***vk*** are computed from the hidden state ***sk*** by a prediction function ***f***.
+
+The MuZero act in the environment like part B of Figure1.  A Monte-Carlo Tree Search is performed at each timestep ***t***, as described in A. An action ***at+1*** is sampled from the search policy ***πt***. At the end of the episode the trajectory data is stored into a replay buffer. 
+
+For more detail, MuZero model ***µθ*** with parameters ***θ***, conditioned on past observations ***o1, ..., ot*** and future actions ***at+1, ..., at+k***. The model predicts three future quantities as following:
+
+- policy
+  ![](img/muzero/muzero_pred_policy.png)
+
+  where ***π*** is the policy used to select real actions
+- value function
+  ![](img/muzero/muzero_pred_value.png)
+
+- immediate reward
+  ![](img/muzero/muzero_pred_reward.png)
+
+  where ***u*** is the true, observation reward. ***γ*** is the discount function of the environment.
+
+The MuZero train in the environment like part C of Figure1.   
+All parameters of the model are **trained jointly to accurately match the policy, value, and reward, for every hypothetical step ***k***, to corresponding target values observed after ***k*** actual time-steps ***t*** have elapsed.(That is predict the policy, value, and reward after ***k*** steps from current time-step ***t***.)** The training objective is to **minimise the error between predicted policy pkt and MCTS search policy ***πt+k*****
+
+For trade-off between accuracy and stability, we allow for long episodes with discounting and intermediate rewards by bootstrapping ***n*** steps into the future from the search value. Final outcomes {lose, draw, win} in board games are treated as rewards ***ut ∈ {−1, 0, +1}*** occurring at the final step of the episode.
+
+Thus, MuZero define ***u*** as folowing:
+
+![](img/muzero/muzero_def_z.png)
+
+Then, the loss function of MuZero is 
+
+![](img/muzero/muzero_loss.png)
+
+where ***lp***, ***lv*** and ***lr*** are loss functions for policy, value and reward, respectively. ***c*** is a L2 regularization constant.
+
+### Experiments & Results
+
+**Board Game**
+
+![](img/muzero/muzero_board_exp.png)
+
+**Atari 57**
+
+![](img/muzero/muzero_atari_exp.png)
+
+![](img/muzero/muzero_atari_exp2.png)
 
 ## World Model
 
@@ -93,8 +170,6 @@ That is the key concept of this paper. Build a world model for the agent.
 
 The ***V*** represent the variational autoencoder(VAE) that encode the input/observation into code/state z. Then, take z as input and put them into an RNN model ***M***. The ***M*** output an hidden state ***h*** as the input of next time step. The controller ***C*** takes the hidden state ***h*** and the code ***z*** as input and output an action ***a***.
 
-
-
 ## Learning Latent Dynamics for Planning from Pixels
 
 [PDF Highlight](Learning%20Latent%20Dynamics%20for%20Planning%20from%20Pixels.pdf)
@@ -104,6 +179,52 @@ It is also known as PlaNet.
 ### Introdution
 
 They propose the **Deep Planning Network (PlaNet)**, a purely model-based agent that **learns the environment dynamics from images** and chooses actions through **fast online planning in latent space**.
+
+### Latent Space Planning
+
+![](img/planet/planet_algo.png)
+
+### Recurrent State Space Model(RSSM)
+
+consider sequences ***{ot, at, rt}T | t=1*** with discrete time step ***t***, image observations ***ot***, continuous action vectors ***at***, and scalar rewards ***rt***.
+
+A typical latent state-space model is shown in Figure 2b and resembles the structure of a **partially observable Markov decision process which is stochastic**. It defines the **generative process of the images and rewards using a hidden state sequence** ***{st}T | t=1*** as following:
+
+![](img/planet/planet_latent-state_space_model.png)
+
+We assume all of them follow Gaussian ditribution. We also use **variational autoencoder(VAE) to approximate the latent state-space model**. As a result, our goal is reconstruting the observation from state as much as possible. We assume that we want to reconstruct from initial state ***s0*** and ignore the state ***st*** at each time-step ***t*** since **we've consider all actions of the trajectory**. The loss function can written as:
+
+![](img/planet/planet_latent-state_space_model_objective.png)
+
+We can understand the loss function intuitively with the loss function of VAE. For more detail of proving, we need to consider **variational lower bound(ELBO)**. Please refer to [my note](/RL/statistics/readme.md) and this [supplement](/RL/statistics/understanding-variational-lower.pdf) for more detail.
+
+We directly take the result of proving of the variational lower bound
+
+![](img/planet/elbo_re.png)
+
+As the figure shows, we can diretly take the output of the model and apply them to the loss function and get the loss.
+
+where we denote ***L*** as the ELBO, ***Z*** is the hiddden/latent state, ***X*** is the observation. We can simply apply this result into the following proof.
+
+![](img/planet/planet_latent-state_space_model_objective_proof.png)
+
+However, the purely stochastic transitions make it **difficult for the transition model to reliably remember information for multiple time steps.** In theory, this model could **learn to set the variance to zero for some state components**, but the optimization procedure **may not find this solution.**
+
+As a reult, we introduce an deterministic transition function ***f*** into the model and propose **recurrent state-space model(RSSM)** as figure2C.
+
+![](img/planet/planet_latent_dynamic_models.png)
+
+where ***f(ht−1, st−1, at−1)*** is implemented as a **RNN**. Intuitively, we can understand this model as **splitting the state into a stochastic part st and a deterministic part** ***ht***, which depend on the stochastic and deterministic parts at the previous time step through the RNN.
+
+We use the encoder as following
+
+![](img/planet/planet_rssm_encoder.png)
+
+to parameterize the approximate state posteriors. Importantly, **all information about the observations must pass through the sampling step of the encoder** to avoid a **deterministic shortcut** from inputs to reconstructions.
+
+### Latent Overshooting
+
+![](img/planet/planet_unroll_scheme.png)
 
 ## DREAM TOCONTROL: LEARNING BEHAVIORS BY LATENT IMAGINATION
 
@@ -201,73 +322,6 @@ To understand it intuitively, ***JO*** is just like the **loss of autoencoder th
 ## MASTERING ATARI WITH DISCRETE WORLD MODELS
 
 It's also known as **DreamerV2**, an evolution of Dreamer agent.
-
-## Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model
-
-[[PDF Highlight](muzero/Mastering%20Atari,%20Go,%20Chess%20and%20Shogi%20by%20Planning%20with%20a.pdf)
-
-It propose MuZero. It is quite famous when I write this note(Jan 2021). Lots of people tried to reproduce the incredible performance of this paper. Some of well-known implementations like [muzero-general](https://github.com/werner-duvaud/muzero-general) give a clear code and modular structure of MuZero. 
-
-### Introdution
-
-The main idea is to predict the future that are directly relevant for planning. The **model receives the observation (e.g. an image of the Go board or the Atari screen)** as an input and transforms it into a hidden state. The **hidden state** is then **updated iteratively by a recurrent process** that receives the previous hidden state and a hypothetical next action. At every one of these steps the model predicts the **policy** (e.g. the move to play), **value function** (e.g. the predicted winner), and **immediate reward** (e.g. the points scored by playing a move).
-
-### Algorithm
-
-![](img/muzero/muzero_algo.png)
-
-The MuZero consist of 3 components: dynamic function, prediction function, representation function:
-
-- Dynamic Function ***g(st, at+1)=rt+1, st+1***
-- Prediction Function ***f(st)=pt, vt***
-- Representation Function ***h(o0)=s0***
-
-We denote ***o0*** as the initial observation, ***s0*** as the initial hidden state, ***pt*** as the policy function, ***vt*** as value function, and ***rt*** as reward function at time step ***t***. These 3 components compose the **deterministic** latent dynamic model for MuZero. (The authors say stochastic transitions is left for future works)
-
-The MuZero plan like part A of Figure1. Given a previous
-hidden state ***sk−1*** and a candidate action ***ak***, the dynamics function ***g*** produces an immediate reward ***rk*** and a new hidden state ***sk***. The policy ***pk*** and value function ***vk*** are computed from the hidden state ***sk*** by a prediction function ***f***.
-
-The MuZero act in the environment like part B of Figure1.  A Monte-Carlo Tree Search is performed at each timestep ***t***, as described in A. An action ***at+1*** is sampled from the search policy ***πt***. At the end of the episode the trajectory data is stored into a replay buffer. 
-
-For more detail, MuZero model ***µθ*** with parameters ***θ***, conditioned on past observations ***o1, ..., ot*** and future actions ***at+1, ..., at+k***. The model predicts three future quantities as following:
-
-- policy
-  ![](img/muzero/muzero_pred_policy.png)
-
-  where ***π*** is the policy used to select real actions
-- value function
-  ![](img/muzero/muzero_pred_value.png)
-
-- immediate reward
-  ![](img/muzero/muzero_pred_reward.png)
-
-  where ***u*** is the true, observation reward. ***γ*** is the discount function of the environment.
-
-The MuZero train in the environment like part C of Figure1.   
-All parameters of the model are **trained jointly to accurately match the policy, value, and reward, for every hypothetical step ***k***, to corresponding target values observed after ***k*** actual time-steps ***t*** have elapsed.(That is predict the policy, value, and reward after ***k*** steps from current time-step ***t***.)** The training objective is to **minimise the error between predicted policy pkt and MCTS search policy ***πt+k*****
-
-For trade-off between accuracy and stability, we allow for long episodes with discounting and intermediate rewards by bootstrapping ***n*** steps into the future from the search value. Final outcomes {lose, draw, win} in board games are treated as rewards ***ut ∈ {−1, 0, +1}*** occurring at the final step of the episode.
-
-Thus, MuZero define ***u*** as folowing:
-
-![](img/muzero/muzero_def_z.png)
-
-Then, the loss function of MuZero is 
-
-![](img/muzero/muzero_loss.png)
-
-where ***lp***, ***lv*** and ***lr*** are loss functions for policy, value and reward, respectively. ***c*** is a L2 regularization constant.
-
-### Experiments & Results
-
-**Board Game**
-
-![](img/muzero/muzero_board_exp.png)
-
-**Atari 57**
-
-![](img/muzero/muzero_atari_exp.png)
-![](img/muzero/muzero_atari_exp2.png)
 
 ## Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models
 
