@@ -222,14 +222,52 @@ The MuZero consist of 3 components: dynamic function, prediction function, repre
 - Prediction Function ***f(st)=pt, vt***
 - Representation Function ***h(o0)=s0***
 
-We denote ***o0*** as the initial observation, ***s0*** as the initial hidden state, ***pt*** as the policy function, ***vt*** as value function, and ***rt*** as reward function at time step ***t***.
+We denote ***o0*** as the initial observation, ***s0*** as the initial hidden state, ***pt*** as the policy function, ***vt*** as value function, and ***rt*** as reward function at time step ***t***. These 3 components compose the **deterministic** latent dynamic model for MuZero. (The authors say stochastic transitions is left for future works)
 
 The MuZero plan like part A of Figure1. Given a previous
 hidden state ***sk−1*** and a candidate action ***ak***, the dynamics function ***g*** produces an immediate reward ***rk*** and a new hidden state ***sk***. The policy ***pk*** and value function ***vk*** are computed from the hidden state ***sk*** by a prediction function ***f***.
 
-The MuZero act in the environment like part B of Figure1.  A Monte-Carlo Tree Search is performed at each timestep t, as described in A. An action at+1 is sampled from the search policy πt ≈ π(at+k+1|o1, ..., ot, at+1, ..., at+k). At the end of the episode the trajectory data is stored into a replay buffer.
+The MuZero act in the environment like part B of Figure1.  A Monte-Carlo Tree Search is performed at each timestep ***t***, as described in A. An action ***at+1*** is sampled from the search policy ***πt***. At the end of the episode the trajectory data is stored into a replay buffer. 
 
-The MuZero act in the environment like part B of Figure1.
+For more detail, MuZero model ***µθ*** with parameters ***θ***, conditioned on past observations ***o1, ..., ot*** and future actions ***at+1, ..., at+k***. The model predicts three future quantities as following:
+
+- policy
+  ![](img/muzero/muzero_pred_policy.png)
+
+  where ***π*** is the policy used to select real actions
+- value function
+  ![](img/muzero/muzero_pred_value.png)
+
+- immediate reward
+  ![](img/muzero/muzero_pred_reward.png)
+
+  where ***u*** is the true, observation reward. ***γ*** is the discount function of the environment.
+
+The MuZero train in the environment like part C of Figure1.   
+All parameters of the model are **trained jointly to accurately match the policy, value, and reward, for every hypothetical step ***k***, to corresponding target values observed after ***k*** actual time-steps ***t*** have elapsed.(That is predict the policy, value, and reward after ***k*** steps from current time-step ***t***.)** The training objective is to **minimise the error between predicted policy pkt and MCTS search policy ***πt+k*****
+
+For trade-off between accuracy and stability, we allow for long episodes with discounting and intermediate rewards by bootstrapping ***n*** steps into the future from the search value. Final outcomes {lose, draw, win} in board games are treated as rewards ***ut ∈ {−1, 0, +1}*** occurring at the final step of the episode.
+
+Thus, MuZero define ***u*** as folowing:
+
+![](img/muzero/muzero_def_z.png)
+
+Then, the loss function of MuZero is 
+
+![](img/muzero/muzero_loss.png)
+
+where ***lp***, ***lv*** and ***lr*** are loss functions for policy, value and reward, respectively. ***c*** is a L2 regularization constant.
+
+### Experiments & Results
+
+**Board Game**
+
+![](img/muzero/muzero_board_exp.png)
+
+**Atari 57**
+
+![](img/muzero/muzero_atari_exp.png)
+![](img/muzero/muzero_atari_exp2.png)
 
 ## Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models
 
