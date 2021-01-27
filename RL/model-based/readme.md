@@ -157,7 +157,12 @@ It's also known as **DreamerV2**, an evolution of Dreamer agent.
 
 It propose MuZero. It is quite famous when I write this note(Jan 2021). Lots of people tried to reproduce the incredible performance of this paper. Some of well-known implementations like [muzero-general](https://github.com/werner-duvaud/muzero-general) give a clear code and modular structure of MuZero. 
 
+## Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models
 
+
+## Data-Efficient Reinforcement Learning with Probabilistic Model Predictive Control
+
+## Gaussian Process Dynamical Models
 
 ## Reference
 - [漫談 Variational Inference (一)](https://odie2630463.github.io/2018/08/21/vi-1/)

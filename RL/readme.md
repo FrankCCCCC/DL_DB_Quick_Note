@@ -25,7 +25,6 @@ Deepmind的work，新的東西不多，但是在Blog整理了近五年RL的重�
 ## Real-World Challenges
 
 
-
 ### Challenges of Real-World Reinforcement Learning
 ### Learning to Adapt in Dynamic, Real-World Environments via Meta-Reinforcement Learning
 
@@ -122,6 +121,15 @@ PlaNet的改良版
 
 ## Meta-Learning
 
+### Discovering Reinforcement Learning Algorithms
+
+提出一種meta-learning的框架讓agent可以從data自行適應學習
+
+[Paper](./rl_algos/Discovering%20Reinforcement%20Learning%20Algorithms.pdf)
 
 
+## Alternative
 
+### Evaluating Agents without Rewards
+
+[Paper](rl_algos/Evaluating%20Agents%20without%20Rewards.pdf)

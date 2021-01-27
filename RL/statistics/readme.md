@@ -12,18 +12,18 @@ For discrete random variable X and probability mass function P(X), we defien the
 
 **H(X) = E[I(X)] = E[-log(P(X))]**
 
-![](img/dist_entropy_sum.svg)
+![](img/entropy/dist_entropy_sum.svg)
 
 ### Conditional Entropy
 
 The conditional entropy of Y given X is defined as
 
-![](img/cond_entropy.svg)
+![](img/entropy/cond_entropy.svg)
 ### Joint Entropy
 
 The joint Shannon entropy (in bits) of two discrete random variables X and Y is defined as
 
-![](img/joint_entropy.svg)
+![](img/entropy/joint_entropy.svg)
 
 ### Mutual Information(MI)
 
@@ -31,23 +31,23 @@ In general, MI is the intersection or say the common information for both random
 
 Let (X,Y) be a pair of random variables with values over the space X x Y. If their joint distribution is P(X,Y) and the marginal distributions are PX and PY, the mutual information is defined as
 
-![](img/mutual_entropy_prod.svg)
+![](img/entropy/mutual_entropy_prod.svg)
 
 In terms of summation, for discrete random variables X and Y
 
-![](img/mutual_entropy_sum.svg)
+![](img/entropy/mutual_entropy_sum.svg)
 
 In terms of integration, for continuous random variables X and Y
 
-![](img/mutual_entropy_int.svg)
+![](img/entropy/mutual_entropy_int.svg)
 
 The relation between mutual information and conditional entropy and joint entropy
 
-![](img/mutual_entropy_rel.svg)
+![](img/entropy/mutual_entropy_rel.svg)
 
 With Venn diagram
 
-![](img/mutual_entropy_venn.png)
+![](img/entropy/mutual_entropy_venn.png)
 
 For more detail, please refer to [this](https://en.wikipedia.org/wiki/Mutual_information)
 
@@ -109,4 +109,4 @@ We can maximize the ELBO and minimize the KL-Divergence to maximize the logp(X).
 [PDF Highlight](./The%20information%20bottleneck%20method.pdf)
 ## Deep Variational Information Bottleneck
 
-[PDF Highlight](./img/deep_variational_information_bottleneck.pdf)
+[PDF Highlight](./deep_variational_information_bottleneck.pdf)
