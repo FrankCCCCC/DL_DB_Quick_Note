@@ -116,13 +116,16 @@ The MuZero act in the environment like part B of Figure1.  A Monte-Carlo Tree Se
 For more detail, MuZero model ***µθ*** with parameters ***θ***, conditioned on past observations ***o1, ..., ot*** and future actions ***at+1, ..., at+k***. The model predicts three future quantities as following:
 
 - policy
+  
   ![](img/muzero/muzero_pred_policy.png)
 
   where ***π*** is the policy used to select real actions
 - value function
+  
   ![](img/muzero/muzero_pred_value.png)
 
 - immediate reward
+  
   ![](img/muzero/muzero_pred_reward.png)
 
   where ***u*** is the true, observation reward. ***γ*** is the discount function of the environment.
