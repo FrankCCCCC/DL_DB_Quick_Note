@@ -18,10 +18,61 @@ We pass in the board position as a **19×19 image and use convolutional layers**
 
 We train the model in **2 stage**. In the **first stage, we use supervised learning with KGS dataset to train the policy network to predict the next action of humans.** Then, in the **second stage, we use reinforment learning and self-play to train the model by themself.**
 
-### Supervised Learning of Policy Network
+### Stage1: Supervised Learning of Policy Network
 
 ![](img/alphago/sl_policy_network.png)
 
+A fast rollout policy ***pπ*** and supervised learning (SL) policy network ***pσ*** are trained to predict human expert moves in a data set of positions. The fast rollout policy ***pπ*** is **trained only with some important features such as Stone colour to reduce the complexity of the model(faster but less accurate)** while the SL policy network ***pσ*** is trained with whole position of Go.
+
+We trained a 13-layer policy network, which we call the **SL policy network**, from 30 million positions from the KGS Go Server. Then we update the policy network with the following function to **maximize the probability of predicting the action of human experts**:
+
+![](img/alphago/policy_update.png)
+
+### Stage2: Reinforcement learning of policy networks
+
+We use policy gradient reinforcement learning (RL) to update the network. The RL policy network ***pρ*** is **identical in structure to the SL policy network**, its weights ***ρ*** are **initialized to the same values**, ***ρ=σ***. We play games between the current policy network ***pρ*** and a **randomly selected previous iteration of the policy network to prevent overfit and stablize training**. To update the RL policy network, we use **policy gradient** to maximize the expected outcome:
+
+![](img/alphago/rl_policy.png)
+
+Here we use a reward function ***r(s)*** that t is 0 for all non-terminal time steps ***t<T***. The outcome ***zt=±r(sT)*** is the terminal reward at the end of the game if the current player wins, ***r(sT)=+1***, loses ***r(sT)=−1***.
+
+### Stage2: Reinforcement learning of value networks
+
+estimating a value function ***vp(s)*** that predicts the outcome from position ***s*** of games played by using policy ***p*** for both players
+
+![](img/alphago/value_funct.png)
+
+We approximate the value function using a value network ***vθ(s)*** with weights ***θ***, ***vθ(s)≈ vpρ(s) ≈ v*(s)***. We define the loss function of the value network with ***mean squared error(MSE)***:
+
+![](img/alphago/value_update.png)
+
+But how do we search the optimal value through policy network? There are 5 steps as Figure3:
+
+![](img/alphago/mcts.png)
+
+- Step 1: **Selection**
+
+  Each simulation traverses the tree by selecting the edge with maximum action value ***Q***, plus a bonus ***u(P)*** that depends on a stored prior probability ***P(s, a)*** for that edge.
+
+- Step 2: **Expansion**
+  
+  The leaf node may be expanded. The new node is processed once by the policy network ***pσ*** with output ***P(s, a)=pσ(a|s)***. Each edge ***(s, a)*** of the search tree stores an action value ***Q(s, a)***, visit count ***N(s, a)***, and prior probability ***P(s, a)***. The ***u(s, a)*** is a kind of bonus that is proportional to the prior probability but decays with repeated visits to encourage exploration.
+
+  ![](img/alphago/Q_u.png)
+
+- Step 3: **Evaluation**
+  
+  The leaf node is evaluated in two very different ways: first, by the value network ***vθ(sL)***; and second, by the outcome ***zL*** of a random rollout played out until terminal step ***T*** using the fast rollout policy ***pπ***; these evaluations are combined, using a mixing parameter ***λ***, into a leaf evaluation ***V(sL)***
+
+  ![](img/alphago/value_eval.png)
+
+- Step 4: **Backup**
+  
+  At the end of simulation, the action values and visit counts of all traversed edges are **updated**. **Each edge accumulates the visit count and mean evaluation of all simulations passing through that edge as following:**
+
+  ![](img/alphago/value_backup.png)
+
+  The notation ***sLi*** is the leaf node from the ith simulation; ***1(s, a, i)*** indicates whether an edge ***(s, a)*** was traversed during the ith simulation.
 ## Mastering the game of Go without human knowledge
 
 The paper propose AlphaGo Zero which is known as self-playing without human knowledge.
@@ -156,6 +207,29 @@ It's also known as **DreamerV2**, an evolution of Dreamer agent.
 [[PDF Highlight](muzero/Mastering%20Atari,%20Go,%20Chess%20and%20Shogi%20by%20Planning%20with%20a.pdf)
 
 It propose MuZero. It is quite famous when I write this note(Jan 2021). Lots of people tried to reproduce the incredible performance of this paper. Some of well-known implementations like [muzero-general](https://github.com/werner-duvaud/muzero-general) give a clear code and modular structure of MuZero. 
+
+### Introdution
+
+The main idea is to predict the future that are directly relevant for planning. The **model receives the observation (e.g. an image of the Go board or the Atari screen)** as an input and transforms it into a hidden state. The **hidden state** is then **updated iteratively by a recurrent process** that receives the previous hidden state and a hypothetical next action. At every one of these steps the model predicts the **policy** (e.g. the move to play), **value function** (e.g. the predicted winner), and **immediate reward** (e.g. the points scored by playing a move).
+
+### Algorithm
+
+![](img/muzero/muzero_algo.png)
+
+The MuZero consist of 3 components: dynamic function, prediction function, representation function:
+
+- Dynamic Function ***g(st, at+1)=rt+1, st+1***
+- Prediction Function ***f(st)=pt, vt***
+- Representation Function ***h(o0)=s0***
+
+We denote ***o0*** as the initial observation, ***s0*** as the initial hidden state, ***pt*** as the policy function, ***vt*** as value function, and ***rt*** as reward function at time step ***t***.
+
+The MuZero plan like part A of Figure1. Given a previous
+hidden state ***sk−1*** and a candidate action ***ak***, the dynamics function ***g*** produces an immediate reward ***rk*** and a new hidden state ***sk***. The policy ***pk*** and value function ***vk*** are computed from the hidden state ***sk*** by a prediction function ***f***.
+
+The MuZero act in the environment like part B of Figure1.  A Monte-Carlo Tree Search is performed at each timestep t, as described in A. An action at+1 is sampled from the search policy πt ≈ π(at+k+1|o1, ..., ot, at+1, ..., at+k). At the end of the episode the trajectory data is stored into a replay buffer.
+
+The MuZero act in the environment like part B of Figure1.
 
 ## Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models
 
