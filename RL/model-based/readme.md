@@ -330,7 +330,11 @@ To understand it intuitively, ***JO*** is just like the **loss of autoencoder th
 
 With an average score of 823 across tasks **after 5 × 10^6 environment steps, Dreamer exceeds the performance of the strong model-free D4PG agent that achieves an average of 786 within 10^8 environment steps**. At the same time, Dreamer inherits the **data-efficiency** of PlaNet, confirming that the learned world model can help to generalize from small amounts of experience.
 
+**Long horizons**
 
+![](img/dreamer/dreamer_exp_fig4.png)
+
+we compare Dreamer to alternatives for deriving behaviors from the world model at various horizon lengths. For this, we learn an action model to maximize imagined rewards without a value model and compare to online planning using PlaNet Dreamer more robust to the horizon and performs well even for short horizons. 
 
 ![](img/dreamer/dreamer_exp_fig7.png)
 
