@@ -322,6 +322,20 @@ To understand it intuitively, ***JO*** is just like the **loss of autoencoder th
 
 ![](img/dreamer/dreamer_reconst_loss.png)
 
+### Experiments
+
+**Permformance**
+
+![](img/dreamer/dreamer_exp_fig6.png)
+
+With an average score of 823 across tasks **after 5 × 10^6 environment steps, Dreamer exceeds the performance of the strong model-free D4PG agent that achieves an average of 786 within 10^8 environment steps**. At the same time, Dreamer inherits the **data-efficiency** of PlaNet, confirming that the learned world model can help to generalize from small amounts of experience.
+
+
+
+![](img/dreamer/dreamer_exp_fig7.png)
+
+![](img/dreamer/dreamer_exp_fig8.png)
+
 ## MASTERING ATARI WITH DISCRETE WORLD MODELS
 
 It's also known as **DreamerV2**, an evolution of Dreamer agent.
