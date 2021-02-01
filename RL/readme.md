@@ -133,3 +133,7 @@ PlaNet的改良版
 ### Evaluating Agents without Rewards
 
 [Paper](rl_algos/Evaluating%20Agents%20without%20Rewards.pdf)
+
+# Reference
+
+- [UCB CS285 Deep Reinforcement Learning](http://rail.eecs.berkeley.edu/deeprlcourse/)
