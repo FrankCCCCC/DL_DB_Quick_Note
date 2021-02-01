@@ -37,3 +37,9 @@ Risk-aware RL.
 # Reference:
 
 - [强化学习（RL）中有哪些重要的理论结果？ 微軟亞洲研究院回答](https://www.zhihu.com/question/312164724)
+- [Distributional Reinforcement Learning — Part 1 (C51 and QR-DQN)](https://medium.com/analytics-vidhya/distributional-reinforcement-learning-part-1-c51-and-qr-dqn-a04c96a258dc)
+- [Risk-sensitive foraging models](https://en.wikipedia.org/wiki/Risk-sensitive_foraging_models)
+- [【强化学习 47】Distributional RL/C51](https://zhuanlan.zhihu.com/p/60632660)
+- [Introduction to the Wasserstein distance](https://www.youtube.com/watch?v=CDiol4LG2Ao)
+- [【数学】Wasserstein Distance](https://zhuanlan.zhihu.com/p/58506295)
+- [Wasserstein metric的通俗解释 冯超](https://zhuanlan.zhihu.com/p/26988777)
