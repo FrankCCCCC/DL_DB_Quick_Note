@@ -5,6 +5,10 @@
 ## A Comprehensive Survey on Safe Reinforcement Learning
 
 ## Safe Model-based Reinforcement Learning with Stability Guarantees
+
+[Paper Intro Video](https://www.youtube.com/watch?v=Xwu38vQb9Gk&t=13s)
+
+
 # Reference
 
 - [Risk and robustness in RL: Nothing ventured, nothing gained - Shie Mannor](https://www.youtube.com/watch?v=M_acBfpqaLQ)
