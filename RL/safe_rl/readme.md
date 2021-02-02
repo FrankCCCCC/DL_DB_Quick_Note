@@ -8,4 +8,7 @@
 - [Andreas Krause (ETH Zuerich): "Safe Exploration in Reinforcement Learning"](https://www.youtube.com/watch?v=5vMyz4HWYfw)
   
   A talk about how to explore safely with RL.
+- [Towards Structural Risk Minimization for RL - Emma Brunskill](https://www.youtube.com/watch?v=V3Op8eIc9H8)
+  
+  A talk about risk-sensitive RL.
 - 
