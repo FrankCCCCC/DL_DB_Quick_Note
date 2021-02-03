@@ -137,3 +137,4 @@ PlaNet的改良版
 # Reference
 
 - [UCB CS285 Deep Reinforcement Learning](http://rail.eecs.berkeley.edu/deeprlcourse/)
+- [UM IFT 6085: Theoretical principles for deep learning](http://mitliagkas.github.io/ift6085-dl-theory-class/)

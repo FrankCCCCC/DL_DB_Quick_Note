@@ -195,6 +195,8 @@ Thus, the lower bound ***L***:
 - [Information Bottleneck](https://zhuanlan.zhihu.com/p/102925788)
 - [《Auto-encoding Variational Bayes》阅读笔记](https://zhuanlan.zhihu.com/p/37224492)
 - [Neural networks [7.8] : Deep learning - variational bound](https://www.youtube.com/watch?v=pStDscJh2Wo)
+- [Banach Fixed Point Theorem](https://www.youtube.com/watch?v=iwklT1Cqq1c)
+- [Banach Fixed Point Theorem](https://www.youtube.com/watch?v=9jL8iHw0ans)
 - [Wikipedia 互信息](https://zh.wikipedia.org/wiki/%E4%BA%92%E4%BF%A1%E6%81%AF)
 - [Wikipedia 聯合分布](https://zh.wikipedia.org/wiki/%E8%81%94%E5%90%88%E5%88%86%E5%B8%83)
 - [Wikipedia 熵 (信息論)](https://zh.wikipedia.org/wiki/%E7%86%B5_(%E4%BF%A1%E6%81%AF%E8%AE%BA))

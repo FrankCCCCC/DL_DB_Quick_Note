@@ -59,6 +59,14 @@ Risk-sensitive RL.
 
 - [Risk-sensitive foraging models](https://en.wikipedia.org/wiki/Risk-sensitive_foraging_models)
 - [【强化学习 47】Distributional RL/C51](https://zhuanlan.zhihu.com/p/60632660)
+- [IFT 6085 - Lecture 19 Basic results on reinforcement learning](http://mitliagkas.github.io/ift6085-2020/ift-6085-lecture-19-notes.pdf)
+  
+  Give a detailed proof for the convergence property of distributional RL.
+
+- [[Seminar] Distributional Perspective on RL](https://zhuanlan.zhihu.com/p/57964280)
+- [How Does Value-Based Reinforcement Learning Find the Optimal Policy?](https://runzhe-yang.science/2017-10-04-contraction/)
+
+  Give a very detailed proof for the convergence propertied of RL and Distributional RL.
 - [Introduction to the Wasserstein distance](https://www.youtube.com/watch?v=CDiol4LG2Ao)
 - [【数学】Wasserstein Distance](https://zhuanlan.zhihu.com/p/58506295)
 - [Wasserstein metric的通俗解释 冯超](https://zhuanlan.zhihu.com/p/26988777)
