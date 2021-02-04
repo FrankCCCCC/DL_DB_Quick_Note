@@ -6,7 +6,23 @@ Make reward like Dopamine
 
 ## A Distributional Perspective on Reinforcement Learning
 
-Everything begins here. It propose C51.
+Everything begins here. The paper propose the idea of distributional RL and prove the distributional Bellman Operation can converge to the expectation and variance of the distribution. Based on the theory, they propose a naive algorthm C51 which use catergorical distribution to approximate the true distribution of the reward.
+
+Let's recall the Q function
+
+![](img/c51/q_func.png)
+
+where ***x*** means the state and ***a*** means the action. The prime means the next state and action.
+
+The distributional RL define the Q function as following
+
+![](img/c51/q_func_dist.png)
+
+where ***Z*** means the distribution of the Q value condition on state and action. That means the Q value is NOT a scalar but a distribution. The equation means both side are drawn from the same distribution.
+
+Well, why we need to replace the scalar with a more complex distribution? The main reason is that **we can keep as much information as possible.** Thus we can update the model more efficiently(sample efficiency). The second reason is we can **choose the optimal policy according to the distribution rather than expectation.** The third reason is **it is similar the mechanism of Dopamine.(an advantage somewhat)**
+
+However distributional RL has a small pitfall
 
 ## A distributional code for value in dopaminebased reinforcement learning
 
