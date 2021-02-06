@@ -22,7 +22,9 @@ where ***Z*** means the distribution of the Q value condition on state and actio
 
 Well, why we need to replace the scalar with a more complex distribution? The main reason is that **we can keep as much information as possible.** Thus we can update the model more efficiently(sample efficiency). The second reason is we can **choose the optimal policy according to the distribution rather than expectation.** The third reason is **it is similar the mechanism of Dopamine.(an advantage somewhat)**
 
-However distributional RL has a small pitfall
+However distributional RL has a small pitfall the Bellman equation does **NOT converge on the distribution itself but expectation and variance.**
+
+
 
 ## A distributional code for value in dopaminebased reinforcement learning
 

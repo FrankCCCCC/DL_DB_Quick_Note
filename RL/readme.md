@@ -138,3 +138,5 @@ PlaNet的改良版
 
 - [UCB CS285 Deep Reinforcement Learning](http://rail.eecs.berkeley.edu/deeprlcourse/)
 - [UM IFT 6085: Theoretical principles for deep learning](http://mitliagkas.github.io/ift6085-dl-theory-class/)
+- [Waterloo University CS885 Spring: Reinforcement Learning](https://cs.uwaterloo.ca/~ppoupart/teaching/cs885-spring18/schedule.htmls)
+- [Caltech CS 159: Data-Driven Algorithm Design](https://sites.google.com/view/cs-159-spring-2020/)

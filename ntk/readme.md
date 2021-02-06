@@ -4,6 +4,11 @@
 
 [PDF Highlight](./Wide%20Neural%20Networks%20of%20Any%20Depth%20Evolve%20as.pdf)
 
+### Every Model Learned by Gradient Descent Is Approximately a Kernel Machine
+
+University of Washington
+
+[Paper Explained Video](https://www.youtube.com/watch?v=ahRPdiCop3E)
 
 ### Finding sparse trainable neural networks through Neural Tangent Transfer
 
@@ -22,4 +27,4 @@
 - [thegregyang/NTK4A](https://github.com/thegregyang/NTK4A)
 - [Some Intuition on the Neural Tangent Kernel](https://www.inference.vc/neural-tangent-kernels-some-intuition-for-kernel-gradient-descent/)
 - [NTK推导的详细过程](https://zhuanlan.zhihu.com/p/166158072)
-- CMU ML Blog: [Ultra-Wide Deep Nets and the Neural Tangent Kernel (NTK)](https://blog.ml.cmu.edu/2019/10/03/ultra-wide-deep-nets-and-the-neural-tangent-kernel-ntk/)
+- [CMU ML Blog: Ultra-Wide Deep Nets and the Neural Tangent Kernel (NTK)](https://blog.ml.cmu.edu/2019/10/03/ultra-wide-deep-nets-and-the-neural-tangent-kernel-ntk/)

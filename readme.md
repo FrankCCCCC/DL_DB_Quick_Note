@@ -1,22 +1,36 @@
 # DL & DB Quick Notes
-A collection of papers for DL and DB researchers
+A collection of papers for DL and DB
 
 ## Fields
 - RL
   - [Algorithms](RL/rl_algos)
 
     Here is [Notes](RL/rl_algos/readme.md) of papers
-  - [Intrisic Curiosity](RL/curiosity)
+    
+  - [Curiosity](RL/curiosity)
+
+    Here is [Notes](RL/curiosity/readme.md) of papers
+
   - [Curricular Learning with RL](RL/curricular_learning_with_rl)
   - [Distributed Training](RL/distributed)
+  - [Distributional RL](RL/distributional_rl)
+
+    Here is [Notes](RL/distributional_rl/readme.md) of papers
+
   - [Open-Ended RL](RL/open_ended)
   - [Real World Challenges](RL/real-world_challenge)
 
     Here is [Notes](RL/real-world_challenge/readme.md) of papers
+
   - [Model-Based RL](RL/model-based)
 
     Here is [Notes](RL/model-based/readme.md) of papers
+
   - [RL & Biology](RL/biology)
+  - [Safe RL](RL/safe_rl)
+  
+    Here is [Notes](RL/safe_rl/readme.md) of papers
+
   - [RL Applications](RL/applications)
   
 - Lottery Hypothesis & Pruning
