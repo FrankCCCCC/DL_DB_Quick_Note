@@ -23,6 +23,12 @@ Citation 153
 
 [Talk](https://www.youtube.com/watch?v=sMfPRLtrob4)
 
+The paper propose Modified SAFEOPT.
+
+## Safe Exploration for Interactive Machine Learning
+
+## Safe Exploration for Optimization with Gaussian Processes
+
 The paper propose SAFEOPT.
 
 # Reference
@@ -43,4 +49,17 @@ The paper propose SAFEOPT.
 - [Bayesian Optimization & Algorithm Configuration](https://www.youtube.com/watch?v=6D9Rqda0dpg&feature=youtu.be)
 
   Bayesian optimization of CS159
-- 
+
+- [Machine Learning by mathematicalmonk](https://www.youtube.com/playlist?list=PLD0F06AA0D2E8FFBA)
+  
+  Give an intuitive explaination of the math often used in ML.
+  
+- [UAI2018 2. Bayesian Optimization](https://www.youtube.com/watch?v=C5nqEHpdyoE)
+- [Gaussian processes by Martin Krasser](http://krasserm.github.io/2018/03/19/gaussian-processes/#References)
+- [Bayesian optimization by Martin Krasser](http://krasserm.github.io/2018/03/21/bayesian-optimization/)
+- [Coursera: Bayesian optimization](https://www.coursera.org/lecture/bayesian-methods-in-machine-learning/bayesian-optimization-iRLaF)
+- [StackExchange: Intuitive Understanding of Expected Improvement for Gaussian Process](https://stats.stackexchange.com/questions/426782/intuitive-understanding-of-expected-improvement-for-gaussian-process)
+
+- [ML Tutorial: Gaussian Processes (Richard Turner)](https://www.youtube.com/watch?v=92-98SYOd)
+- [10 Gaussian Processes, pt 1/3 Basics](https://www.youtube.com/watch?v=AEf_ta4vyKU)
+- [A Visual Exploration of Gaussian Processes](https://distill.pub/2019/visual-exploration-gaussian-processes/?fbclid=IwAR3XSg_gQ9KvIG9qPOXCWjGGEhl7b3qSZCLxXeee-uDbuQtktLCf-2lVeno#DimensionSwap)
