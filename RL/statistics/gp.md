@@ -102,9 +102,7 @@ EI method is a kind of acquisition functions.
 ## Bayesian Upper Confident Bound(UCB) Method
 Before diving to UCB method, 
 
-```math
-SE = \frac{\sigma}{\sqrt{n}}
-```
+$$x=\sqrt{2}$$
 
 ## Thompson Sampling Method
 
