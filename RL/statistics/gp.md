@@ -83,6 +83,8 @@ A popular model is Gaussian Process. Gaussian process defines a prior over funct
 ## Algorithm
 The Bayesian optimization procedure is as follows. 
 
+---
+
 For t=1,2,… 
 
 repeat:
@@ -90,8 +92,21 @@ repeat:
 - Obtain a possibly noisy sample yt=f(xt)+ϵt from the objective function f.
 - Add the sample to previous samples D1:t=D1:t−1,(xt,yt) and update the surrogate model.
 
+---
+
+## Probability improvement(PI) Method
+
 ## Expected improvement(EI) Method
 EI method is a kind of acquisition functions. 
+
+## Bayesian Upper Confident Bound(UCB) Method
+Before diving to UCB method, 
+
+```math
+SE = \frac{\sigma}{\sqrt{n}}
+```
+
+## Thompson Sampling Method
 
 # Reference 
 
