@@ -1,3 +1,32 @@
+# Multi-Armed Bandit Problem
+Imagine you are in a casionoand face multiple slot machines. Each machine is configured with an unknown probability of how likely you would get a reward at one play. The question is **What's the strategy to get the highest long-term reward?**
+
+![](img/gp/bern_bandit.png)
+*An illustration of multi-armed bandit problem*
+
+## Definition
+
+## Upper Confidence Bounds(UCB)
+The UCB algorithm give a realtion between upper bound and probability confidence. That is to say, the UCB gives **How likely is the real value of a random variable below the upper bound?** To achieve this goal, we need to understand [Hoeffding’s Inequality](https://en.wikipedia.org/wiki/Hoeffding%27s_inequality) first.
+
+### Hoeffding’s Inequality
+Let ***X1,…,Xt*** be i.i.d. (independent and identically distributed) random variables and they are all bounded by the interval ***[0, 1]***. The sample mean is X¯¯¯¯t=1t∑tτ=1Xτ. Then for ***u > 0***, we have:
+
+![](img/gp/hoeffding_ineq.png)
+
+Combine the Hoeffding’s Inequality and our goal. We can dervie 
+
+![](img/gp/ucb_hoeffding.png)
+
+Once we get the bound, we can specify a target confidnce and always choose the action having highest upper bound.
+
+![](img/gp/ucb_algo.png)
+
+### UCB1
+Since we want to measure the confidence of the upper bound, we can derive the confidence with the times of acting.
+
+![](img/gp/ucb1.png)
+
 # Gaussian Process
 
 ## Big Picture and Background
@@ -100,9 +129,13 @@ repeat:
 EI method is a kind of acquisition functions. 
 
 ## Bayesian Upper Confident Bound(UCB) Method
-Before diving to UCB method, 
+Before diving to Bayesian UCB method, please understand the bandit problem first. 
 
-$$x=\sqrt{2}$$
+Bayesian UCB inherents UCB. They both give a relation between upper bound and probability confidence. The different thing is UCB finds the relation with Hoeffding's Inequality while Bayesian UCB find the relation with Gaussian distribution itself. 
+
+For example, it is common that we know if we sample values from Gaussian distribution, 95% of them are between the mean plus 2 standard deviation and mean subtract 2 standard deviation.
+
+![](img/gp/gaussian_dist_conf.png)
 
 ## Thompson Sampling Method
 

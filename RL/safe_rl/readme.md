@@ -31,6 +31,8 @@ The paper propose Modified SAFEOPT.
 
 The paper propose SAFEOPT.
 
+## The Lyapunov Neural Network: Adaptive Stability Certification for Safe Learning of Dynamical Systems
+
 # Reference
 
 - [Risk and robustness in RL: Nothing ventured, nothing gained - Shie Mannor](https://www.youtube.com/watch?v=M_acBfpqaLQ)
