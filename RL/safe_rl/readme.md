@@ -15,6 +15,8 @@ DeepMind & Facebook AI
 
 NIPS 2018
 
+[Blog](https://ai.facebook.com/blog/lyapunov-based-safe-reinforcement-learning/)
+
 ## Safe Controller Optimization for Quadrotors with Gaussian Processes
 
 ICRA 2017
