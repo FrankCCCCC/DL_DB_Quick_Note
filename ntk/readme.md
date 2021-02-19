@@ -40,3 +40,4 @@ Citation 370
 - [CMU ML Blog: Ultra-Wide Deep Nets and the Neural Tangent Kernel (NTK)](https://blog.ml.cmu.edu/2019/10/03/ultra-wide-deep-nets-and-the-neural-tangent-kernel-ntk/)
 - [Some Intuition on the Neural Tangent Kernel](https://www.inference.vc/neural-tangent-kernels-some-intuition-for-kernel-gradient-descent/)
 - [直观理解Neural Tangent Kernel](https://zhuanlan.zhihu.com/p/339971642)
+- [Deep Gaussian Processes](http://inverseprobability.com/talks/notes/deep-gaussian-processes.html)
