@@ -16,6 +16,16 @@ University of Washington
 
 [Paper](https://arxiv.org/abs/2006.08228)
 
+### Deep Neural Networks as Gaussian Processes
+
+ICLR 2018
+
+Citation 370
+
+[Paper](https://arxiv.org/abs/1711.00165)
+
+[PDF Highlight](./DEEP%20NEURAL%20NETWORKS%20AS%20GAUSSIAN%20PROCESSES.pdf)
+
 ---
 
 ## Reference
@@ -28,3 +38,5 @@ University of Washington
 - [Some Intuition on the Neural Tangent Kernel](https://www.inference.vc/neural-tangent-kernels-some-intuition-for-kernel-gradient-descent/)
 - [NTK推导的详细过程](https://zhuanlan.zhihu.com/p/166158072)
 - [CMU ML Blog: Ultra-Wide Deep Nets and the Neural Tangent Kernel (NTK)](https://blog.ml.cmu.edu/2019/10/03/ultra-wide-deep-nets-and-the-neural-tangent-kernel-ntk/)
+- [Some Intuition on the Neural Tangent Kernel](https://www.inference.vc/neural-tangent-kernels-some-intuition-for-kernel-gradient-descent/)
+- [直观理解Neural Tangent Kernel](https://zhuanlan.zhihu.com/p/339971642)
