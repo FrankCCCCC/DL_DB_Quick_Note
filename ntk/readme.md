@@ -41,3 +41,4 @@ Citation 370
 - [Some Intuition on the Neural Tangent Kernel](https://www.inference.vc/neural-tangent-kernels-some-intuition-for-kernel-gradient-descent/)
 - [直观理解Neural Tangent Kernel](https://zhuanlan.zhihu.com/p/339971642)
 - [Deep Gaussian Processes](http://inverseprobability.com/talks/notes/deep-gaussian-processes.html)
+- [知乎 -【强化学习 139】PreQN](https://zhuanlan.zhihu.com/p/162496935)
