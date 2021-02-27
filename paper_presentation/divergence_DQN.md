@@ -107,3 +107,9 @@ $$Q_{\theta'} (\bar{s}, \bar{a}) = Q_{\theta}(\bar{s}, \bar{a}) + \alpha E_{s, a
 $$k_{\theta}(\bar{s}, \bar{a}, s, a) = \nabla_{\theta}Q_{\theta}(\bar{s}, \bar{a})^{\top} \nabla_{\theta} Q_{\theta}(s, a)$$
 
 Where $k_{\theta}(\bar{s}, \bar{a}, s, a)$ is **NTK** 
+
+
+---
+# Reference
+
+[Washington University - Line Search Methods](https://sites.math.washington.edu/~burke/crs/408/notes/nlp/line.pdf)
