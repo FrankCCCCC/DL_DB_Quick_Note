@@ -5,8 +5,10 @@ paginate: true
 # _class: invert
 # color: white
 # backgroundColor: black
+class: lead
 ---
 
+<!-- _class: lead -->
 # Towards Characterizing Divergence in Deep Q-Learning
 
 arXiv 2019
@@ -32,7 +34,7 @@ Why dose DQN diverge under deadly triad?
 How about analyzing DQN with NTK?
 
 ---
-# The Result of Analyzation
+# The Result of Analysis
 
 - The main reason why DQN diverge is **Over-generalization** and **improper(too large or too small) learning rate**.
 - The **network architecture seems to affect the convergence of DQN**
@@ -42,8 +44,8 @@ How about analyzing DQN with NTK?
 
 - Motivation
 - Main Ideas 
-- The Result of Analyzation
-- Analyzation Setup
+- The Result of Analysis
+- Analysis Setup
 - NTK of DQN
 - Building Intuition for Divergen with NTK
 - PreQN
@@ -51,7 +53,7 @@ How about analyzing DQN with NTK?
 
 ---
 
-# Analyzation Setup
+# Analysis Setup
 
 ## Contraction Map
 Let $X$ be a vector space with norm $k \cdot k$, and $f$ a function from $X$ to $X$. If $\forall x, y \in X$, $f$ satisfies
@@ -284,8 +286,23 @@ The larger off-diagonal entries, the higher row ratio.
 
 ---
 
-- Relu nets commonly have the largest on-diagonal elements and row ratio (so they should learn quickly and generalize aggressively)
-- Sin networks appear to be in a “sweet spot” of high ondiagonal elements and low off-diagonal elements.
+![bg contain](towards_characterizing_divergence_in_deep_q-Learning/exp_ant_width.png)
+![bg contain](towards_characterizing_divergence_in_deep_q-Learning/exp_ant_depth.png)
+
+---
+
+- **Relu** nets commonly have the **largest on-diagonal elements and row ratio (so they should learn quickly and generalize aggressively)**
+- **Sin** networks have **low off-diagonal elements and lowest row ratio.**
+- Diagonal elements tend to increase with width and decrease with depth, across activation functions.
+- Row ratios tend to increase with depth across activation functions, and do not clearly correlate with width.
+
+---
+
+![](towards_characterizing_divergence_in_deep_q-Learning/exp_swimmer_perform.png)
+
+---
+
+![](towards_characterizing_divergence_in_deep_q-Learning/exp_all_perform.png)
 
 ---
 # Reference
