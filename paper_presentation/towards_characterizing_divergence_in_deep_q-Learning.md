@@ -222,11 +222,72 @@ $(1 + \gamma)/(1 − \gamma)$ will be quite large, and the left hand side has a 
 
 
 ---
-## Intuition 3
-- The stability of Q-learning is **tied to the generalization properties of DQN**. 
+## Intuitions
+- The stability and convergence of Q-learning is **tied to the generalization properties of DQN**. 
 - DQNs with **more aggressive generalization (larger off-diagonal terms in $K_{\theta}$)** are **less likely to demonstrate stable learning**.
+- The **architecture of network will affect to the stability and convergence of Q-learning**.
+- Q-values for missing (or under-represented) state-action pairs are adjusted by **generalization with errors**. **Bootstrapping then propagates those errors** through the Q-values for all other state-action pairs.
+
+---
+## Theorem 3
+Consider a sequence of updates $\{ \mathcal{U}_0, \mathcal{U}_1, ... \}$, with each $\mathcal{U}_i: Q \to Q$ Lipschitz continuous, with Lipschitz constant $\beta_i$ , with respect to a norm $||\cdot||$. Furthermore, suppose all Ui share a common fixed-point, $\tilde{Q}$. Then for any initial point $Q_0$, the sequence of iterates produced by $Q_i + 1 = \mathcal{U}_i Q_i$ satisfies:
+
+$$ ||\widetilde{Q} − Q_{i}|| \leq (\prod_{k=0}^{i−1} \beta_k) ||\widetilde{Q} − Q_0||
+$$
+
+Furthermore, if there is an iterate $j$ such that $\forall k \leq j, \beta_k \in [0, 1)$, the sequence $\{ \mathcal{U}_0, \mathcal{U}_1, ... \}$ converges to $\widetilde{Q}$.
+
+Roughly speaking, this theorem says that **if you sequentially apply different contraction maps with the same fixed-point, you will attain that fixed-point which is also optimal point $Q^*$ in DQL.**
+
+---
+
+# Preconditioned Q-Networks(PreQN)
+
+---
+
+![bg contain left](towards_characterizing_divergence_in_deep_q-Learning/algo.png)
+
+# Algorithm
+We form $K_{\theta}$ for the minibatch, find the least-squares solution $Z$ to
+
+$$
+K_{\theta} Z = \tau^* Q_{\theta} − Q_{\theta}
+$$
+
+For the minibatch, compute the update
+$$
+\theta' = \theta + \alpha sum_{(s,a) \in B} Z(s, a) \nabla_{\theta} Q_{\theta}(s, a)
+$$
+
+To make the 
+
+$$
+\operatorname{cos}(Q_{\theta'} − Q_{\theta}, \tau^* Q_{\theta} − Q_{\theta}) \leq \eta
+$$
+
+---
+
+# Experiments
+
+## Metrics
+
+We consider the ratio of the average off-diagonal row entry to the on-diagonal entry, $R_i$ as **'row ratio'**:
+$$
+R_i(K) = \frac{1}{N} \frac{\sum_{j \not ={i}} |K_{ij}|}{K_{ii}}
+$$
+
+where $N$ is the size of the square matrix $K$.
+
+The larger off-diagonal entries, the higher row ratio.
+
+**The higher row ratio, the greater generalization, but less stability and convergence**
+
+---
+
+- Relu nets commonly have the largest on-diagonal elements and row ratio (so they should learn quickly and generalize aggressively)
+- Sin networks appear to be in a “sweet spot” of high ondiagonal elements and low off-diagonal elements.
 
 ---
 # Reference
 
-[Washington University - Line Search Methods](https://sites.math.washington.edu/~burke/crs/408/notes/nlp/line.pdf)
+- [Washington University - Line Search Methods](https://sites.math.washington.edu/~burke/crs/408/notes/nlp/line.pdf)
