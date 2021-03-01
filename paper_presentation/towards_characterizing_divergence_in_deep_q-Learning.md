@@ -337,11 +337,13 @@ The larger off-diagonal entries, the higher row ratio.
 
 ---
 
-![](towards_characterizing_divergence_in_deep_q-Learning/exp_swimmer_perform.png)
+![](towards_characterizing_divergence_in_deep_q-Learning/exp_all_perform.png)
+
+In some of experiments, PreQN outperform than TD3 and SAC. But PreQN is more stable trivially.
 
 ---
 
-![](towards_characterizing_divergence_in_deep_q-Learning/exp_all_perform.png)
+![](towards_characterizing_divergence_in_deep_q-Learning/exp_swimmer_perform.png)
 
 ---
 # Reference
