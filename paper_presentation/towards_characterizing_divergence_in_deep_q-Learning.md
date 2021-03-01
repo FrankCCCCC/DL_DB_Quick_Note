@@ -75,26 +75,65 @@ Let $f$ be a contraction map, $\exist x_u \ \ st \ \ f(x_u) = x_u$.
 
 ---
 
-## Bellmen Operator & Q-Function
-Let $Q(s, a)$ be the Q function and $Q^*(s, a)$ be the optimal Q function.
+## Q-Function
+The optimal Q-function $Q^*$, which is known to satisfy the optimal Bellman equation:
+
+$$
+Q^*(s, a) = E_{s \sim P}[ R(s, a, s') + \gamma \mathop{\max}_{a'} \ Q^*(s', a')]
+$$
+
+The value iteration of Q-learning is
+
+$$
+Q_{k+1}(s, a) = E_{s, a \sim P}[Q_k(s, a) + \alpha_k (r + \gamma \mathop{\max}_{a'} Q_k(s', a') − Q_k(s, a))]
+$$
+
+---
+
+## Bellman Operator
+Define an optimal Bellman operator $\tau^*: Q \to Q$ be the operator on Q-functions
+
+$$
+Q^* = \tau^* Q^*
+$$
+
+The operator $\tau^*$ is  a contraction map
+
+Thus, the value iteration of Q-learning can be represented as
+
+$$Q_{k+1}(s, a) = E_{s, a \sim P}[Q_k(s, a) + \alpha_k (\hat{\tau}^* Q_k(s, a) − Q_k(s, a))]$$
+
+$$\hat{\tau}^{*} Q_k(s, a) = r + \gamma \ max_{a'} Q_k(s', a')$$
+
+The optimal policy $π^*$ can be obtained with $π^*(s) = \mathop{\arg\max}_{a} Q^*(s, a)$ after the value iteration $Q_{k+1}= \tau^* Q_k$ converges
 
 ---
 # NTK of DQN
 
-The Bellman quation of DQN with the experience distribution $\rho$ in replay buffer
+The Bellman equation of DQN with the **experience distribution $\rho$ in replay buffer**
 
 $$Q_{k+1}(s, a) = E_{s, a \sim \rho}[Q_k(s, a) + \alpha_k (\hat{\tau}^* Q_k(s, a) − Q_k(s, a))]$$
 
-$$\hat{\tau}^{*} = Q_k(s, a) = r + \gamma \ max_{a'} Q_k(s', a')$$
+$$\hat{\tau}^{*} Q_k(s, a) = r + \gamma \ max_{a'} Q_k(s', a')$$
 
-The TD error $\delta_t$
+The TD error $\delta_t$ with minibatch sampled from replay buffer $\rho$
 
-$$\delta_t = \tau^* Q(s_t, a_t) − Q(s_t, a_t)
-= r_t + \gamma \ \mathop{\max}_{a'} \ Q(s_{t+1}, a') − Q(s_t, a_t)$$
+$$
+\delta_t = E_{s, a \sim \rho}[\tau^* Q(s_t, a_t) − Q(s_t, a_t)]
+$$
+$$
+= E_{s, a \sim \rho}[r_t + \gamma \ \mathop{\max}_{a'} \ Q(s_{t+1}, a') − Q(s_t, a_t)]
+$$
 
 Update the weights
 
-$$\theta' = \theta + \alpha E_{s, a \sim \rho}[(\tau^* Q_{\theta}(s, a) − Q_{\theta}(s, a)) \ \nabla_{\theta} Q_{\theta}(s, a)]$$
+$$
+\theta' = \theta + \alpha \nabla_{\theta} \delta_{t} 
+$$
+
+$$
+= \theta + \alpha E_{s, a \sim \rho}[(\tau^* Q_{\theta}(s, a) − Q_{\theta}(s, a)) \ \nabla_{\theta} Q_{\theta}(s, a)] \qquad \qquad \tag{5}
+$$
 
 ---
 # NTK of DQN
@@ -103,7 +142,7 @@ The **Taylor Expansion** of $Q$ around $\theta$ at a state-action pair $(\bar{s}
 
 $$Q_{\theta'} (\bar{s}, \bar{a}) = Q_{\theta}(\bar{s}, \bar{a})+\nabla_{\theta}Q_{\theta}(\bar{s}, \bar{a})^{\top}(\theta'−\theta)$$
 
-Combine with
+Combine with Eq. 5
 
 $$\theta' - \theta = \alpha E_{s, a \sim \rho}[(\tau^* Q_{\theta}(s, a) − Q_{\theta}(s, a)) \ \nabla_{\theta} Q_{\theta}(s, a)]$$
 
@@ -232,7 +271,7 @@ $(1 + \gamma)/(1 − \gamma)$ will be quite large, and the left hand side has a 
 
 ---
 ## Theorem 3
-Consider a sequence of updates $\{ \mathcal{U}_0, \mathcal{U}_1, ... \}$, with each $\mathcal{U}_i: Q \to Q$ Lipschitz continuous, with Lipschitz constant $\beta_i$ , with respect to a norm $||\cdot||$. Furthermore, suppose all Ui share a common fixed-point, $\tilde{Q}$. Then for any initial point $Q_0$, the sequence of iterates produced by $Q_i + 1 = \mathcal{U}_i Q_i$ satisfies:
+Consider a **sequence of updates $\{ \mathcal{U}_0, \mathcal{U}_1, ... \}$**, with each $\mathcal{U}_i: Q \to Q$ Lipschitz continuous, with Lipschitz constant $\beta_i$ , with respect to a norm $||\cdot||$. Furthermore, **suppose all $\mathcal{U}_i$ share a common fixed-point**, $\tilde{Q}$. Then for any initial point $Q_0$, the sequence of iterates produced by $Q_{i + 1} = \mathcal{U}_i Q_i$ satisfies:
 
 $$ ||\widetilde{Q} − Q_{i}|| \leq (\prod_{k=0}^{i−1} \beta_k) ||\widetilde{Q} − Q_0||
 $$
@@ -258,7 +297,7 @@ $$
 
 For the minibatch, compute the update
 $$
-\theta' = \theta + \alpha sum_{(s,a) \in B} Z(s, a) \nabla_{\theta} Q_{\theta}(s, a)
+\theta' = \theta + \alpha \sum_{(s,a) \in B} Z(s, a) \nabla_{\theta} Q_{\theta}(s, a)
 $$
 
 To make the 
