@@ -8,7 +8,6 @@ paginate: true
 class: lead
 ---
 
-<!-- _class: lead -->
 # Towards Characterizing Divergence in Deep Q-Learning
 
 arXiv 2019
