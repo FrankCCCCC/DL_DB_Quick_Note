@@ -282,6 +282,52 @@ Roughly speaking, this theorem says that **if you sequentially apply different c
 ---
 
 # Preconditioned Q-Networks(PreQN)
+Denote $\Phi_{\theta}^T \in \mathbb{R}^{d |S||A|}$ as the matrix whose columns are $\nabla_{\theta} Q_{\theta}(s, a)$. With Taylor expansion, we have
+
+$$
+Q_{\theta'} \approx Q_{\theta} + \Phi_{\theta}^T(\theta' − \theta) \qquad \qquad \tag{19}
+$$
+
+However, to stablize the update, since we've known that the Q-learning is stable and satisfy the Banach's fix point thereom, we want to make the update of DQL close to the update of Q-learning. That is, satisfy the following relation
+
+$$
+Q_{\theta'} \approx Q_{\theta} + \alpha (\tau^* Q_{\theta} − Q_{\theta}) \qquad \qquad \tag{20}
+$$
+
+---
+
+We can simply reorganize the equation
+
+$$
+Q_{\theta'} - Q_{\theta}  \approx \Phi_{\theta}^T(\theta' − \theta) \qquad \qquad \tag{19-1}
+$$
+
+$$
+Q_{\theta'} - Q_{\theta} \approx \alpha (\tau^* Q_{\theta} − Q_{\theta}) \qquad \qquad \tag{20-1}
+$$
+
+Combine Eq. (19-1) and Eq. (20-1)
+
+$$
+\Phi_{\theta}^T(\theta' − \theta) \approx \alpha (\tau^* Q_{\theta} − Q_{\theta})
+$$
+
+$$
+(\Phi_{\theta}^T \Phi_{\theta}) \Phi_{\theta}^{-1} (\theta' − \theta) \approx \alpha (\tau^* Q_{\theta} − Q_{\theta})
+$$
+
+$$
+K_{\theta} \Phi_{\theta}^{-1} (\theta' − \theta) \approx \alpha (\tau^* Q_{\theta} − Q_{\theta})
+$$
+
+We get
+
+$$
+\theta' \approx \theta + \alpha \Phi_{\theta} K_{\theta}^{-1} (\tau^* Q_{\theta} − Q_{\theta}) \qquad \qquad \tag{21}
+$$
+
+$K_{\theta}^{-1}$ is the preconditioner to calibrate the ill condition of the update.
+
 
 ---
 
