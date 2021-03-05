@@ -78,13 +78,13 @@ Let $f$ be a contraction map, $\exist x_u \ \ st \ \ f(x_u) = x_u$.
 The optimal Q-function $Q^*$, which is known to satisfy the optimal Bellman equation:
 
 $$
-Q^*(s, a) = E_{s \sim P}[ R(s, a, s') + \gamma \mathop{\max}_{a'} \ Q^*(s', a')]
+Q^*(s, a) = E_{s \sim P}[ R(s, a, s^\prime) + \gamma \mathop{\max}_{a^\prime} \ Q^*(s^\prime, a^\prime)]
 $$
 
 The value iteration of Q-learning is
 
 $$
-Q_{k+1}(s, a) = E_{s, a \sim P}[Q_k(s, a) + \alpha_k (r + \gamma \mathop{\max}_{a'} Q_k(s', a') − Q_k(s, a))]
+Q_{k+1}(s, a) = E_{s, a \sim P}[Q_k(s, a) + \alpha_k (r + \gamma \mathop{\max}_{a^\prime} Q_k(s^\prime, a^\prime) − Q_k(s, a))]
 $$
 
 ---
@@ -102,7 +102,7 @@ Thus, the value iteration of Q-learning can be represented as
 
 $$Q_{k+1}(s, a) = E_{s, a \sim P}[Q_k(s, a) + \alpha_k (\hat{\tau}^* Q_k(s, a) − Q_k(s, a))]$$
 
-$$\hat{\tau}^{*} Q_k(s, a) = r + \gamma \ max_{a'} Q_k(s', a')$$
+$$\hat{\tau}^{*} Q_k(s, a) = r + \gamma \ max_{a^\prime} Q_k(s^\prime, a^\prime)$$
 
 The optimal policy $π^*$ can be obtained with $π^*(s) = \mathop{\arg\max}_{a} Q^*(s, a)$ after the value iteration $Q_{k+1}= \tau^* Q_k$ converges
 
@@ -113,7 +113,7 @@ The Bellman equation of DQN with the **experience distribution $\rho$ in replay 
 
 $$Q_{k+1}(s, a) = E_{s, a \sim \rho}[Q_k(s, a) + \alpha_k (\hat{\tau}^* Q_k(s, a) − Q_k(s, a))]$$
 
-$$\hat{\tau}^{*} Q_k(s, a) = r + \gamma \ max_{a'} Q_k(s', a')$$
+$$\hat{\tau}^{*} Q_k(s, a) = r + \gamma \ max_{a^\prime} Q_k(s^\prime, a^\prime)$$
 
 The TD error $\delta_t$ with minibatch sampled from replay buffer $\rho$
 
@@ -121,13 +121,13 @@ $$
 \delta_t = E_{s, a \sim \rho}[\tau^* Q(s_t, a_t) − Q(s_t, a_t)]
 $$
 $$
-= E_{s, a \sim \rho}[r_t + \gamma \ \mathop{\max}_{a'} \ Q(s_{t+1}, a') − Q(s_t, a_t)]
+= E_{s, a \sim \rho}[r_t + \gamma \ \mathop{\max}_{a^\prime} \ Q(s_{t+1}, a^\prime) − Q(s_t, a_t)]
 $$
 
 Update the weights
 
 $$
-\theta' = \theta + \alpha \nabla_{\theta} \delta_{t} 
+\theta^\prime = \theta + \alpha \nabla_{\theta} \delta_{t} 
 $$
 
 $$
@@ -139,15 +139,15 @@ $$
 
 The **Taylor Expansion** of $Q$ around $\theta$ at a state-action pair $(\bar{s}, \bar{a})$. 
 
-$$Q_{\theta'} (\bar{s}, \bar{a}) = Q_{\theta}(\bar{s}, \bar{a})+\nabla_{\theta}Q_{\theta}(\bar{s}, \bar{a})^{\top}(\theta'−\theta)$$
+$$Q_{\theta^\prime} (\bar{s}, \bar{a}) = Q_{\theta}(\bar{s}, \bar{a})+\nabla_{\theta}Q_{\theta}(\bar{s}, \bar{a})^{\top}(\theta^\prime−\theta)$$
 
 Combine with Eq. 5
 
-$$\theta' - \theta = \alpha E_{s, a \sim \rho}[(\tau^* Q_{\theta}(s, a) − Q_{\theta}(s, a)) \ \nabla_{\theta} Q_{\theta}(s, a)]$$
+$$\theta^\prime - \theta = \alpha E_{s, a \sim \rho}[(\tau^* Q_{\theta}(s, a) − Q_{\theta}(s, a)) \ \nabla_{\theta} Q_{\theta}(s, a)]$$
 
 Thus, the Q-values before and after an update are related by:
 
-$$Q_{\theta'} (\bar{s}, \bar{a}) = Q_{\theta}(\bar{s}, \bar{a}) + \alpha E_{s, a \sim \rho}[k_{\theta}(\bar{s}, \bar{a}, s, a) (\tau^*Q_{\theta}(s, a) − Q_{\theta}(s, a))]$$
+$$Q_{\theta^\prime} (\bar{s}, \bar{a}) = Q_{\theta}(\bar{s}, \bar{a}) + \alpha E_{s, a \sim \rho}[k_{\theta}(\bar{s}, \bar{a}, s, a) (\tau^*Q_{\theta}(s, a) − Q_{\theta}(s, a))]$$
 
 $$k_{\theta}(\bar{s}, \bar{a}, s, a) = \nabla_{\theta}Q_{\theta}(\bar{s}, \bar{a})^{\top} \nabla_{\theta} Q_{\theta}(s, a) \qquad \qquad \tag{9}$$
 
@@ -159,7 +159,7 @@ Where $k_{\theta}(\bar{s}, \bar{a}, s, a)$ is **NTK**
 ## Theorem 1
 The Q function is represented as a vector in $\mathbb{R}^{|S||A|}$, and the Q-values before and after an update are related by:
 
-$$Q_{\theta'} = Q_{\theta} + \alpha K_{\theta} D_{\rho}(\tau^* Q_{\theta} − Q_{\theta}) \qquad \qquad \tag{10}$$
+$$Q_{\theta^\prime} = Q_{\theta} + \alpha K_{\theta} D_{\rho}(\tau^* Q_{\theta} − Q_{\theta}) \qquad \qquad \tag{10}$$
 
 
 where $K_{\theta} \in \mathbb{R}^{|S||A| × |S||A|}$ is the matrix of entries given by the NTK $k_{\theta}(\bar{s}, \bar{a}, s, a)$, and $D_{\rho}$ is a  matrix with entries given by $\rho(s, a)$, the distribution from the replay buffer.
@@ -282,16 +282,17 @@ Roughly speaking, this theorem says that **if you sequentially apply different c
 ---
 
 # Preconditioned Q-Networks(PreQN)
+
 Denote $\Phi_{\theta}^T \in \mathbb{R}^{d |S||A|}$ as the matrix whose columns are $\nabla_{\theta} Q_{\theta}(s, a)$. With Taylor expansion, we have
 
 $$
-Q_{\theta'} \approx Q_{\theta} + \Phi_{\theta}^T(\theta' − \theta) \qquad \qquad \tag{19}
+Q_{\theta^\prime} \approx Q_{\theta} + \Phi_{\theta}^T(\theta^\prime − \theta) \qquad \qquad \tag{19}
 $$
 
 However, to stablize the update, since we've known that the Q-learning is stable and satisfy the Banach's fix point thereom, we want to make the update of DQL close to the update of Q-learning. That is, satisfy the following relation
 
 $$
-Q_{\theta'} \approx Q_{\theta} + \alpha (\tau^* Q_{\theta} − Q_{\theta}) \qquad \qquad \tag{20}
+Q_{\theta^\prime} \approx Q_{\theta} + \alpha (\tau^* Q_{\theta} − Q_{\theta}) \qquad \qquad \tag{20}
 $$
 
 ---
@@ -299,56 +300,65 @@ $$
 We can simply reorganize the equation
 
 $$
-Q_{\theta'} - Q_{\theta}  \approx \Phi_{\theta}^T(\theta' − \theta) \qquad \qquad \tag{19-1}
+Q_{\theta^\prime} - Q_{\theta}  \approx \Phi_{\theta}^T(\theta^\prime − \theta) \qquad \qquad \tag{19-1}
 $$
 
 $$
-Q_{\theta'} - Q_{\theta} \approx \alpha (\tau^* Q_{\theta} − Q_{\theta}) \qquad \qquad \tag{20-1}
+Q_{\theta^\prime} - Q_{\theta} \approx \alpha (\tau^* Q_{\theta} − Q_{\theta}) \qquad \qquad \tag{20-1}
 $$
 
 Combine Eq. (19-1) and Eq. (20-1)
 
 $$
-\Phi_{\theta}^T(\theta' − \theta) \approx \alpha (\tau^* Q_{\theta} − Q_{\theta})
+\Phi_{\theta}^T(\theta^\prime − \theta) \approx \alpha (\tau^* Q_{\theta} − Q_{\theta})
 $$
 
 $$
-(\Phi_{\theta}^T \Phi_{\theta}) \Phi_{\theta}^{-1} (\theta' − \theta) \approx \alpha (\tau^* Q_{\theta} − Q_{\theta})
+(\Phi_{\theta}^T \Phi_{\theta}) \Phi_{\theta}^{-1} (\theta^\prime − \theta) \approx \alpha (\tau^* Q_{\theta} − Q_{\theta})
 $$
 
 $$
-K_{\theta} \Phi_{\theta}^{-1} (\theta' − \theta) \approx \alpha (\tau^* Q_{\theta} − Q_{\theta})
+K_{\theta} \Phi_{\theta}^{-1} (\theta^\prime − \theta) \approx \alpha (\tau^* Q_{\theta} − Q_{\theta})
 $$
 
 We get
 
 $$
-\theta' \approx \theta + \alpha \Phi_{\theta} K_{\theta}^{-1} (\tau^* Q_{\theta} − Q_{\theta}) \qquad \qquad \tag{21}
+\theta^\prime \approx \theta + \alpha \Phi_{\theta} K_{\theta}^{-1} (\tau^* Q_{\theta} − Q_{\theta}) \qquad \qquad \tag{21}
 $$
 
 $K_{\theta}^{-1}$ is the preconditioner to calibrate the ill condition of the update.
 
-
 ---
 
-![bg contain left](towards_characterizing_divergence_in_deep_q-Learning/algo.png)
-
-# Algorithm
 We form $K_{\theta}$ for the minibatch, find the least-squares solution $Z$ to
 
 $$
 K_{\theta} Z = \tau^* Q_{\theta} − Q_{\theta}
 $$
 
+Thus, the clibrated update is
+
+$$
+Z = K_{\theta}^{-1} (\tau^* Q_{\theta} − Q_{\theta})
+$$
+
+---
+
+![bg contain left](towards_characterizing_divergence_in_deep_q-Learning/algo.png)
+
+# Algorithm
+
+
 For the minibatch, compute the update
 $$
-\theta' = \theta + \alpha \sum_{(s,a) \in B} Z(s, a) \nabla_{\theta} Q_{\theta}(s, a)
+\theta^\prime = \theta + \alpha \sum_{(s,a) \in B} Z(s, a) \nabla_{\theta} Q_{\theta}(s, a)
 $$
 
-To make the 
+To make the updated Q-function close to the target Bellman optimality, we use linesearch to achieve the criterion
 
 $$
-\operatorname{cos}(Q_{\theta'} − Q_{\theta}, \tau^* Q_{\theta} − Q_{\theta}) \leq \eta
+\operatorname{cos}(Q_{\theta^\prime} − Q_{\theta}, \tau^* Q_{\theta} − Q_{\theta}) \geq \eta
 $$
 
 ---
@@ -357,7 +367,7 @@ $$
 
 ## Metrics
 
-We consider the ratio of the average off-diagonal row entry to the on-diagonal entry, $R_i$ as **'row ratio'**:
+We consider the ratio of the average off-diagonal row entry to the on-diagonal entry, $R_i$ as **^\primerow ratio^\prime**:
 $$
 R_i(K) = \frac{1}{N} \frac{\sum_{j \not ={i}} |K_{ij}|}{K_{ii}}
 $$
