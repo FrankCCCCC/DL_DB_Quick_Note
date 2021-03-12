@@ -54,24 +54,6 @@ How about analyzing DQN with NTK?
 
 # Analysis Setup
 
-## Contraction Map
-Let $X$ be a vector space with norm $k \cdot k$, and $f$ a function from $X$ to $X$. If $\forall x, y \in X$, $f$ satisfies
-
-$$||f(x) − f(y)|| \leq \beta ||x − y|| \ \ \ $$
-
-with $\beta \in [0, 1)$, then $f$ is called a contraction map with modulus $\beta$
-
----
-
-## Banach Fixed-Point Theorem
-Let $f$ be a contraction map, $\exist x_u \ \ st \ \ f(x_u) = x_u$. 
-
-### Properties
-
-- $x_u$ is an unique fixed-point. 
-
-- Because $f$ is a contraction map, $x_u$ can be obtained by the repeated application of $f$: for any point $x_0 \in X$, if we define a sequence of points $\{ x_n \}$ such that $x_n = f(x_n − 1)$, $\lim_{n \to \infty} x_n = x$.
-
 ---
 
 ## Q-Function
@@ -173,7 +155,7 @@ $$\mathcal{U}_3 Q = Q + \alpha K D_{\rho} (\tau^* Q − Q) \qquad \qquad \tag{14
 
 Under the same conditions as Theorem 1, the Q-values before and after an update are related by 
 
-$$Q_{\theta} = \mathcal{U}_3 Q_{\theta} \qquad \qquad \tag{15}$$
+$$Q_{\theta^\prime} = \mathcal{U}_3 Q_{\theta} \qquad \qquad \tag{15}$$
 
 ---
 ## Theorem 2
@@ -266,18 +248,6 @@ $(1 + \gamma)/(1 − \gamma)$ will be quite large, and the left hand side has a 
 - The stability and convergence of Q-learning is **tied to the generalization properties of DQN**. 
 - DQNs with **more aggressive generalization (larger off-diagonal terms in $K_{\theta}$)** are **less likely to demonstrate stable learning**.
 - The **architecture of network will affect to the stability and convergence of Q-learning**.
-- Q-values for missing (or under-represented) state-action pairs are adjusted by **generalization with errors**. **Bootstrapping then propagates those errors** through the Q-values for all other state-action pairs.
-
----
-## Theorem 3
-Consider a **sequence of updates $\{ \mathcal{U}_0, \mathcal{U}_1, ... \}$**, with each $\mathcal{U}_i: Q \to Q$ Lipschitz continuous, with Lipschitz constant $\beta_i$ , with respect to a norm $||\cdot||$. Furthermore, **suppose all $\mathcal{U}_i$ share a common fixed-point**, $\tilde{Q}$. Then for any initial point $Q_0$, the sequence of iterates produced by $Q_{i + 1} = \mathcal{U}_i Q_i$ satisfies:
-
-$$ ||\widetilde{Q} − Q_{i}|| \leq (\prod_{k=0}^{i−1} \beta_k) ||\widetilde{Q} − Q_0||
-$$
-
-Furthermore, if there is an iterate $j$ such that $\forall k \leq j, \beta_k \in [0, 1)$, the sequence $\{ \mathcal{U}_0, \mathcal{U}_1, ... \}$ converges to $\widetilde{Q}$.
-
-Roughly speaking, this theorem says that **if you sequentially apply different contraction maps with the same fixed-point, you will attain that fixed-point which is also optimal point $Q^*$ in DQL.**
 
 ---
 
@@ -367,7 +337,7 @@ $$
 
 ## Metrics
 
-We consider the ratio of the average off-diagonal row entry to the on-diagonal entry, $R_i$ as **^\primerow ratio^\prime**:
+We consider the ratio of the average off-diagonal row entry to the on-diagonal entry, $R_i$ as **"row ratio"**:
 $$
 R_i(K) = \frac{1}{N} \frac{\sum_{j \not ={i}} |K_{ij}|}{K_{ii}}
 $$
@@ -394,12 +364,60 @@ The larger off-diagonal entries, the higher row ratio.
 
 ![](towards_characterizing_divergence_in_deep_q-Learning/exp_all_perform.png)
 
-In some of experiments, PreQN outperform than TD3 and SAC. But PreQN is more stable trivially.
+In some of experiments, PreQN outperform than TD3 and SAC. PreQN is more stable trivially.
 
 ---
 
-![](towards_characterizing_divergence_in_deep_q-Learning/exp_swimmer_perform.png)
+![bg 80%](towards_characterizing_divergence_in_deep_q-Learning/exp_all2_perform.png)
 
+PreQN seems great. 
+
+---
+
+![bg 80%](towards_characterizing_divergence_in_deep_q-Learning/exp_all1_perform.png)
+
+But some of experiments are not.
+
+---
+
+# Appendix
+
+---
+## Theorem 3
+Consider a **sequence of updates $\{ \mathcal{U}_0, \mathcal{U}_1, ... \}$**, with each $\mathcal{U}_i: Q \to Q$ Lipschitz continuous, with Lipschitz constant $\beta_i$ , with respect to a norm $||\cdot||$. Furthermore, **suppose all $\mathcal{U}_i$ share a common fixed-point**, $\tilde{Q}$. Then for any initial point $Q_0$, the sequence of iterates produced by $Q_{i + 1} = \mathcal{U}_i Q_i$ satisfies:
+
+$$ ||\widetilde{Q} − Q_{i}|| \leq (\prod_{k=0}^{i−1} \beta_k) ||\widetilde{Q} − Q_0||
+$$
+
+Furthermore, if there is an iterate $j$ such that $\forall k \leq j, \beta_k \in [0, 1)$, the sequence $\{ \mathcal{U}_0, \mathcal{U}_1, ... \}$ converges to $\widetilde{Q}$.
+
+Roughly speaking, this theorem says that **if you sequentially apply different contraction maps with the same fixed-point, you will attain that fixed-point which is also optimal point $Q^*$ in DQL.**
+
+---
+
+## Contraction Map
+Let $X$ be a vector space with norm $k \cdot k$, and $f$ a function from $X$ to $X$. If $\forall x, y \in X$, $f$ satisfies
+
+$$||f(x) − f(y)|| \leq \beta ||x − y|| \ \ \ $$
+
+with $\beta \in [0, 1)$, then $f$ is called a contraction map with modulus $\beta$
+
+---
+
+## Banach Fixed-Point Theorem
+Let $f$ be a contraction map, $\exist x_u \ \ st \ \ f(x_u) = x_u$. 
+
+### Properties
+
+- $x_u$ is an unique fixed-point. 
+
+- Because $f$ is a contraction map, $x_u$ can be obtained by the repeated application of $f$: for any point $x_0 \in X$, if we define a sequence of points $\{ x_n \}$ such that $x_n = f(x_n − 1)$, $\lim_{n \to \infty} x_n = x$.
+
+---
+
+# Intuitions
+
+- Q-values for missing (or under-represented) state-action pairs are adjusted by **generalization with errors**. **Bootstrapping then propagates those errors** through the Q-values for all other state-action pairs.
 ---
 # Reference
 
