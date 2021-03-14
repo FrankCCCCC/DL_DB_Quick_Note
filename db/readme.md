@@ -16,7 +16,7 @@
 
 ## Black or White? How to Develop an AutoTuner for Memory-based Analytics
 
-[PDF](./Black%20or%20White%20How%20to%20Develop%20an%20AutoTuner%20for%20Memory-based%20Analytics)
+[PDF](./Black%20or%20White%20How%20to%20Develop%20an%20AutoTuner%20for%20Memory-based%20Analytics.pdf)
 
 # AQP
 
