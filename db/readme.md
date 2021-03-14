@@ -72,10 +72,12 @@ Propose Calvin distributed database system
 
 # Multi-Tenant
 
-## Characterizing Tenant Behavior for Placement and CrisisMitigation in Multitenant DBMSs
+## Characterizing Tenant Behavior for Placement and Crisis Mitigation in Multitenant DBMSs
 
 [PDF](./Characterizing%20tenant%20behavior%20for%20placement%20and%20crisis%20mitigation%20in%20multitenant%20DBMSs.pdf)
 
 ## Ease.ml Towards Multi-tenant Resource Sharing for Machine Learning Workload
+
+VLDB 2018
 
 [PDF](./Ease.ml%20Towards%20Multi-tenant%20Resource%20Sharing%20for%20Machine%20Learning%20Workload.pdf)
