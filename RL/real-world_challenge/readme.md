@@ -3,7 +3,7 @@
 ## Learning to Adapt in Dynamic, Real-WorldEnvironments via Meta-Reinforcement Learning
 
 ### Introduciton
-Propose  efficient method for online adaptation, and to the best of our knowledge. The algorithm **efficiently trains a global model that is capable of using its recent experiences to quickly adapt, achieving fast online adaptation in dynamic environments**.
+Propose an efficient method for online adaptation. The algorithm **efficiently trains a global model that is capable of using its recent experiences to quickly adapt, achieving fast online adaptation in dynamic environments**.
 
 They evaluate 2 version of approaches on stochastic
 continuous control tasks: 
