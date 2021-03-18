@@ -70,6 +70,10 @@ Propose Calvin distributed database system
 
 [PDF](./T-Part%20Partitioning%20of%20Transactions%20for%20Forward-Pushing%20in%20Deterministic%20Database%20Systems.pdf)
 
+## Don’t Look Back, Look into the Future Prescient Data Partitioning and Migration for Deterministic Database System
+
+[PDF](./Don’t%20Look%20Back,%20Look%20into%20the%20Future%20Prescient%20Data%20Partitioning%20and%20Migration%20for%20Deterministic%20Database%20System.pdf)
+
 # Multi-Tenant
 
 ## Characterizing Tenant Behavior for Placement and Crisis Mitigation in Multitenant DBMSs
@@ -81,3 +85,21 @@ Propose Calvin distributed database system
 VLDB 2018
 
 [PDF](./Ease.ml%20Towards%20Multi-tenant%20Resource%20Sharing%20for%20Machine%20Learning%20Workload.pdf)
+
+# Query Optimization
+
+## Learning to Optimize Join Qeries With Deep Reinforcement Learning
+
+[PDF](./Learning%20to%20Optimize%20Join%20Qeries%20With%20Deep%20Reinforcement%20Learning.pdf)
+
+## Learning State Representations for Query Optimization with Deep Reinforcement Learning
+
+[PDF](./Learning%20State%20Representations%20for%20Query%20Optimization%20with%20Deep%20Reinforcement%20Learning.pdf)
+
+## The Case for Deep Query Optimisation
+
+[PDF](./The%20Case%20for%20Deep%20Query%20Optimisation.pdf)
+
+## DeepQuery Deep Reinforcement Learning for Query Optimization
+
+[PDF](./DeepQuery%20Deep%20Reinforcement%20Learning%20for%20Query%20Optimization.pdf)
