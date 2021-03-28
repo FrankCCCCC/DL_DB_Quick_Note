@@ -127,6 +127,11 @@ PlaNet的改良版
 
 [Paper](./rl_algos/Discovering%20Reinforcement%20Learning%20Algorithms.pdf)
 
+## Adversarial Attack on Deep Reinforcement Learning
+
+### Tactics of Adversarial Attack on Deep Reinforcement Learning Agent
+
+[Paper](./Tactics%20of%20Adversarial%20Attack%20on%20Deep%20Reinforcement%20Learning%20Agent.pdf)
 
 ## Alternative
 
