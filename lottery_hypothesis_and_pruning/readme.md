@@ -272,3 +272,6 @@ For the following figure, it shows the mask distance drawn from different epoch 
 ## Weight Agnostic Neural Networks
 
 [PDF Highlight](./Weight_Agnostic_Neural_Networks.pdf)
+
+### Initialization and Regularization of Factorized Neural Layers
+[PDF Highlight](./Initialization%20and%20Regularization%20of%20Factorized%20Neural%20Layers.pdf)
