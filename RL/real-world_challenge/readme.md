@@ -55,3 +55,18 @@ Here we denote the reward function as r and a planning horizon as H.
 
 ### Experiments
 
+## Stabilizing Off-Policy Q-Learning via Bootstrapping Error Reduction
+
+[PDF HIGHTLIGHT](./Stabilizing%20Off-Policy%20Q-Learning%20via%20Bootstrapping%20Error%20Reduction.pdf)
+
+## DEEP IMITATIVE MODELS FOR FLEXIBLE INFERENCE, PLANNING, AND CONTROL
+
+[PDF HIGHTLIGHT](./Deep%20Imitative%20Models%20for%20Flexible%20Inference,%20Planning,%20and%20Control.pdf)
+
+## CIRL: Controllable Imitative Reinforcement Learning for Vision-based Self-driving
+
+[PDF HIGHTLIGHT](./CIRL%20Controllable%20Imitative%20Reinforcement%20Learning.pdf)
+
+## Off-Policy Deep Reinforcement Learning without Exploration
+
+[PDF HIGHTLIGHT](./Off-Policy%20Deep%20Reinforcement%20Learning%20without%20Exploration.pdf)
