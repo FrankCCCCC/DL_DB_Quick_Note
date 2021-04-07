@@ -31,6 +31,8 @@ The paper is aim to solving hard-exploration problem. The agent would go to unce
 
 [PDF HIGHLIGHT](./First%20return%20then%20explore.pdf)
 
+[Github Code](https://github.com/uber-research/go-explore)
+
 ## Large-Scale Study of Curiosity-Driven Learning
 
 ICLR'19
@@ -38,6 +40,8 @@ ICLR'19
 Citation 283
 
 [PDF HIGHLIGHT](./Large-Scale%20Study%20of%20Curiosity-Driven%20Learning.pdf)
+
+The paper find out an big issue of intrinsic curiosity: the noisy TV problem.
 
 ## NOISY NETWORKS FOR EXPLORATION
 
@@ -60,6 +64,14 @@ ICLR'19
 Citation 96
 
 [PDF HIGHLIGHT](./EPISODIC%20CURIOSITY%20THROUGH%20REACHABILITY.pdf)
+
+## Self-Supervised Exploration via Disagreement
+
+ICML'19
+
+[PDF HIGHLIGHT](./Self-Supervised%20Exploration%20via%20Disagreement.pdf)
+
+[Github Code](https://github.com/pathak22/exploration-by-disagreement)
 
 # Reference
 

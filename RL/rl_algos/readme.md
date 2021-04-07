@@ -18,3 +18,6 @@ Proposed by Hafner who proposes Dreamer, PlaNet. The paper seems to be interesti
 
 ## Discovering Reinforcement Learning Algorithms
 
+## Agent57 Outperforming the Atari Human Benchmark
+
+Propose Agent57 and outperforms than human baseline in all Atari games.
