@@ -22,7 +22,7 @@
 
 ## Approximate Query Processing: What is New and Where to Go?
 
-[PDF](Approximate%20Query%20Processing%20What%20is%20New%20and%20Where%20to%20Go.pdf)
+[PDF](./aqp/Approximate%20Query%20Processing%20What%20is%20New%20and%20Where%20to%20Go.pdf)
 
 A survey of AQP.
 
@@ -30,7 +30,7 @@ A survey of AQP.
 
 ## In Search of an Understandable Consensus Algorithm
 
-[PDF](./In%20Search%20of%20an%20Understandable%20Consensus%20Algorithm.pdf)
+[PDF](./consensus_algo/In%20Search%20of%20an%20Understandable%20Consensus%20Algorithm.pdf)
 
 ## Practical Byzantine Fault Tolerance
 
