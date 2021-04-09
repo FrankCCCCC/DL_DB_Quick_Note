@@ -1,5 +1,7 @@
 # Distributed Database
 
+## 2020 What's Machine Learning?
+
 ## The Case for Determinism in Database Systems
 
 [PDF](./The%20Case%20for%20Determinism%20in%20Database%20Systems.pdf)
