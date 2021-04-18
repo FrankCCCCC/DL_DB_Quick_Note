@@ -8,6 +8,8 @@ ICML'18
 
 Citation 213
 
+[PDF Highlight](./Conditional%20Neural%20Processes.pdf)
+
 ## Neural Process
 
 Marta Garnelo, et al. 
@@ -15,6 +17,8 @@ Marta Garnelo, et al.
 ICML'18 workshop
 
 Citation 183
+
+[PDF Highlight](./Neural%20Process.pdf)
 
 # Reference
 
