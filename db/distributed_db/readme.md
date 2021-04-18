@@ -21,3 +21,9 @@ Propose Calvin distributed database system
 ## Don’t Look Back, Look into the Future Prescient Data Partitioning and Migration for Deterministic Database System
 
 [PDF](./Don’t%20Look%20Back,%20Look%20into%20the%20Future%20Prescient%20Data%20Partitioning%20and%20Migration%20for%20Deterministic%20Database%20System.pdf)
+
+## MorphoSys: Automatic Physical Design Metamorphosisfor Distributed Database Systems
+
+VLDB'20
+
+[PDF](./MorphoSys%20automatic%20physical%20design%20metamorphosis%20for%20distributed%20database%20systems.pdf)
