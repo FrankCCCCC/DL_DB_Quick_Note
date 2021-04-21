@@ -1,5 +1,7 @@
 # Query Optimization
 
+---
+
 ## An Overview of Query Optimization in Relational Systems
 
 [PDF HIGHLIGHT](./An%20Overview%20of%20Query%20Optimization%20in%20Relational%20Systems.pdf)
