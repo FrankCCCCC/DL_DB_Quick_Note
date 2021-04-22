@@ -76,3 +76,4 @@ ICML'19
 # Reference
 
 - [深度强化学习中的探索策略总结](https://zhuanlan.zhihu.com/p/188714833)
+- [Curiosity-Driven Learning with OpenAI and Keras](https://medium.com/swlh/curiosity-driven-learning-with-openai-and-keras-66f2c7f091fa)
