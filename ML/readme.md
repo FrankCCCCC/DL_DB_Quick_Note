@@ -27,3 +27,10 @@ Citation 119
 # Reference
 
 - [Matt Bonakdarpour - Introduction to EM: Gaussian Mixture Models](https://stephens999.github.io/fiveMinuteStats/intro_to_em.html)
+- [Variational Bayes and The Mean-Field Approximation](https://bjlkeng.github.io/posts/variational-bayes-and-the-mean-field-approximation/)
+- [RPubs - Variational Mixture of Gaussians](https://rpubs.com/cakapourani/variational_bayes_gmm)
+- [Variational Inference入门：variational bayesian EM](https://blog.csdn.net/foreseerwang/article/details/78427430)
+- [漫談 Variational Inference (一)](https://odie2630463.github.io/2018/08/21/vi-1/)
+- [谈谈Variational inference和EM算法之间的关系](https://zhuanlan.zhihu.com/p/97284299)
+- [宅男路上 - [貝氏] 煩死人的 Variational Bayes 初探](http://rightthewaygeek.blogspot.com/2014/11/variational-bayes.html)
+- [CSDN - Variational Inference入门：variational bayesian EM](https://blog.csdn.net/foreseerwang/article/details/78427430)
