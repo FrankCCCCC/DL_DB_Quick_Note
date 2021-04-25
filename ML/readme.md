@@ -41,3 +41,5 @@ Citation 119
 - [RPubs - Variational Bayesian Linear Regression Model](https://rpubs.com/cakapourani/variational-bayes-lr)
 - [CS 7140: Advanced Machine Learning - Variational EM](https://www.khoury.neu.edu/home/jwvdm/teaching/cs7140/spring2018/assets/notes/cs7140-09-vbem.pdf)
 - [U Buffalo Machine Learning - Variational Mixture of Gaussians](https://cedar.buffalo.edu/~srihari/CSE574/Chap10/10.3VariationalGMM.pdf)
+- [Chris Choy - Expectation Maximization and Variational Inference (Part 1)](https://chrischoy.github.io/research/Expectation-Maximization-and-Variational-Inference/)
+- [Chris Choy - Expectation Maximization and Variational Inference (Part 2)](https://chrischoy.github.io/research/Expectation-Maximization-and-Variational-Inference-2/)
