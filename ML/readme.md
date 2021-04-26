@@ -44,3 +44,4 @@ Citation 119
 - [Chris Choy - Expectation Maximization and Variational Inference (Part 1)](https://chrischoy.github.io/research/Expectation-Maximization-and-Variational-Inference/)
 - [Chris Choy - Expectation Maximization and Variational Inference (Part 2)](https://chrischoy.github.io/research/Expectation-Maximization-and-Variational-Inference-2/)
 - [A View of the Em Algorithm that Justifies Incremental, Sparse, and other Variants](https://link.springer.com/chapter/10.1007/978-94-011-5014-9_12)
+- [Deep Learning AND Bayesian Methods](http://deepbayes.ru/#materials)
