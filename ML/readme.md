@@ -46,3 +46,4 @@ Citation 119
 - [A View of the Em Algorithm that Justifies Incremental, Sparse, and other Variants](https://link.springer.com/chapter/10.1007/978-94-011-5014-9_12)
 - [Deep Learning AND Bayesian Methods](http://deepbayes.ru/#materials)
 - [NEU - CS 7140 Advanced Machine Learning](https://www.khoury.neu.edu/home/jwvdm/teaching/cs7140/spring2018/)
+- [CS 287: Advanced Robotics, Fall 2013](https://people.eecs.berkeley.edu/~pabbeel/cs287-fa13/)
