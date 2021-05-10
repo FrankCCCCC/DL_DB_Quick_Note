@@ -17,6 +17,8 @@ MIT, University of Wisconsin Madison
 
 Yi Lu1, Xiangyao Yu, Lei Cao, Samuel Madden
 
+Citation 
+
 Propose Aria DB
 
 ## Rethinking serializable multiversion concurrency control
