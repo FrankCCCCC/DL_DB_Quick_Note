@@ -1,3 +1,6 @@
+# Deterministic Database
+
+---
 
 ## High Performance Transactions via Early Write Visibility
 

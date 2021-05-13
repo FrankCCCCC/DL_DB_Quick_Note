@@ -1,5 +1,7 @@
 # Transaction Reordering
 
+---
+
 ## Design Principles for Scaling Multi-core OLTP UnderHigh Contention
 
 ## Scheduling OLTP Transactions via Learned AbortPrediction
