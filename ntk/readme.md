@@ -44,3 +44,5 @@ Citation 370
 - [知乎 -【强化学习 139】PreQN](https://zhuanlan.zhihu.com/p/162496935)
 - [Effortless optimization through gradient flows](https://francisbach.com/gradient-flows/)
 - [Chang Liu - Gradient Flow](http://ml.cs.tsinghua.edu.cn/~changliu/static/Gradient-Flow.pdf)
+- [When are Neural Networks more powerful than Neural Tangent Kernels?](https://blog.einstein.ai/beyond-ntk/)
+- [Neural networks are fundamentally Bayesian](https://towardsdatascience.com/neural-networks-are-fundamentally-bayesian-bee9a172fad8)
