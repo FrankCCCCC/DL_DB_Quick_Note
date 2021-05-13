@@ -42,3 +42,5 @@ Citation 370
 - [直观理解Neural Tangent Kernel](https://zhuanlan.zhihu.com/p/339971642)
 - [Deep Gaussian Processes](http://inverseprobability.com/talks/notes/deep-gaussian-processes.html)
 - [知乎 -【强化学习 139】PreQN](https://zhuanlan.zhihu.com/p/162496935)
+- [Effortless optimization through gradient flows](https://francisbach.com/gradient-flows/)
+- [Chang Liu - Gradient Flow](http://ml.cs.tsinghua.edu.cn/~changliu/static/Gradient-Flow.pdf)
