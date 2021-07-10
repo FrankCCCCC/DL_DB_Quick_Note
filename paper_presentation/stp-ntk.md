@@ -10,6 +10,8 @@ class: lead
 
 # Student-T Process Instead of Gaussian Process for Empirical Kernel
 
+資工21 周聖諺
+
 ---
 
 ## Empirical Kernel
@@ -100,7 +102,7 @@ $\hat{K}_{22} = K_{22} - K_{21} K_{11}^{-1} K_{12}$
 
 ## Experiment
 
-![](./stp-ntk/stp-ntk.png)
+![width:400px](./stp-ntk/stp-ntk.png)
 
 We've already known, if $\nu = \infty$, the student-T process will converge to Gaussian process. In the above figure, we compare the result of **fitting a $\sin()$ function with $\mathcal{TP}$ and $\mathcal{GP}$ respectively**. The **left** part of above figure shows the **training/testing progress of fitting**. The right part shows the fitting result of NTK.
 
