@@ -14,13 +14,19 @@ class: lead
 
 ---
 
-## Empirical Kernel
+## Empirical Kernel & SGD
+
+According to the **Deep learning versus kernel learning: an empirical study of loss landscape geometry and the time evolution of the Neural Tangent Kernel**(presented by 袁哥), chaotic sensitivity of basin fate to **SGD choices** early in training.
+
+### Why not just add some random noise to the NTK?
+
+With **inverse Wishart distribution** $\Sigma \sim \mathcal{IW}(\nu, K)$ where the degree of freedom $\nu > 2$ and $K$ is positive definite, we can generate a random matrix $\Sigma$ with expectation $\mathbb{E}[\Sigma] = \frac{K}{\nu - 2}$. 
 
 ---
 
 ## Normal-Wishart Distribution
 
-Consider the randomness of the kernel matrix, with Bayesian rule, we can model the kernel matrix with **Inverse Wishart distribution**.
+Consider the **randomness of the kernel matrix**, with Bayesian rule, we can model the kernel matrix with **Inverse Wishart distribution**.
 
 $$
 p(y | \phi, \nu, K) = \int p(y | \phi, \Sigma) p(\Sigma | \nu, K) d \Sigma = \mathcal{TP}(\phi, K, \nu)
@@ -58,6 +64,14 @@ $$
 
 ## Student-T Process 
 
+![width:900px](stp-ntk/bivariate_stp_gp.png)
+
+Degrees of freedom is the number of values in the final calculation of a statistic that are free to vary.
+
+---
+
+## Student-T Process Posterior
+
 Given a training dataset $\{ X_1, Y_1 \}$ with $n_1$ samples and a testing dataset $\{ X_2, Y_2 \}$ with $n_2$ samples  where $X_1 \in \mathbb{R}^{n_1 \times d}$,  $Y_1 \in \mathbb{R}^{n_1}$, and $X_2 \in \mathbb{R}^{n_2 \times d}$,  $Y_1 \in \mathbb{R}^{n_2}$. 
 
 Denote the mean function as $z$ and the kernel function as $k$. Thus, $\phi_i = z(X_i)$ and $K_{ij} = k(X_i, X_j)$
@@ -82,7 +96,7 @@ $$
 
 ---
 
-## Student-T Process 
+## Student-T Process Posterior
 
 The posterior is 
 
@@ -102,8 +116,16 @@ $\hat{K}_{22} = K_{22} - K_{21} K_{11}^{-1} K_{12}$
 
 ## Experiment
 
-![width:400px](./stp-ntk/stp-ntk.png)
+![width:600px](./stp-ntk/stp-ntk.png)
 
-We've already known, if $\nu = \infty$, the student-T process will converge to Gaussian process. In the above figure, we compare the result of **fitting a $\sin()$ function with $\mathcal{TP}$ and $\mathcal{GP}$ respectively**. The **left** part of above figure shows the **training/testing progress of fitting**. The right part shows the fitting result of NTK.
+We've already known, if $\nu = \infty$, the student-T process will converge to Gaussian process. In the above figure, we compare the result of **fitting a $\sin()$ function with $\mathcal{TP}$ and $\mathcal{GP}$ respectively**. The **left** part of above figure shows the **training/testing progress of fitting**.
 
-As the **blue line** shows above, as the **training process goes**, **the $\nu$ gets lower**. It shows that we can **control $\nu$ of $\mathcal{TP}$ to achieve a better fitting**.
+As the **blue line** shows above, as the **training progress goes**, **the $\nu$ gets lower**. It shows that we can **control $\nu$ of $\mathcal{TP}$ to achieve a better fitting**.
+
+---
+
+## Conclusion
+
+- During **training progress**, the **$\nu$ gets lower**.
+- By control the value of $\nu$ of $\mathcal{TP}$ we can get a better prediction on the training loss rather than $\mathcal{GP}$ 
+- If the 
