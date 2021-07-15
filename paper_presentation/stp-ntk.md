@@ -127,5 +127,5 @@ As the **blue line** shows above, as the **training progress goes**, **the $\nu$
 ## Conclusion
 
 - During **training progress**, the **$\nu$ gets lower**.
-- By control the value of $\nu$ of $\mathcal{TP}$ we can get a better prediction on the training loss rather than $\mathcal{GP}$ 
-- If the 
+- By controlling the value of $\nu$ of $\mathcal{TP}$ we can get a better prediction on the training loss rather than $\mathcal{GP}$ 
+- If the NTK follows the $\mathcal{TP}$,  the bigger training dataset, the larger degree of freedom of the posterior.
