@@ -14,9 +14,9 @@ class: lead
 
 ---
 
-## Empirical Kernel & SGD
+## Infinite-Width Neural Network & SGD
 
-According to the paper **"Deep learning versus kernel learning: an empirical study of loss landscape geometry and the time evolution of the Neural Tangent Kernel"**(presented by 袁哥), chaotic sensitivity of basin fate to **SGD choices** early in training.
+According to the paper **"Deep learning versus kernel learning: an empirical study of loss landscape geometry and the time evolution of the Neural Tangent Kernel"**(presented by 袁哥), infinite-width NTK gives a poor prediction on the loss of the finite-width neural network during training and, chaotic sensitivity of basin fate to **SGD choices** early in training.
 
 ### Why not just add some random noise to the NTK?
 
@@ -24,7 +24,7 @@ With **inverse Wishart distribution** $\Sigma \sim \mathcal{IW}(\nu, K)$ where t
 
 ---
 
-## Normal-Wishart Distribution
+## Inverse Normal-Wishart Distribution
 
 Consider the **randomness of the kernel matrix**, with Bayesian rule, we can model the kernel matrix with **Inverse Wishart distribution**.
 
@@ -45,14 +45,6 @@ The Student-T process can be written as
 $$
 y \sim \mathcal{TP}(\phi, K, \nu)
 $$
-
-<!-- $$
-\mathbin{E}[y] = \phi
-$$
-
-$$
-\mathbin{COV}[y] = \frac{\nu}{\nu - 2} K
-$$ -->
 
 The hyperparameter $\nu$ is called **degrees of freedom**, it can control the covariance of the output $cov(y) = \frac{\nu}{\nu - 2} K$. Thus, the relation between $\mathcal{TP}$ and $\mathcal{GP}$ is 
 
