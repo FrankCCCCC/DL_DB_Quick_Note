@@ -87,7 +87,7 @@ We also denote the empirical loss of all training dataset as $\mathcal{L}(\mathc
 $$
 l(\hat{y}, y) = l(f(x, \theta), y)
 \newline
-\mathcal{L}(\mathcal{X}, \mathcal{Y}) = \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}} l(f(x, \theta), y)
+\mathcal{L}_{f(\cdot, )}(\mathcal{X}, \mathcal{Y}) = \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}} l(f(x, \theta), y)
 $$
 
 ## Infinite-Width Neural Network As A Linear Model
@@ -120,12 +120,12 @@ $$
 g(x) \approx \ g(a) + \frac{d g(a)}{dx} (x - a)
 $$
 
-We denote the parameters of the neural network at training step $t$ as $\theta^{(t)}$. Then, expand the neural network $f(x, \theta^{(t + 1)})$ at training step $t$ with data point $x$.
+We denote the parameters of the neural network at training step $t$ as $\theta^{(t)}$. Then, expand the neural network $f(x, \theta^{(t)})$ at training step $t$ with data point $x$.
 
 $$
-\hat{y}^{(t + 1)} = f(x, \theta^{(t + 1)}) 
+\hat{y}^{(t)} = f(x, \theta^{(t)}) 
 \newline
-\approx \bar{f}(x, \theta^{(t + 1)}) = f(x, \theta^{(t)}) + \nabla_{\theta} f(x, \theta^{(t)})(\theta^{(t + 1)} - \theta^{(t)}), \ \forall t
+\approx  f(x, \theta^{(0)}) + \nabla_{\theta} f(x, \theta^{(0)})(\theta^{(t)} - \theta^{(0)}), \ \forall t
 $$
 
 where $\hat{y}^{(t)}$ is the prediction of the data point $x$ from the network at training step $t$
@@ -133,9 +133,34 @@ where $\hat{y}^{(t)}$ is the prediction of the data point $x$ from the network a
 As for the whole dataset $\mathcal{X}$, the predictions $\hat{\mathcal{Y}}^{(t)}$
 
 $$
-\hat{\mathcal{Y}}^{(t + 1)} = f(\mathcal{X}, \theta^{(t + 1)}) 
+\hat{\mathcal{Y}}^{(t)} 
+= f(\mathcal{X}, \theta^{(t)}) 
 \newline
-\approx \bar{f}(\mathcal{X}, \theta^{(t + 1)}) = f(\mathcal{X}, \theta^{(t)}) + \nabla_{\theta} f(\mathcal{X}, \theta^{(t)})(\theta^{(t + 1)} - \theta^{(t)}), \ \forall t
+\approx f(\mathcal{X}, \theta^{(0)}) + \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})(\theta^{(t)} - \theta^{(0)}), \ \forall t
+$$
+
+$$
+f(\mathcal{X}, \theta^{(t)}) -  f(\mathcal{X}, \theta^{(0)})
+\approx \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})(\theta^{(t)} - \theta^{(0)})
+$$
+
+With Lipschiz continue, we can guarantee that $\theta^{(t)} - \theta^{(0)} \geq \theta^{(t)} - \theta^{(t - 1)}$ and $f(\mathcal{X}, \theta^{(t)}) -  f(\mathcal{X}, \theta^{(0)}) \geq f(\mathcal{X}, \theta^{(t)}) -  f(\mathcal{X}, \theta^{(t - 1)})$, and we can also write down the formula.
+
+$$
+\lim_{\Delta t \to 0} \frac{f(\mathcal{X}, \theta^{(t + \Delta t)}) -  f(\mathcal{X}, \theta^{(t)})}{\Delta t}
+\approx \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \lim_{\Delta t \to 0} \frac{(\theta^{(t + \Delta t)} - \theta^{(t)})}{\Delta t}
+$$
+
+$$
+\frac{\partial f(\mathcal{X}, \theta^{(t)})}{\partial t}
+\approx \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \frac{\partial \theta^{(t)}}{\partial t}
+$$
+
+In the form of dynamic
+
+$$
+\dot{f}(\mathcal{X}, \theta^{(t)})
+\approx \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \dot{\theta}(t)
 $$
 
 ### Combine With Gradient Descent
@@ -151,16 +176,26 @@ $$
 \theta^{(t + 1)} - \theta^{(t)} = \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
+In the form of gradient flow dynamic
+
+$$
+\dot{\theta}(t) = \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+$$
+
 Replace $(\theta^{(t + 1)} - \theta^{(t)})$ with $\eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})$
 
 $$
-\bar{f}(\mathcal{X}, \theta^{(t + 1)}) = f(\mathcal{X}, \theta^{(t)}) + \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)})^{\top} \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+\hat{\mathcal{Y}}^{(t + 1)} 
+= f(\mathcal{X}, \theta^{(t + 1)}) 
+\approx f(\mathcal{X}, \theta^{(t)}) + \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)})^{\top} \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
 Then, replace the $\nabla_{\theta} f(\mathcal{X}, \theta^{(t)})$ with $\nabla_{\theta} f(\mathcal{X}, \theta^{(0)})$ since the parameters remain almost unchanged.
 
 $$
-\bar{f}(\mathcal{X}, \theta^{(t + 1)}) = f(\mathcal{X}, \theta^{(t)}) + \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})^{\top} \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+\hat{\mathcal{Y}}^{(t + 1)} 
+= f(\mathcal{X}, \theta^{(t + 1)}) 
+\approx f(\mathcal{X}, \theta^{(t)}) + \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})^{\top} \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
 Let $T_{\mathcal{X} \mathcal{X}}^{(0)} = \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})^{\top} \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})$
@@ -178,7 +213,9 @@ where $T^{(0)}_{\mathcal{X} \mathcal{X}} \in \mathbb{R}^{|\mathcal{D}| \times |\
 In the previous section, we've derive the relation between the prediction of the neural network and the gradient descent at time step $t$. In this section, we'll dive into the point of view of gradient flow. Now, we've known that the linear approximation of the neural network regression.
 
 $$
-\hat{y}^{(t + 1)} = f(x, \theta^{(t + 1)}) \approx \bar{f}(\mathcal{X}, \theta^{(t + 1)}) = f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+\hat{\mathcal{Y}}^{(t + 1)} 
+= f(\mathcal{X}, \theta^{(t + 1)}) 
+\approx f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
 Usually, in regression tasks, we use **Mean Square Error(MSE)** as error function.
@@ -250,6 +287,10 @@ $$
 
 ### Prediction Dynamic
 
+$$
+f(\mathcal{X}, \theta^{(t + 1)}) 
+\approx f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+$$
 
 ### Weight Dynamic
 
@@ -279,4 +320,10 @@ $$
 
 $$
 = \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) (\hat{\mathcal{Y}}^{(t)} - \mathcal{Y})
+$$
+
+---
+
+$$
+\bar{f}(\mathcal{X}, \theta^{(t + 1)}) 
 $$
