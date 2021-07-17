@@ -50,10 +50,52 @@ Combine these 3 points, NTK is a kernel that can kernelize the neural network ar
 
 ## Infinite-Width Neural Network As Gaussian Process
 
+### Define A Neural Network
 
+First, given a training dataset $\mathcal{D}$ and we denote the data point as $d_i = (x, y) \in \mathcal{D} \ \forall i$ where the feature vector $x \in \mathbb{R}^{k}$ and the label $y \in \mathbb{R}$. The set of the feature vectors is $\mathcal{X} = \{x: (x, y) \in \mathcal{D}\}$ and similarly, the set of the label $\mathcal{Y} = \{ y: (x, y) \in \mathcal{D}\}$. 
+
+We represent the element of the neural network $f(x, \theta), \ x \in \mathcal{X}$ as following
+
+$$
+h^{1} = x W^{1} + b^{1}
+\newline
+h^{l+1} = a^l W^{l+1} + b^{l+1}
+\newline
+a^{l+1} = \phi(h^{h+1})
+\newline
+\hat{y} = f(x, \theta) = a^{L+1}
+$$
+
+where $\phi$ is the activation function, $h^{l+1}$ and $a^{l+1}$ are the pre-activation and the post-activation respectively. The parameter $\theta$ includes $W^{l}, b^{l} \in \theta \ \forall l$. $W^{l+1} \in \mathbb{R}^{n_l \times n_{l+1}}$ and $b^{l+1} \in \mathbb{R}^{1 \times n_{l+1}}$ are the weight and the bias respectively. They follow the LeCun and normal distribution respectively.
+
+$$
+W_{i,j}^l = \frac{\sigma_w}{\sqrt{n_l}} w_{i,j}^l, \quad b_{j}^l = \sigma_b \beta_{j}^l 
+\newline
+w_{i,j}^l, \beta_{j}^l \overset{i.i.d}{\sim} \mathcal{N}(0, 1)
+$$
+
+Let $\theta^{l}$ denote as the all parameters of the layer $l$.
+
+$$
+\theta^{l} = vec({W^l, b^l}) \in \mathbb{R}^{(n_{l} + 1) \times n_{l-1}}
+\newline
+\theta = vec(\cup_{l=1}^{L+1} \theta^l)
+$$
+
+We also denote the empirical loss as $\mathcal{L}$, and $l(\hat{y}, y)$ as loss function. 
+
+$$
+l(\hat{y}, y) = l(f(x, \theta), y)
+\newline
+\mathcal{L} = \sum_{(x, y) \in \mathcal{D}} l(f(x, \theta), y)
+$$
 
 ## Infinite-Width Neural Network As A Linear Model
 
+Since the parameters of the infinite-width neural network only change slightly, thus, we can expand the neural network with Taylor expansion.
 
+$$
+f(x, \theta) \approx \bar{f}(x, \theta) = 
+$$
 
 ## Gradient Flow Of MSE As A Linear Regression
