@@ -102,6 +102,8 @@ $$
 \lim_{n_{l} \to \infty} f(x, \theta^{(t)}) = \bar{f}(x, \theta^{(0)}), \quad 1 \leq l \leq L, \quad \forall t
 $$
 
+where $\bar{f}(x, \cdot)$ is the approximation function of neural network $f(x, \cdot)$.
+
 ### Taylor Expansion
 
 Since the parameters of the infinite-width neural network only change slightly, thus, we can expand the neural network with Taylor expansion.
@@ -182,7 +184,7 @@ $$
 Usually, in regression tasks, we use **Mean Square Error(MSE)** as error function.
 
 $$
-l(\hat{y}, y) = l(f(x, \theta), y) = \frac{1}{2} || f(x, \theta) - y||^{2}
+l(\hat{y}, y) = l(f(x, \theta), y) = \frac{1}{2} || f(x, \theta) - y||_{2}^{2}
 $$
 
 Plugin the MSE into the neural network regression
@@ -192,15 +194,89 @@ $$
 $$
 
 $$
-= f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(t)})} \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}} \frac{1}{2} || f(x, \theta^{(t)}) - y||^{2}
+= f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(t)})} \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}} \frac{1}{2} || f(x, \theta^{(t)}) - y||_{2}^{2}
 $$
 
 $$
-= f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(t)})} \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}}  || f(x, \theta^{(t)}) - y||
+= f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)}  \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}}  || f(x, \theta^{(t)}) - y||_{2}
 $$
 
 $$
-= f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(t)})} (\hat{\mathcal{Y}}^{(t)} - \mathcal{Y})
+= f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} (\hat{\mathcal{Y}}^{(t)} - \mathcal{Y})
 $$
 
-###
+### The Dynamic
+
+In the previous post, we've shown that we can continue the discrete step and take the discrete trajectory as a continuous trajectory as if the step is small enough. For instance, Malthus' population growth model says that "the population growth rate is proportional to the total population".
+
+$$
+\left\{
+    \begin{matrix}
+        \frac{d P(t)}{dt} = \lambda P(t), \ \lambda > 0 \\
+        P(t_0) =  P_0
+    \end{matrix}
+\right.
+$$
+
+where the dynamic $P(t)$ is the population at time $t$ and the $P_0$ is the initial population. Usually, we also denote $\frac{d P(t)}{dt} = \dot{P}(t)$.
+
+Now, we can solve the dynamic $P(t)$.
+
+$$
+\int_{t_0}^{t_1} \frac{d P(t)}{dt} \frac{1}{P(t)} dt = \int_{t_0}^{t_1} \lambda dt
+$$
+
+$$
+\int_{t_0}^{t_1} \frac{d \ ln(P(t))}{dt} dt = \lambda (t_1 - t_0)
+$$
+
+$$
+ln(P(t_1)) - ln(P(t_0)) = \lambda (t_1 - t_0)
+$$
+
+$$
+ln(\frac{P(t_1)}{P(t_0)}) = \lambda (t_1 - t_0)
+$$
+
+$$
+P(t_1)) = P(t_0) e^{\lambda (t_1 - t_0)}
+$$
+
+The solution is
+
+$$
+P(t) = P_0 e^{\lambda (t - t_0)}
+$$
+
+### Prediction Dynamic
+
+
+### Weight Dynamic
+
+$$
+\theta^{(t + 1)} - \theta^{(t)} = \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+$$
+
+We can write down the ODE of the dynamic $\dot{\theta}(t)$
+
+$$
+\lim_{\Delta t \to 0} \frac{\theta^{(t + \Delta t)} - \theta^{(t)}}{\Delta t} 
+= \frac{\partial \theta^{(t)}}{\partial t}
+= \dot{\theta}(t)
+= \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+$$
+
+Now, since the ODE $\dot{\theta}(t)$ is linear, it has cloesd form solution
+
+$$
+\dot{\theta}(t)
+= \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}} \frac{1}{2} || f(x, \theta^{(t)}) - y||_{2}^{2}
+$$
+
+$$
+= \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}} || f(x, \theta^{(t)}) - y||_{2}
+$$
+
+$$
+= \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) (\hat{\mathcal{Y}}^{(t)} - \mathcal{Y})
+$$
