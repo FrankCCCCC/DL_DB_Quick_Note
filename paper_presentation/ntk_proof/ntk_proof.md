@@ -98,6 +98,10 @@ $$
 
 As we've shown in the previous post, the parameters of the neural network change more slightly while the width of the network gets larger. In the other words, the neural network **remains almost unchanged during training.** As a result, the parameters $\theta^{(T)}$ of neural network after training $T$ steps will be very close to the initial parameters $\theta^{(0)}$.
 
+$$
+\lim_{n_{l} \to \infty} f(x, \theta^{(t)}) = \bar{f}(x, \theta^{(0)}), \quad 1 \leq l \leq L, \quad \forall t
+$$
+
 ### Taylor Expansion
 
 Since the parameters of the infinite-width neural network only change slightly, thus, we can expand the neural network with Taylor expansion.
@@ -114,10 +118,12 @@ $$
 g(x) \approx \ g(a) + \frac{d g(a)}{dx} (x - a)
 $$
 
-We denote the parameters of the neural network at training step $t$ as $\theta^{(t)}$. Then, expand the neural network $f(x, \theta^{(t)})$ at training step $t$ with data point $x$.
+We denote the parameters of the neural network at training step $t$ as $\theta^{(t)}$. Then, expand the neural network $f(x, \theta^{(t + 1)})$ at training step $t$ with data point $x$.
 
 $$
-\hat{y}^{(t)} = f(x, \theta^{(t)}) \approx \bar{f}(x, \theta^{(t)}) = f(x, \theta^{(0)}) + \nabla_{\theta} f(x, \theta^{(0)})(\theta^{(t)} - \theta^{(0)}), \ \forall t
+\hat{y}^{(t + 1)} = f(x, \theta^{(t + 1)}) 
+\newline
+\approx \bar{f}(x, \theta^{(t + 1)}) = f(x, \theta^{(t)}) + \nabla_{\theta} f(x, \theta^{(t)})(\theta^{(t + 1)} - \theta^{(t)}), \ \forall t
 $$
 
 where $\hat{y}^{(t)}$ is the prediction of the data point $x$ from the network at training step $t$
@@ -125,41 +131,76 @@ where $\hat{y}^{(t)}$ is the prediction of the data point $x$ from the network a
 As for the whole dataset $\mathcal{X}$, the predictions $\hat{\mathcal{Y}}^{(t)}$
 
 $$
-\hat{\mathcal{Y}}^{(t)} = f(\mathcal{X}, \theta^{(t)}) \approx \bar{f}(\mathcal{X}, \theta^{(t)}) = f(\mathcal{X}, \theta^{(0)}) + \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})(\theta^{(t)} - \theta^{(0)}), \ \forall t
+\hat{\mathcal{Y}}^{(t + 1)} = f(\mathcal{X}, \theta^{(t + 1)}) 
+\newline
+\approx \bar{f}(\mathcal{X}, \theta^{(t + 1)}) = f(\mathcal{X}, \theta^{(t)}) + \nabla_{\theta} f(\mathcal{X}, \theta^{(t)})(\theta^{(t + 1)} - \theta^{(t)}), \ \forall t
 $$
 
 ### Combine With Gradient Descent
 
-The gradient descent
+Denote the loss of the training dataset $(\mathcal{X}, \mathcal{Y})$ at the training step $t$ as $\mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y}) = \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}} l(f(x, \theta^{(t)}), y)$. The gradient descent can be represented as the following formula.
 
 $$
-\theta^{(t)} = \theta^{(0)} + \eta \nabla_{\theta} \mathcal{L}(\mathcal{X}, \mathcal{Y}) 
-= \theta^{(0)} + \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \nabla_{f(\mathcal{X}, \theta^{(0)})} \mathcal{L}(\mathcal{X}, \mathcal{Y})
+\theta^{(t+1)} = \theta^{(t)} + \eta \nabla_{\theta} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y}) 
+= \theta^{(t)} + \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
 $$
-\theta^{(t)} - \theta^{(0)} = \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \nabla_{f(\mathcal{X}, \theta^{(0)})} \mathcal{L}(\mathcal{X}, \mathcal{Y})
+\theta^{(t + 1)} - \theta^{(t)} = \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
-Replace
+Replace $(\theta^{(t + 1)} - \theta^{(t)})$ with $\eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})$
 
 $$
-\bar{f}(\mathcal{X}, \theta^{(t)}) = f(\mathcal{X}, \theta^{(0)}) + \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})^{\top} \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \nabla_{f(\mathcal{X}, \theta^{(0)})} \mathcal{L}(\mathcal{X}, \mathcal{Y})
+\bar{f}(\mathcal{X}, \theta^{(t + 1)}) = f(\mathcal{X}, \theta^{(t)}) + \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)})^{\top} \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+$$
+
+Then, replace the $\nabla_{\theta} f(\mathcal{X}, \theta^{(t)})$ with $\nabla_{\theta} f(\mathcal{X}, \theta^{(0)})$ since the parameters remain almost unchanged.
+
+$$
+\bar{f}(\mathcal{X}, \theta^{(t + 1)}) = f(\mathcal{X}, \theta^{(t)}) + \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})^{\top} \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
 Let $T_{\mathcal{X} \mathcal{X}}^{(0)} = \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})^{\top} \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})$
 
 $$
-= f(\mathcal{X}, \theta^{(0)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \mathcal{L}(\mathcal{X}, \mathcal{Y})
+= f(\mathcal{X}, \theta^{(0)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(0)})} \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
 where $T^{(0)}_{\mathcal{X} \mathcal{X}} \in \mathbb{R}^{|\mathcal{D}| \times |\mathcal{D}|}$ is the **Neural Tangent Kernel(NTK)**
 
 ## Gradient Flow Of MSE As A Linear Regression
 
-In the previous section, we've derive the relation between the prediction of the neural network and the gradient descent at time step $t$. In this section, we'll dive into the point of view of gradient flow. For now, we've known that 
+### Mean Square Error(MSE)
+
+In the previous section, we've derive the relation between the prediction of the neural network and the gradient descent at time step $t$. In this section, we'll dive into the point of view of gradient flow. Now, we've known that the linear approximation of the neural network regression.
 
 $$
-\bar{f}(\mathcal{X}, \theta^{(t)}) = f(\mathcal{X}, \theta^{(0)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \mathcal{L}(\mathcal{X}, \mathcal{Y})
+\hat{y}^{(t + 1)} = f(x, \theta^{(t + 1)}) \approx \bar{f}(\mathcal{X}, \theta^{(t + 1)}) = f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
+Usually, in regression tasks, we use **Mean Square Error(MSE)** as error function.
+
+$$
+l(\hat{y}, y) = l(f(x, \theta), y) = \frac{1}{2} || f(x, \theta) - y||^{2}
+$$
+
+Plugin the MSE into the neural network regression
+
+$$
+\bar{f}(\mathcal{X}, \theta^{(t + 1)}) = f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+$$
+
+$$
+= f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(t)})} \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}} \frac{1}{2} || f(x, \theta^{(t)}) - y||^{2}
+$$
+
+$$
+= f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(t)})} \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}}  || f(x, \theta^{(t)}) - y||
+$$
+
+$$
+= f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(t)})} (\hat{\mathcal{Y}}^{(t)} - \mathcal{Y})
+$$
+
+###
