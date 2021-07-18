@@ -125,7 +125,8 @@ We denote the parameters of the neural network at training step $t$ as $\theta^{
 $$
 \hat{y}^{(t)} = f(x, \theta^{(t)}) 
 \newline
-\approx  f(x, \theta^{(0)}) + \nabla_{\theta} f(x, \theta^{(0)})(\theta^{(t)} - \theta^{(0)}), \ \forall t
+\approx  f_{lin}(x, \theta^{(t)})
+= f(x, \theta^{(0)}) + \nabla_{\theta} f(x, \theta^{(0)})(\theta^{(t)} - \theta^{(0)}), \ \forall t
 $$
 
 where $\hat{y}^{(t)}$ is the prediction of the data point $x$ from the network at training step $t$
@@ -136,72 +137,93 @@ $$
 \hat{\mathcal{Y}}^{(t)} 
 = f(\mathcal{X}, \theta^{(t)}) 
 \newline
-\approx f(\mathcal{X}, \theta^{(0)}) + \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})(\theta^{(t)} - \theta^{(0)}), \ \forall t
+\approx  f_{lin}(x, \theta^{(t)})
+= f(\mathcal{X}, \theta^{(0)}) + \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})(\theta^{(t)} - \theta^{(0)}), \ \forall t
 $$
 
 $$
-f(\mathcal{X}, \theta^{(t)}) -  f(\mathcal{X}, \theta^{(0)})
-\approx \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})(\theta^{(t)} - \theta^{(0)})
+f_{lin}(\mathcal{X}, \theta^{(t)}) - f(\mathcal{X}, \theta^{(0)})
+= \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})(\theta^{(t)} - \theta^{(0)})
 $$
 
-With Lipschiz continue, we can guarantee that $\theta^{(t)} - \theta^{(0)} \geq \theta^{(t)} - \theta^{(t - 1)}$ and $f(\mathcal{X}, \theta^{(t)}) -  f(\mathcal{X}, \theta^{(0)}) \geq f(\mathcal{X}, \theta^{(t)}) -  f(\mathcal{X}, \theta^{(t - 1)})$, and we can also write down the formula.
+Because $f_{lin}(\mathcal{X}, \theta^{(0)}) = f(\mathcal{X}, \theta^{(0)}) + \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})(\theta^{(0)} - \theta^{(0)}) = f(\mathcal{X}, \theta^{(0)})$, replace $f(\mathcal{X}, \theta^{(0)})$ with $f_{lin}(\mathcal{X}, \theta^{(0)})$
 
 $$
-\lim_{\Delta t \to 0} \frac{f(\mathcal{X}, \theta^{(t + \Delta t)}) -  f(\mathcal{X}, \theta^{(t)})}{\Delta t}
-\approx \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \lim_{\Delta t \to 0} \frac{(\theta^{(t + \Delta t)} - \theta^{(t)})}{\Delta t}
+f_{lin}(\mathcal{X}, \theta^{(t)}) -  f_{lin}(\mathcal{X}, \theta^{(0)})
+= \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(0)})(\theta^{(t)} - \theta^{(0)})
+$$
+
+**@ Need Hessian Proof**
+
+With Lipschitz continuity, we can guarantee that $\theta^{(t + \Delta t)} - \theta^{(0)} \geq \theta^{(t + \Delta t)} - \theta^{(t)}$ and $f(\mathcal{X}, \theta^{(t + \Delta t)}) -  f(\mathcal{X}, \theta^{(0)}) \geq f(\mathcal{X}, \theta^{(t + \Delta t)}) -  f(\mathcal{X}, \theta^{(t)})$, and we can also write down the formula.
+
+$$
+\lim_{\Delta t \to 0} \frac{f_{lin}(\mathcal{X}, \theta^{(t + \Delta t)}) -  f_{lin}(\mathcal{X}, \theta^{(t)})}{\Delta t}
+= \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(0)}) \lim_{\Delta t \to 0} \frac{(\theta^{(t + \Delta t)} - \theta^{(t)})}{\Delta t}
 $$
 
 $$
-\frac{\partial f(\mathcal{X}, \theta^{(t)})}{\partial t}
-\approx \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \frac{\partial \theta^{(t)}}{\partial t}
+\frac{\partial f_{lin}(\mathcal{X}, \theta^{(t)})}{\partial t}
+= \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(0)}) \frac{\partial \theta^{(t)}}{\partial t}
 $$
 
 In the form of dynamic
 
 $$
-\dot{f}(\mathcal{X}, \theta^{(t)})
-\approx \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \dot{\theta}(t)
+\dot{f}_{lin}(\mathcal{X}, \theta^{(t)})
+= \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(0)}) \dot{\theta}(t)
 $$
 
 ### Combine With Gradient Descent
 
-Denote the loss of the training dataset $(\mathcal{X}, \mathcal{Y})$ at the training step $t$ as $\mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y}) = \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}} l(f(x, \theta^{(t)}), y)$. The gradient descent can be represented as the following formula.
+Denote the loss of linearized neural network $f_{lin}(\cdot, \cdot)$ on the training dataset $(\mathcal{X}, \mathcal{Y})$ at the training step $t$ as $\mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y}) = \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}} l(f_{lin}(x, \theta^{(t)}), y)$. The gradient descent can be represented as the following formula.
 
 $$
-\theta^{(t+1)} = \theta^{(t)} + \eta \nabla_{\theta} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y}) 
-= \theta^{(t)} + \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+\theta^{(t+1)} = \theta^{(t)} + \eta \nabla_{\theta} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y}) 
+= \theta^{(t)} + \eta \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)}) \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
 $$
-\theta^{(t + 1)} - \theta^{(t)} = \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+\theta^{(t + 1)} - \theta^{(t)} = \eta \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)}) \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
 In the form of gradient flow dynamic
 
 $$
-\dot{\theta}(t) = \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+\dot{\theta}(t) = \eta \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)}) \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
-Replace $(\theta^{(t + 1)} - \theta^{(t)})$ with $\eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})$
+Replace $\dot{\theta}(t)$ with $\eta \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)}) \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})$
+
+$$ 
+\dot{f}_{lin}(\mathcal{X}, \theta^{(t)})
+= \eta \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)})^{\top} \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)}) \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
+$$
+
+Then, we can derive $\nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)})$.
 
 $$
-\hat{\mathcal{Y}}^{(t + 1)} 
-= f(\mathcal{X}, \theta^{(t + 1)}) 
-\approx f(\mathcal{X}, \theta^{(t)}) + \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)})^{\top} \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+\nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)}) 
+\newline
+= \nabla_{\theta}(f(\mathcal{X}, \theta^{(0)}) + \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})(\theta^{(t)} - \theta^{(0)})) 
+\newline
+= \nabla_{\theta}(f(\mathcal{X}, \theta^{(0)}) + \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})\theta^{(t)} - \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})\theta^{(0)}) 
+\newline
+=\nabla_{\theta} f(\mathcal{X}, \theta^{(0)})
 $$
 
-Then, replace the $\nabla_{\theta} f(\mathcal{X}, \theta^{(t)})$ with $\nabla_{\theta} f(\mathcal{X}, \theta^{(0)})$ since the parameters remain almost unchanged.
+Finally, because of the linearity, we can replace $\nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)})$ with $\nabla_{\theta} f(\mathcal{X}, \theta^{(0)})$
 
 $$
-\hat{\mathcal{Y}}^{(t + 1)} 
-= f(\mathcal{X}, \theta^{(t + 1)}) 
-\approx f(\mathcal{X}, \theta^{(t)}) + \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})^{\top} \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+\dot{f}_{lin}(\mathcal{X}, \theta^{(t)})
+= \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})^{\top} \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
 Let $T_{\mathcal{X} \mathcal{X}}^{(0)} = \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})^{\top} \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})$
 
 $$
-= f(\mathcal{X}, \theta^{(0)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(0)})} \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+\dot{f}_{lin}(\mathcal{X}, \theta^{(t)})
+= \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
 where $T^{(0)}_{\mathcal{X} \mathcal{X}} \in \mathbb{R}^{|\mathcal{D}| \times |\mathcal{D}|}$ is the **Neural Tangent Kernel(NTK)**
@@ -213,33 +235,33 @@ where $T^{(0)}_{\mathcal{X} \mathcal{X}} \in \mathbb{R}^{|\mathcal{D}| \times |\
 In the previous section, we've derive the relation between the prediction of the neural network and the gradient descent at time step $t$. In this section, we'll dive into the point of view of gradient flow. Now, we've known that the linear approximation of the neural network regression.
 
 $$
-\hat{\mathcal{Y}}^{(t + 1)} 
-= f(\mathcal{X}, \theta^{(t + 1)}) 
-\approx f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+\dot{f}_{lin}(\mathcal{X}, \theta^{(t)})
+= \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
 Usually, in regression tasks, we use **Mean Square Error(MSE)** as error function.
 
 $$
-l(\hat{y}, y) = l(f(x, \theta), y) = \frac{1}{2} || f(x, \theta) - y||_{2}^{2}
+l(f_{lin}(x, \theta), y) = \frac{1}{2} || f_{lin}(x, \theta) - y||_{2}^{2}
 $$
 
 Plugin the MSE into the neural network regression
 
 $$
-\bar{f}(\mathcal{X}, \theta^{(t + 1)}) = f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+\dot{f}_{lin}(\mathcal{X}, \theta^{(t)})
+= \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
 $$
-= f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(t)})} \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}} \frac{1}{2} || f(x, \theta^{(t)}) - y||_{2}^{2}
+= \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}} \frac{1}{2} || f_{lin}(x, \theta^{(t)}) - y||_{2}^{2}
 $$
 
 $$
-= f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)}  \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}}  || f(x, \theta^{(t)}) - y||_{2}
+= \eta T_{\mathcal{X} \mathcal{X}}^{(0)}  \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}}  || f_{lin}(x, \theta^{(t)}) - y||_{2}
 $$
 
 $$
-= f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} (\hat{\mathcal{Y}}^{(t)} - \mathcal{Y})
+= \eta T_{\mathcal{X} \mathcal{X}}^{(0)} (f_{lin}(\mathcal{X}, \theta^{(t)}) - \mathcal{Y})
 $$
 
 ### The Dynamic
@@ -288,8 +310,35 @@ $$
 ### Prediction Dynamic
 
 $$
-f(\mathcal{X}, \theta^{(t + 1)}) 
-\approx f(\mathcal{X}, \theta^{(t)}) + \eta T_{\mathcal{X} \mathcal{X}}^{(0)} \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
+\dot{f}_{lin}(\mathcal{X}, \theta^{(t)}) 
+= \eta T_{\mathcal{X} \mathcal{X}}^{(0)} (f_{lin}(\mathcal{X}, \theta^{(t)}) - \mathcal{Y})
+$$
+
+**@ Need Proof**
+
+Thus, we can write down the ODE.
+
+$$
+\dot{f}_{lin}(\mathcal{X}, \theta^{(t)}) 
+= \eta T_{\mathcal{X} \mathcal{X}}^{(0)} f_{lin}(\mathcal{X}, \theta^{(t)})
+$$
+
+It's trivial that since the term's derivation is itself, thus the solution of the term must contain natural exponential $e$. Usually, we guess the solution in the form of $Ae^{\lambda t}$
+
+$$
+f_{lin}(\mathcal{X}, \theta^{(t)}) = Ae^{\eta T_{\mathcal{X} \mathcal{X}}^{(0)} t}
+$$
+
+Consider the training time step $t = 0$.
+
+$$
+f_{lin}(\mathcal{X}, \theta^{(0)}) = Ae^{\eta T_{\mathcal{X} \mathcal{X}}^{(0)} 0} = A
+$$
+
+Plug into the $Ae^{\eta T_{\mathcal{X} \mathcal{X}}^{(0)} t}$
+
+$$
+f_{lin}(\mathcal{X}, \theta^{(t)}) = f_{lin}(\mathcal{X}, \theta^{(0)}) e^{\eta T_{\mathcal{X} \mathcal{X}}^{(0)} t}
 $$
 
 ### Weight Dynamic
