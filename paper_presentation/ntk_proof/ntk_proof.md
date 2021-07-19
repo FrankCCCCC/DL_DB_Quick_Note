@@ -52,32 +52,47 @@ Combine these 3 points, NTK is a kernel that can kernelize the neural network ar
 
 ### Define A Neural Network
 
-First, given a training dataset $\mathcal{D}$ including $N = |\mathcal{D}|$ data points. We denote the data point as $d_i = (x, y) \in \mathcal{D} \ \forall i$ where the feature vector $x \in \mathbb{R}^{k}$ and the label $y \in \mathbb{R}$. The set of the feature vectors is $\mathcal{X} = \{x: (x, y) \in \mathcal{D}\}$ and similarly, the set of the label $\mathcal{Y} = \{ y: (x, y) \in \mathcal{D}\}$. 
+First, given a training dataset $\mathcal{D}$ including $N = |\mathcal{D}|$ data points. We denote the data point as $d_i = (x, y) \in \mathcal{D} \ \forall i$ where the feature vector $x \in \mathbb{R}^{k \times 1}$ and the label $y \in \mathbb{R}$. The set of the feature vectors is $\mathcal{X} = \{x: (x, y) \in \mathcal{D}\}$ and similarly, the set of the label $\mathcal{Y} = \{ y: (x, y) \in \mathcal{D}\}$. 
 
 We represent the element of the neural network $f(x, \theta), \ x \in \mathcal{X}$ as following
 
 $$
-h^{1} = x W^{1} + b^{1}
+h^{1} = W^{1} x + b^{1}
 \newline
-h^{l+1} = a^l W^{l+1} + b^{l+1}
+h^{l+1} = W^{l+1} a^l + b^{l+1} =  W^{l+1} \phi(h^l) + b^{l+1}
 \newline
-a^{l+1} = \phi(h^{h+1})
-\newline
-\hat{y} = f(x, \theta) = a^{L+1}
+\hat{y} = f(x, \theta) = h^{L}
 $$
 
-where $\phi$ is the activation function, $h^{l+1}$ and $a^{l+1}$ are the pre-activation and the post-activation respectively. The parameter $\theta$ includes $W^{l}, b^{l} \in \theta \ \forall l$. $W^{l+1} \in \mathbb{R}^{n_l \times n_{l+1}}$ and $b^{l+1} \in \mathbb{R}^{1 \times n_{l+1}}$ are the weight and the bias respectively. They follow the LeCun and normal distribution respectively.
+where $\phi$ is the activation function, $h^{l+1} \in \mathbb{R}^{n_{l+1} \times 1}$ and $a^{l+1} \in \mathbb{R}^{n_{l+1} \times 1}$ are the pre-activation and the post-activation respectively. The parameter $\theta$ includes $W^{l}, b^{l} \in \theta \ \forall l$. $W^{l+1} \in \mathbb{R}^{n_{l+1} \times n_{l}}$ and $b^{l+1} \in \mathbb{R}^{n_{l+1} \times 1}$ are the weight and the bias respectively. They follow the LeCun and normal distribution respectively.
 
 $$
-W_{i,j}^l = \frac{\sigma_w}{\sqrt{n_l}} w_{i,j}^l, \quad b_{j}^l = \sigma_b \beta_{j}^l 
+W_{i,j}^{l+1} = \frac{\sigma_w}{\sqrt{n_{l+1}}} w_{i,j}^{l+1}, \quad b_{i}^{l+1} = \sigma_b \beta_{i}^{l+1} 
 \newline
-w_{i,j}^l, \beta_{j}^l \overset{i.i.d}{\sim} \mathcal{N}(0, 1)
+w_{i,j}^{l+1}, \beta_{i}^{l+1} \overset{i.i.d}{\sim} \mathcal{N}(0, 1)
+\newline
+\forall l, i, j \quad 1 \leq l \leq L, \quad 1 \leq i \leq n_{l+1}, \quad 1 \leq j \leq n_{l}
 $$
 
-Let $\theta^{l}$ denote as the all parameters of the layer $l$.
+where $W_{i,j}^{l+1} \in \mathbb{R}$ is the entry of the matrix of $l+1$-th layer at the i-th row and j-th column. $b_{i}^{l} \in \mathbb{R}$ is the i-th entry of the bias vector.
+
+Combine them.
 
 $$
-\theta^{l} = vec({W^l, b^l}) \in \mathbb{R}^{(n_{l} + 1) \times n_{l-1}}
+h_{i}^{l+1} 
+= W_{i}^{l+1} a^{l} + b_{i}^{l+1}
+\newline
+= \sum_{j=1}^{n_{l+1}} W_{i, j}^{l+1} a_{j}^{l} + b_{i}^{l+1}
+\newline
+= \frac{\sigma_w}{\sqrt{n_{l+1}}} \sum_{j=1}^{n_{l+1}} w_{i, j}^{l+1} \phi(h_{j}^{l}) + \sigma_b \beta_{i}^{l+1}
+$$
+
+where $W_{i}^{l+1} \in \mathbb{R}^{1 \times n_{l}}$, $b_{i}^{l+1} \in \mathbb{R}$ and  are the i-th row of the matrix $W^{l+1}$ and i-th entry of the bias vector. The post-activation vector is $a^{l} \in \mathbb{R}^{n_{l} \times 1}$ and the j-th entry of the vector is $a_{j}^l \in \mathbb{R}$.
+
+Let $\theta^{l+1}$ denote as the all parameters of the layer $l+1$.
+
+$$
+\theta^{l} = vec({W^{l+1}, b^{l+1}}) \in \mathbb{R}^{n_{l+1} \times (n_{l} + 1)}
 \newline
 \theta = vec(\cup_{l=1}^{L+1} \theta^l)
 $$
@@ -86,9 +101,102 @@ We also denote the empirical loss of all training dataset as $\mathcal{L}(\mathc
 
 $$
 l(\hat{y}, y) = l(f(x, \theta), y)
-\newline
+$$
+
+$$
 \mathcal{L}_{f(\cdot, )}(\mathcal{X}, \mathcal{Y}) = \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}} l(f(x, \theta), y)
 $$
+
+### The Mean Of The Layers
+
+$$
+E[h_{i}^{l}(x)] = E[\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} a_{j}^{l-1} + \sigma_b \beta_{i}^{1}]
+$$
+
+$$
+= \frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} E[w_{i, j}^{1}] a_{j}^{l-1} + \sigma_b E[\beta_{i}^{1}] = 0
+$$
+
+### The Covariance Of The First Layer
+
+Consider the same entry.
+
+$$
+k^{1}(x, x') = Cov[h_{i}^{1}(x), h_{i}^{1}(x')]
+$$
+
+$$
+= E[(h_{i}^{1}(x) - E[h_{i}^{1}(x)]) (h_{i}^{1}(x') - E[h_{i}^{1}(x')])]
+$$
+
+$$
+= E[h_{i}^{1}(x) h_{i}^{1}(x')] - E[h_{i}^{1}(x)] E[h_{i}^{1}(x')]
+$$
+
+$$
+= E[(\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} x_{j} + \sigma_b \beta_{i}^{1}) (\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} x_{j}' + \sigma_b \beta_{i}^{1})]
+$$
+
+$$
+= E[\frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}} w_{i, j}^{1} x_{j}) (\sum_{k=1}^{n_{1}} w_{i, k}^{1} x_{k}')) 
++ (\sigma_b \beta_{i}^{1}) (\sigma_b \beta_{i}^{1}) 
++ \frac{\sigma_w}{\sqrt{n_{1}}} (\sigma_b \beta_{i}^{1} \sum_{j=1}^{n_{1}} w_{i, j}^{1} x_{j}) 
++ \frac{\sigma_w}{\sqrt{n_{1}}} (\sigma_b \beta_{i}^{1} \sum_{j=1}^{n_{1}} w_{i, j}^{1} x_{j}')]
+$$
+
+$$
+= \frac{\sigma_w^2}{n_{1}} (E[\sum_{j=k}^{n_{1}} w_{i, j}^{1} x_{j} w_{i, k}^{1} x_{k}'] + E[\sum_{j \neq k}^{n_{1}} w_{i, j}^{1} x_{j} w_{i, k}^{1} x_{k}'])
++ \sigma_b^2 E[(\beta_{i}^{1})^2]
++ \frac{\sigma_w \sigma_b}{\sqrt{n_{1}}} ( E[\beta_{i}^{1}] E[\sum_{j=1}^{n_{1}} w_{i, j}^{1} x_{j}]) 
++ \frac{\sigma_w \sigma_b}{\sqrt{n_{1}}} ( E[\beta_{i}^{1}] E[\sum_{j=1}^{n_{1}} w_{i, j}^{1} x_{j}']) 
+$$
+
+Since $E[\beta_{i}^{1}] = E[w_{i, j}^{l}] = 0$, thus we can derive the following formula.
+
+$$
+= \frac{\sigma_w^2}{n_{1}} (\sum_{j=k}^{n_{1}} E[w_{i, j}^{1} w_{i, k}^{1}] x_{j} x_{k}' + \sum_{j \neq k}^{n_{1}} E[w_{i, j}^{1} w_{i, k}^{1}] x_{j} x_{k}')
++ \sigma_b^2 (Var[\beta_{i}^{1}] + E[\beta_{i}^{1}]^{2})
+$$
+
+Since $w_{i, j}^{1}, w_{i, k}^{1} \overset{i.i.d}{\sim} \mathcal{N}(0, 1)$, thus, $E[w_{i, j}^{1} w_{i, k}^{1}] = E[w_{i, j}^{1}] E[w_{i, k}^{1}] = 0$. Also, $Var[\beta_{i}^{1}] = 1$.
+
+$$
+= \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}} (Var[w_{i, j}^{1}] + E[w_{i, j}^{1}]^{2}) x_{j} x_{k}')
++ \sigma_b^2
+$$
+
+$$
+= \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}}  x_{j} x_{k}')
++ \sigma_b^2
+$$
+
+$$
+= \frac{\sigma_w^2}{n_{1}} x^{\top} x'
++ \sigma_b^2
+$$
+
+Consider the different entries.
+
+$$
+k_{i \neq j}^{1}(x, x') = Cov[h_{i}^{1}(x), h_{j}^{1}(x')], \ i \neq j
+$$
+
+$$
+= E[(\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{k=1}^{n_{1}} w_{i, k}^{1} x_{k} + \sigma_b \beta_{i}^{1}) (\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{k'=1}^{n_{1}} w_{j, k'}^{1} x_{k'}' + \sigma_b \beta_{j}^{1})]
+$$
+
+$$
+= \frac{\sigma_w^2}{n_{1}} (E[\sum_{k=1}^{n_{1}} \sum_{k'=1}^{n_{1}} w_{i, k}^{1} x_{k} w_{j, k'}^{1} x_{k'}'])
++ \sigma_b^2 E[\beta_{i}^{1} \beta_{j}^{1}]
++ \frac{\sigma_w \sigma_b}{\sqrt{n_{1}}} ( E[\beta_{i}^{1}] E[\sum_{k=1}^{n_{1}} w_{i, k}^{1} x_{k}]) 
++ \frac{\sigma_w \sigma_b}{\sqrt{n_{1}}} ( E[\beta_{j}^{1}] E[\sum_{k'=1}^{n_{1}} w_{j, k'}^{1} x_{k'}']) 
+$$
+
+$$
+= \frac{\sigma_w^2}{n_{1}} (\sum_{k=1}^{n_{1}} \sum_{k'=1}^{n_{1}} E[w_{i, k}^{1}] E[w_{j, k'}^{1}] x_{k} x_{k'}']) = 0
+$$
+
+### The Covariance Of The Deeper Layers
 
 ## Infinite-Width Neural Network As A Linear Model
 
