@@ -119,7 +119,7 @@ $$
 
 ### The Covariance Of The First Layer
 
-Consider the same entry.
+**Consider the same entries.**
 
 $$
 k^{1}(x, x') = Cov[h_{i}^{1}(x), h_{i}^{1}(x')]
@@ -175,7 +175,7 @@ $$
 + \sigma_b^2
 $$
 
-Consider the different entries.
+**Consider the different entries.**
 
 $$
 k_{i \neq j}^{1}(x, x') = Cov[h_{i}^{1}(x), h_{j}^{1}(x')], \ i \neq j
@@ -197,6 +197,86 @@ $$
 $$
 
 ### The Covariance Of The Deeper Layers
+
+**Consider the different entries.**
+
+$$
+k_{i \neq j}^{l}(x, x') = Cov[h_{i}^{l}(x), h_{j}^{l}(x')], \ i \neq j
+$$
+
+$$
+= E[(\frac{\sigma_w}{\sqrt{n_{l}}} \sum_{k=1}^{n_{l}} w_{i, k}^{l} \phi(h_{k}^{l}(x)) + \sigma_b \beta_{i}^{l}) (\frac{\sigma_w}{\sqrt{n_{l}}} \sum_{k'=1}^{n_{l}} w_{j, k'}^{l}  \phi(h_{k'}^{l}(x')) + \sigma_b \beta_{j}^{l})]
+$$
+
+$$
+= \frac{\sigma_w^2}{n_{l}} (E[\sum_{k=1}^{n_{l}} \sum_{k'=1}^{n_{l}} w_{i, k}^{l} \phi(h_{k}^{l}(x)) w_{j, k'}^{l} \phi(h_{k'}^{l}(x'))])
++ \sigma_b^2 E[\beta_{i}^{l} \beta_{j}^{l}]
++ \frac{\sigma_w \sigma_b}{\sqrt{n_{l}}} ( E[\beta_{i}^{l}] E[\sum_{k=1}^{n_{l}} w_{i, k}^{l} \phi(h_{k}^{l}(x))]) 
++ \frac{\sigma_w \sigma_b}{\sqrt{n_{l}}} ( E[\beta_{j}^{l}] E[\sum_{k'=1}^{n_{l}} w_{j, k'}^{l} \phi(h_{k'}^{l}(x'))]) 
+$$
+
+$$
+= \frac{\sigma_w^2}{n_{l}} (\sum_{k=1}^{n_{l}} \sum_{k'=1}^{n_{l}} E[w_{i, k}^{l}] E[w_{j, k'}^{l}] \phi(h_{k}^{l}(x)) \phi(h_{k'}^{l}(x'))]) = 0
+$$
+
+**Consider the same entries.**
+
+$$
+k^{l}(x, x') = Cov[h_{i}^{l}(x), h_{i}^{l}(x')]
+$$
+
+$$
+= E[(h_{i}^{l}(x) - E[h_{i}^{l}(x)]) (h_{i}^{l}(x') - E[h_{i}^{l}(x')])]
+$$
+
+$$
+= E[h_{i}^{l}(x) h_{i}^{l}(x')] - E[h_{i}^{l}(x)] E[h_{i}^{l}(x')]
+$$
+
+$$
+= E[(\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} \phi(h_{j}^{l-1}(x)) + \sigma_b \beta_{i}^{1}) (\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} \phi(h_{j}^{l-1}(x')) + \sigma_b \beta_{i}^{1})]
+$$
+
+$$
+= \frac{\sigma_w^2}{n_{l}} (E[\sum_{j=k}^{n_{l}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x)) w_{i, k}^{l} \phi(h_{j}^{l-1}(x'))] 
++ E[\sum_{j \neq k}^{n_{l}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x)) w_{i, k}^{l} \phi(h_{j}^{l-1}(x'))])
++ \sigma_b^2 E[(\beta_{i}^{l})^2]
++ \frac{\sigma_w \sigma_b}{\sqrt{n_{l}}} ( E[\beta_{i}^{l}] E[\sum_{j=1}^{n_{l}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x))]) 
++ \frac{\sigma_w \sigma_b}{\sqrt{n_{l}}} ( E[\beta_{i}^{l}] E[\sum_{j=1}^{n_{l}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x'))]) 
+$$
+
+$$
+= \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}}  \phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x')))
++ \sigma_b^2
+$$
+
+Recall **central limit theorem(CLT)**, support we have random variables $X_1, X_2, ..., X_n$ are i.i.d, the expectation and the variance of the random variables are $E[X_i] = \mu$ and $Var[X_i] = \sigma^2$. Denote the sum of the random variables is $\bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i$. The normalized $\bar{X}$ is $\zeta = \frac{\bar{X} - \mu}{\frac{\sigma}{\sqrt{n}}}$.
+
+$$
+\lim_{n \to \infty} P_{\zeta}(\zeta \leq z) = P_{Z}(Z \leq z)
+$$
+
+where random variable $Z \sim \mathcal{N}(0, 1)$ and $z \in \mathbb{R}$ is a scalar. The functions $P_{\zeta}$ and $P_{Z}$ are C.D.F of the random variables $\zeta$ and $Z$ respectively.
+
+**@ Need Proof: Connection between CLT and infinite width**
+
+When $n_l \to \infty$, apply central limit theorem(CLT)
+
+$$
+\lim_{n_{l} \to \infty} \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}}  \phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x')))
++ \sigma_b^2 
+\newline
+= \sigma_w^2 E_{h_{j}^{l-1}(x), h_{j}^{l-1}(x') \sim \mathcal{N}(0, K^{l-1})}[\phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x')] + \sigma_b^2 
+\newline
+$$
+
+$$
+K^{l-1} = 
+\begin{bmatrix}
+    k^{l-1}(x, x) & k^{l-1}(x, x') \\
+    k^{l-1}(x', x) & k^{l-1}(x', x')
+\end{bmatrix}
+$$
 
 ## Infinite-Width Neural Network As A Linear Model
 
@@ -308,7 +388,7 @@ $$
 = \eta \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)})^{\top} \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)}) \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
-Then, we can derive $\nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)})$.
+Then, we can expand $\nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)})$ with Taylor expansion.
 
 $$
 \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)}) 
@@ -478,6 +558,10 @@ $$
 $$
 = \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) (\hat{\mathcal{Y}}^{(t)} - \mathcal{Y})
 $$
+
+## Gradient Kernel
+
+
 
 ---
 
