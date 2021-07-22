@@ -640,43 +640,92 @@ $$
 = \nabla_{\theta^{\leq L}} h^{L}(x)^{\top} \nabla_{\theta^{\leq L}} h^{L}(x')
 $$
 
-Since $\nabla_{\theta^{\leq L}} h^{L}(x)^{\top} = [\nabla_{\theta_{(1)}^{\leq L}} h_{1}^{L}(x), \ \nabla_{\theta_{(2)}^{L}} h_{2}^{L}(x), ... \ , \nabla_{\theta_{(n_L)}^{L}} h_{n_L}^{L}(x)] \in \mathbb{R}^{1 \times n_L}$, the inner product of the vector can be written as a form of summation. Note that, for convenience, $\theta_{(i)}^{\leq l}$ represents the i-th entry of the $l$-th layer and the all parameters before the layer $l$, that is $\theta_{(i)}^{\leq l} = \theta_{i}^{l} \cup \theta^{< l}$. Denote the $i$-th entry of $l$-th layer as $\theta_{i}^{l}$ and $\theta^{< l}$ as the parameters of 1st, 2nd, ..., $l-1$-th layers. 
+Since $\nabla_{\theta^{L}} h^{L}(x)^{\top} = [\nabla_{\theta^{L}} h^{L}(x), \ \nabla_{\theta^{\leq L-1}} h^{L}(x)]$,
 
 $$
-= \sum_{i=1}^{n_L} \nabla_{\theta_{(i)}^{L}} h_{i}^{L}(x)^{\top} \nabla_{\theta_{(i)}^{L}} h_{i}^{L}(x')
+= \nabla_{\theta^{L}} h^{L}(x)^{\top} \nabla_{\theta^{L}} h^{L}(x') 
++ \nabla_{\theta^{\leq L-1}} h^{L}(x)^{\top} \nabla_{\theta^{\leq L-1}} h^{L}(x')
+$$
+
+Since $\nabla_{\theta^{L}} h^{L}(x)^{\top} = [\nabla_{\theta_{1}^{L}} h_{1}^{L}(x), \ \nabla_{\theta_{2}^{L}} h_{2}^{L}(x), ... \ , \nabla_{\theta_{n_L}^{L}} h_{n_L}^{L}(x)] \in \mathbb{R}^{1 \times n_L}$, the inner product of the vector can be written as a form of summation. Note that $\theta_{i}^{\leq l}$ represents the $i$-th entry of the $l$-th layer.
+
+$$
+= \sum_{i=1}^{n_L} \nabla_{\theta_{i}^{L}} h_{i}^{L}(x)^{\top} \nabla_{\theta_{i}^{L}} h_{i}^{L}(x')
++ (\nabla_{\theta^{\leq L-1}} h^{L-1}(x) \nabla_{h^{L-1}(x)} h^{L}(x))^{\top} (\nabla_{\theta^{\leq L-1}} h^{L-1}(x') \nabla_{h^{L-1}(x')} h^{L}(x'))
+$$
+
+$$
+= \sum_{i=1}^{n_L} \nabla_{\theta_{i}^{L}} h_{i}^{L}(x)^{\top} \nabla_{\theta_{i}^{L}} h_{i}^{L}(x')
++ \nabla_{h^{L-1}(x)} h^{L}(x)^{\top} \nabla_{\theta^{\leq L-1}} h^{L-1}(x)^{\top} \nabla_{\theta^{\leq L-1}} h^{L-1}(x') \nabla_{h^{L-1}(x')} h^{L}(x')
+$$
+
+$$
+= \sum_{i=1}^{n_L} \nabla_{\theta_{i}^{L}} h_{i}^{L}(x)^{\top} \nabla_{\theta_{i}^{L}} h_{i}^{L}(x')
++ \nabla_{h^{L-1}(x)} h^{L}(x)^{\top} \dot{k}^{L-1}(x, x') \nabla_{h^{L-1}(x')} h^{L}(x')
 $$
 
 ---
 
+### The First Term
+
+Derive the inner product of gradient at $i$-th entry.
 
 $$
-\nabla_{\theta_{(i)}^{l}} h_{i}^{l}(x)^{\top} \nabla_{\theta_{(i)}^{l}} h_{i}^{l}(x') 
-$$
-
-$$
-= \nabla_{\theta_{(i)}^{l}} (\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} \phi(h_{j}^{l-1}(x)) + \sigma_b \beta_{i}^{l})^{\top}
-\nabla_{\theta_{(i)}^{l}} (\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} \phi(h_{j}^{l-1}(x')) + \sigma_b \beta_{i}^{l})
-$$
-
-$$
-= [\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} \nabla_{\theta^{\leq l-1}} \phi(h_{j}^{l-1}(x)), \ \sigma_b]
-[\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} \nabla_{\theta^{\leq l-1}} \phi(h_{j}^{l-1}(x')), \ \sigma_b]^{\top}
+\nabla_{\theta_{i}^{l}} h_{i}^{l}(x)^{\top} \nabla_{\theta_{i}^{l}} h_{i}^{l}(x') 
 $$
 
 $$
-= \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}} \nabla_{\theta^{\leq l-1}} \phi(h_{j}^{l-1}(x)) \nabla_{\theta^{\leq l-1}} \phi(h_{j}^{l-1}(x'))) + \sigma_b^2
+= \nabla_{\theta_{i}^{l}} (\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} \phi(h_{j}^{l-1}(x)) + \sigma_b \beta_{i}^{l})^{\top}
+\nabla_{\theta_{i}^{l}} (\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} \phi(h_{j}^{l-1}(x')) + \sigma_b \beta_{i}^{l})
+$$
+
+$$
+= [\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} \phi(h_{j}^{l-1}(x)), \ \sigma_b]
+[\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} \phi(h_{j}^{l-1}(x')), \ \sigma_b]^{\top}
+$$
+
+$$
+= \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}} \phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x'))) + \sigma_b^2
 $$
 
 By central limit theorem(CLT), if $n_l \to \infty$, it will converge.
 
 $$
-= \sigma_w^2 E_{h_{j}^{l-1}(x), h_{j}^{l-1}(x') \sim \mathcal{N}(0, \dot{K}_{xx'}^{l-1})} [\nabla_{\theta^{\leq l-1}} \phi(h_{j}^{l-1}(x)) \nabla_{\theta^{\leq l-1}} \phi(h_{j}^{l-1}(x'))] + \sigma_b^2
+= \sigma_w^2 E_{h_{j}^{l-1}(x), h_{j}^{l-1}(x') \sim \mathcal{N}(0, K_{xx'}^{l-1})}[\phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x'))] + \sigma_b^2
 $$
 
 $$
-\dot{K}_{xx'}^{l-1} = 
+= \sigma_w^2 E_{u, v \sim \mathcal{N}(0, K_{xx'}^{l-1})}[\phi(u) \phi(v)] + \sigma_b^2
+$$
+
+$$
+K_{xx'}^{l-1} = 
 \begin{bmatrix}
-    \dot{k}^{l-1}(x, x) & \dot{k}^{l-1}(x, x') \\
-    \dot{k}^{l-1}(x', x) & \dot{k}^{l-1}(x', x')
+    k^{l-1}(x, x) & k^{l-1}(x, x') \\
+    k^{l-1}(x', x) & k^{l-1}(x', x')
 \end{bmatrix}
+$$
+
+### The Second Term
+
+$$
+\nabla_{h^{l-1}(x)} h^{l}(x)^{\top} \dot{k}^{l-1}(x, x') \nabla_{h^{l-1}(x')} h^{l}(x')
+$$
+
+$$
+= \dot{k}^{l-1}(x, x') \nabla_{h^{l-1}(x)} h^{l}(x)^{\top} \nabla_{h^{l-1}(x')} h^{l}(x')
+$$
+
+$$
+= \dot{k}^{l-1}(x, x')
+\nabla_{h^{l-1}(x)} (\frac{\sigma_w}{\sqrt{n_{l}}} \sum_{j=1}^{n_{l}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x)) + \sigma_b \beta_{i}^{l})^{\top}
+\nabla_{h^{l-1}(x')} (\frac{\sigma_w}{\sqrt{n_{l}}} \sum_{j=1}^{n_{l}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x')) + \sigma_b \beta_{i}^{l})
+$$
+
+$$
+= \dot{k}^{l-1}(x, x') \frac{\sigma_w^2}{n_{l}} (\sum_{j=1}^{n_{l}} w_{i, j}^{l} \nabla_{h^{l-1}(x)} \phi(h_{j}^{l-1}(x)) w_{i, j}^{l} \nabla_{h^{l-1}(x')} \phi(h_{j}^{l-1}(x')))
+$$
+
+$$
+= \dot{k}^{l-1}(x, x') \frac{\sigma_w^2}{n_{l}} (\sum_{j=1}^{n_{l}} w_{i, j}^{l} \nabla_{h^{l-1}(x)} \phi(h_{j}^{l-1}(x)) w_{i, j}^{l} \nabla_{h^{l-1}(x')} \phi(h_{j}^{l-1}(x')))
 $$
