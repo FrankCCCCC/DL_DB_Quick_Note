@@ -64,7 +64,7 @@ h^{l+1} = W^{l+1} a^l + b^{l+1} =  W^{l+1} \phi(h^l) + b^{l+1}
 \hat{y} = f(x, \theta) = h^{L}
 $$
 
-where $\phi$ is the activation function, $h^{l+1} \in \mathbb{R}^{n_{l+1} \times 1}$ and $a^{l+1} \in \mathbb{R}^{n_{l+1} \times 1}$ are the pre-activation and the post-activation respectively. The parameter $\theta$ includes $W^{l}, b^{l} \in \theta \ \forall l$. $W^{l+1} \in \mathbb{R}^{n_{l+1} \times n_{l}}$ and $b^{l+1} \in \mathbb{R}^{n_{l+1} \times 1}$ are the weight and the bias respectively. They follow the LeCun and normal distribution respectively.
+where $\phi$ is the activation function, $h^{l+1} \in \mathbb{R}^{n_{l+1} \times 1}$ and $a^{l+1} \in \mathbb{R}^{n_{l+1} \times 1}$ are the pre-activation and the post-activation respectively. The parameter $\theta$ includes $W^{l}, b^{l} \in \theta \ \forall l$. $W^{l+1} \in \mathbb{R}^{n_{l+1} \times n_{l}}$ and $b^{l+1} \in \mathbb{R}^{n_{l+1} \times 1}$ are the weight and the bias respectively. They follow the LeCun and normal distribution respectively. Also, we denote the $n_{l+1}$ as the network width of $l+1$-th layer and $n_0 = k$ is the size of the feature vector. Finally, we denote $\hat{y} \in \mathbb{R}$ is the prediction of the network based on input $x$. For convenience, we also denote $\hat{\mathcal{Y}} = f(\mathcal{X}, \theta) \in \mathbb{R}^{N}$.
 
 $$
 W_{i,j}^{l+1} = \frac{\sigma_w}{\sqrt{n_{l+1}}} w_{i,j}^{l+1}, \quad b_{i}^{l+1} = \sigma_b \beta_{i}^{l+1} 
@@ -87,15 +87,17 @@ h_{i}^{l+1}
 = \frac{\sigma_w}{\sqrt{n_{l+1}}} \sum_{j=1}^{n_{l+1}} w_{i, j}^{l+1} \phi(h_{j}^{l}) + \sigma_b \beta_{i}^{l+1}
 $$
 
-where $W_{i}^{l+1} \in \mathbb{R}^{1 \times n_{l}}$, $b_{i}^{l+1} \in \mathbb{R}$ and  are the i-th row of the matrix $W^{l+1}$ and i-th entry of the bias vector. The post-activation vector is $a^{l} \in \mathbb{R}^{n_{l} \times 1}$ and the j-th entry of the vector is $a_{j}^l \in \mathbb{R}$.
+where $W_{i}^{l+1} \in \mathbb{R}^{1 \times n_{l}}$ is the i-th row of the matrix $W^{l+1}$. The post-activation vector is $a^{l} \in \mathbb{R}^{n_{l} \times 1}$ and the j-th entry of the vector is $a_{j}^l \in \mathbb{R}$.
 
 Let $\theta^{l+1}$ denote as the all parameters of the layer $l+1$.
 
 $$
-\theta^{l} = vec({W^{l+1}, b^{l+1}}) \in \mathbb{R}^{n_{l+1} \times (n_{l} + 1)}
+\theta^{l + 1} = vec({W^{l+1}, b^{l+1}}) \in \mathbb{R}^{n_{l+1} \times (n_{l} + 1)}
 \newline
-\theta = vec(\cup_{l=1}^{L+1} \theta^l)
+\theta = vec(\cup_{l=1}^{L} \theta^l) \in \mathbb{R}^{S \times 1}
 $$
+
+where $S =\sum_{l=1}^{L} n_{l}(n_{l-1} + 1)$ is the number of all parameters.
 
 We also denote the empirical loss of all training dataset as $\mathcal{L}(\mathcal{X}, \mathcal{Y})$, and $l(\hat{y}, y)$ as loss function. 
 
@@ -104,7 +106,7 @@ l(\hat{y}, y) = l(f(x, \theta), y)
 $$
 
 $$
-\mathcal{L}_{f(\cdot, )}(\mathcal{X}, \mathcal{Y}) = \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}} l(f(x, \theta), y)
+\mathcal{L}_{f(\cdot, )}(\mathcal{X}, \mathcal{Y}) = \sum_{x \in \mathcal{X}, \ y \in \mathcal{Y}} l(f(x, \theta), y) \in \mathbb{R}
 $$
 
 ### The Mean Of The Layers
@@ -219,6 +221,8 @@ $$
 = \frac{\sigma_w^2}{n_{l}} (\sum_{k=1}^{n_{l}} \sum_{k'=1}^{n_{l}} E[w_{i, k}^{l}] E[w_{j, k'}^{l}] \phi(h_{k}^{l}(x)) \phi(h_{k'}^{l}(x'))]) = 0
 $$
 
+We've got the covariance of different entries $k_{i \neq j}^{l}(x, x')$ of sample $x$ and $x'$ is 0. Thus, we can conclude that different entries are independent.
+
 **Consider the same entries.**
 
 $$
@@ -263,20 +267,58 @@ where random variable $Z \sim \mathcal{N}(0, 1)$ and $z \in \mathbb{R}$ is a sca
 When $n_l \to \infty$, apply central limit theorem(CLT)
 
 $$
-\lim_{n_{l} \to \infty} \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}}  \phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x')))
+k^{l}(x, x') = \lim_{n_{l} \to \infty} \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}}  \phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x')))
 + \sigma_b^2 
 \newline
-= \sigma_w^2 E_{h_{j}^{l-1}(x), h_{j}^{l-1}(x') \sim \mathcal{N}(0, K^{l-1})}[\phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x')] + \sigma_b^2 
+= \sigma_w^2 E_{h_{j}^{l-1}(x), h_{j}^{l-1}(x') \sim \mathcal{N}(0, K_{x, x'}^{l-1})}[\phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x'))] + \sigma_b^2 
 \newline
+= \sigma_w^2 E_{u, v \sim \mathcal{N}(0, K_{}^{l-1})}[\phi(u) \phi(v)] + \sigma_b^2 
 $$
 
 $$
-K^{l-1} = 
+K_{xx'}^{l-1} = 
 \begin{bmatrix}
     k^{l-1}(x, x) & k^{l-1}(x, x') \\
     k^{l-1}(x', x) & k^{l-1}(x', x')
 \end{bmatrix}
 $$
+
+$$
+k^1(x, x') = \frac{\sigma_w^2}{n_{1}} x^{\top} x' + \sigma_b^2
+$$
+
+Define an operator $\Gamma$, for a positive semi-definite matrix $\Sigma \in \mathbb{R}^{2 \times 2}$
+
+$$
+\Gamma(\Sigma) = \sigma_w^2 E_{u, v \sim \mathcal{N}(0, \Sigma)}[\phi(u) \phi(v)] + \sigma_b^2 
+$$
+
+With $\Gamma$, the NNGP kernel $\Sigma_{\mathcal{X}}^{L}$.
+
+$$
+\Sigma_{\mathcal{X}}^{L} = 
+\begin{bmatrix}
+    k^{L}(x_1, x_1) & k^{L}(x_1, x_2) &... \ k^{L}(x_1, x_N) \\
+    k^{L}(x_2, x_1) & k^{L}(x_2, x_2) &... \ k^{L}(x_2, x_N) \\
+    . & . & .\\
+    . & . & .\\
+    . & . & .\\
+    k^{L}(x_N, x_1) & k^{L}(x_N, x_2) &... \ k^{L}(x_N, x_N) \\
+\end{bmatrix}
+$$
+
+$$
+k^{L}(x_1, x_2) = \Gamma(K_{x_1 x_2}^{L}) = \sigma_w^2 E_{u, v \sim \mathcal{N}(0, K_{}^{L-1})}[\phi(u) \phi(v)] + \sigma_b^2 
+$$
+
+$$
+K_{x_1 x_2}^{l} = 
+\begin{bmatrix}
+    k^{l}(x_1, x_1) & k^{l}(x_1, x_2) \\
+    k^{l}(x_2, x_1) & k^{l}(x_2, x_2)
+\end{bmatrix}
+$$
+
 
 ## Infinite-Width Neural Network As A Linear Model
 
@@ -284,10 +326,10 @@ $$
 
 ![](img/w_changing_training.png)
 
-As we've shown in the previous post, the parameters of the neural network change more slightly while the width of the network gets larger. In the other words, the neural network **remains almost unchanged during training.** As a result, the parameters $\theta^{(T)}$ of neural network after training $T$ steps will be very close to the initial parameters $\theta^{(0)}$.
+As we've shown in the previous post, the parameters of the neural network change more slightly while the width of the network gets larger. In the other words, the neural network **remains almost unchanged during training.** As a result, the parameters $\theta^{(T)} \in \mathbb{R}^{}$ of neural network after training $T$ steps will be very close to the initial parameters $\theta^{(0)}$.
 
 $$
-\lim_{n_{l} \to \infty} f(x, \theta^{(t)}) = \bar{f}(x, \theta^{(0)}), \quad 1 \leq l \leq L, \quad \forall t
+\lim_{n_{l} \to \infty} f(x, \theta^{(t)}) = f(x, \theta^{(0)}), \quad 1 \leq l \leq L, \quad \forall t
 $$
 
 where $\bar{f}(x, \cdot)$ is the approximation function of neural network $f(x, \cdot)$.
@@ -317,7 +359,7 @@ $$
 = f(x, \theta^{(0)}) + \nabla_{\theta} f(x, \theta^{(0)})(\theta^{(t)} - \theta^{(0)}), \ \forall t
 $$
 
-where $\hat{y}^{(t)}$ is the prediction of the data point $x$ from the network at training step $t$
+where $\hat{y}^{(t)}$ is the prediction of the data point $x$ from the network at training step $t$. The divergence $\nabla_{\theta} f(x, \theta^{(0)}) \in \mathbb{R}^{N \times S}$ is a **Jacobian matrix**.
 
 As for the whole dataset $\mathcal{X}$, the predictions $\hat{\mathcal{Y}}^{(t)}$
 
@@ -340,6 +382,8 @@ $$
 f_{lin}(\mathcal{X}, \theta^{(t)}) -  f_{lin}(\mathcal{X}, \theta^{(0)})
 = \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(0)})(\theta^{(t)} - \theta^{(0)})
 $$
+
+where $\nabla_{\theta} f_{lin}(x, \theta^{(0)}) \in \mathbb{R}^{N \times S}$ is also a **Jacobian matrix**.
 
 **@ Need Hessian Proof**
 
@@ -368,24 +412,26 @@ Denote the loss of linearized neural network $f_{lin}(\cdot, \cdot)$ on the trai
 
 $$
 \theta^{(t+1)} = \theta^{(t)} + \eta \nabla_{\theta} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y}) 
-= \theta^{(t)} + \eta \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)}) \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
+= \theta^{(t)} + \eta \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)})^{\top} \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
 $$
-\theta^{(t + 1)} - \theta^{(t)} = \eta \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)}) \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
+\theta^{(t + 1)} - \theta^{(t)} = \eta \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)})^{\top} \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
+
+where $\nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y}) \in \mathbb{R}^{N \times 1}$
 
 In the form of gradient flow dynamic
 
 $$
-\dot{\theta}(t) = \eta \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)}) \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
+\dot{\theta}(t) = \eta \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)})^{\top} \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
-Replace $\dot{\theta}(t)$ with $\eta \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)}) \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})$
+Replace $\dot{\theta}(t)$ with $\eta \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)})^{\top} \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})$
 
 $$ 
 \dot{f}_{lin}(\mathcal{X}, \theta^{(t)})
-= \eta \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)})^{\top} \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)}) \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
+= \eta \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)}) \nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)})^{\top} \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
 Then, we can expand $\nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)})$ with Taylor expansion.
@@ -400,14 +446,14 @@ $$
 =\nabla_{\theta} f(\mathcal{X}, \theta^{(0)})
 $$
 
-Finally, because of the linearity, we can replace $\nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)})$ with $\nabla_{\theta} f(\mathcal{X}, \theta^{(0)})$
+Finally, we can replace $\nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)})$ with $\nabla_{\theta} f(\mathcal{X}, \theta^{(0)})$, since they are identical due to the linearity.
 
 $$
 \dot{f}_{lin}(\mathcal{X}, \theta^{(t)})
-= \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})^{\top} \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
+= \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \nabla_{f_{lin}(\mathcal{X}, \theta^{(t)})}^{\top} \mathcal{L}_{lin}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
-Let $T_{\mathcal{X} \mathcal{X}}^{(0)} = \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})^{\top} \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})$
+Let $T_{\mathcal{X} \mathcal{X}}^{(0)} = \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})^{\top}$
 
 $$
 \dot{f}_{lin}(\mathcal{X}, \theta^{(t)})
@@ -559,12 +605,65 @@ $$
 = \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) (\hat{\mathcal{Y}}^{(t)} - \mathcal{Y})
 $$
 
+## Prediction of Trained NN
+
 ## Gradient Kernel
 
+Recll the NTK $T_{\mathcal{X} \mathcal{X}}^{(0)} = \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})^{\top} \in \mathbb{R}^{N \times N}$
 
+$$
+T_{\mathcal{X} \mathcal{X}}^{(0)} 
+= \nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})^{\top}
+$$
+
+Since $\nabla_{\theta} f(\mathcal{X}, \theta^{(0)}) \in \mathbb{R}^{N \times S}$ is a Jacobian matrix, the matrix multiplication can be written as the following matrix.
+
+$$
+= 
+\begin{bmatrix}
+    \dot{k}^{L}(x_1, x_1) & \dot{k}^{L}(x_1, x_2) & ... & \dot{k}^{L}(x_1, x_N) \\
+    \dot{k}^{L}(x_2, x_1) & \dot{k}^{L}(x_2, x_2) & ... & \dot{k}^{L}(x_2, x_N) \\
+    . & . & & . \\
+    . & . & & . \\
+    . & . & & . \\
+    \dot{k}^{L}(x_N, x_1) & \dot{k}^{L}(x_N, x_2) & ... & \dot{k}^{L}(x_N, x_N)
+\end{bmatrix}
+$$
+
+where the function $\dot{k}^{L}(x, x') = \nabla_{\theta} f(x, \theta^{(0)})^{\top} \nabla_{\theta} f(x', \theta^{(0)})$ is the kernel function of NTK.
+
+$$
+\dot{k}^{L}(x, x') = \nabla_{\theta} f(x, \theta^{(0)})^{\top} \nabla_{\theta} f(x', \theta^{(0)})
+$$
+
+$$
+= \nabla_{\theta^{\leq L}} h^{L}(x)^{\top} \nabla_{\theta^{\leq L}} h^{L}(x')
+$$
+
+Since $\nabla_{\theta^{\leq L}} h^{L}(x)^{\top} = [\nabla_{\theta_{1}^{\leq L}} h_{1}^{L}(x), \ \nabla_{\theta_{2}^{L}} h_{2}^{L}(x), ... \ , \nabla_{\theta_{n_L}^{L}} h_{n_L}^{L}(x)] \in \mathbb{R}^{1 \times n_L}$, the inner product of the vector can be written as a form of summation.
+
+$$
+= \sum_{i=1}^{n_L} \nabla_{\theta_{i}^{L}} h_{i}^{L}(x)^{\top} \nabla_{\theta_{i}^{L}} h_{i}^{L}(x')
+$$
 
 ---
 
+
 $$
-\bar{f}(\mathcal{X}, \theta^{(t + 1)}) 
+\nabla_{\theta^{l}} h_{i}^{l}(x)^{\top} \nabla_{\theta^{l}} h_{i}^{l}(x') 
+$$
+
+$$
+= \nabla_{\theta^{l}} (\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} \phi(h_{j}^{l-1}(x)) + \sigma_b \beta_{i}^{l})
+\nabla_{\theta^{l}} (\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} \phi(h_{j}^{l-1}(x')) + \sigma_b \beta_{i}^{l})
+$$
+
+$$
+= \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}} \phi(h_{j}^{l-1}(x)) + \sigma_b)
+(\sum_{j=1}^{n_{1}} \phi(h_{j}^{l-1}(x')) + \sigma_b)
+$$
+
+$$
+= \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}} \phi(h_{j}^{l-1}(x)) + \sigma_b)
+(\sum_{j=1}^{n_{1}} \phi(h_{j}^{l-1}(x')) + \sigma_b)
 $$
