@@ -640,30 +640,43 @@ $$
 = \nabla_{\theta^{\leq L}} h^{L}(x)^{\top} \nabla_{\theta^{\leq L}} h^{L}(x')
 $$
 
-Since $\nabla_{\theta^{\leq L}} h^{L}(x)^{\top} = [\nabla_{\theta_{1}^{\leq L}} h_{1}^{L}(x), \ \nabla_{\theta_{2}^{L}} h_{2}^{L}(x), ... \ , \nabla_{\theta_{n_L}^{L}} h_{n_L}^{L}(x)] \in \mathbb{R}^{1 \times n_L}$, the inner product of the vector can be written as a form of summation.
+Since $\nabla_{\theta^{\leq L}} h^{L}(x)^{\top} = [\nabla_{\theta_{(1)}^{\leq L}} h_{1}^{L}(x), \ \nabla_{\theta_{(2)}^{L}} h_{2}^{L}(x), ... \ , \nabla_{\theta_{(n_L)}^{L}} h_{n_L}^{L}(x)] \in \mathbb{R}^{1 \times n_L}$, the inner product of the vector can be written as a form of summation. Note that, for convenience, $\theta_{(i)}^{\leq l}$ represents the i-th entry of the $l$-th layer and the all parameters before the layer $l$, that is $\theta_{(i)}^{\leq l} = \theta_{i}^{l} \cup \theta^{< l}$. Denote the $i$-th entry of $l$-th layer as $\theta_{i}^{l}$ and $\theta^{< l}$ as the parameters of 1st, 2nd, ..., $l-1$-th layers. 
 
 $$
-= \sum_{i=1}^{n_L} \nabla_{\theta_{i}^{L}} h_{i}^{L}(x)^{\top} \nabla_{\theta_{i}^{L}} h_{i}^{L}(x')
+= \sum_{i=1}^{n_L} \nabla_{\theta_{(i)}^{L}} h_{i}^{L}(x)^{\top} \nabla_{\theta_{(i)}^{L}} h_{i}^{L}(x')
 $$
 
 ---
 
 
 $$
-\nabla_{\theta^{l}} h_{i}^{l}(x)^{\top} \nabla_{\theta^{l}} h_{i}^{l}(x') 
+\nabla_{\theta_{(i)}^{l}} h_{i}^{l}(x)^{\top} \nabla_{\theta_{(i)}^{l}} h_{i}^{l}(x') 
 $$
 
 $$
-= \nabla_{\theta^{l}} (\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} \phi(h_{j}^{l-1}(x)) + \sigma_b \beta_{i}^{l})
-\nabla_{\theta^{l}} (\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} \phi(h_{j}^{l-1}(x')) + \sigma_b \beta_{i}^{l})
+= \nabla_{\theta_{(i)}^{l}} (\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} \phi(h_{j}^{l-1}(x)) + \sigma_b \beta_{i}^{l})^{\top}
+\nabla_{\theta_{(i)}^{l}} (\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} \phi(h_{j}^{l-1}(x')) + \sigma_b \beta_{i}^{l})
 $$
 
 $$
-= \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}} \phi(h_{j}^{l-1}(x)) + \sigma_b)
-(\sum_{j=1}^{n_{1}} \phi(h_{j}^{l-1}(x')) + \sigma_b)
+= [\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} \nabla_{\theta^{\leq l-1}} \phi(h_{j}^{l-1}(x)), \ \sigma_b]
+[\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} \nabla_{\theta^{\leq l-1}} \phi(h_{j}^{l-1}(x')), \ \sigma_b]^{\top}
 $$
 
 $$
-= \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}} \phi(h_{j}^{l-1}(x)) + \sigma_b)
-(\sum_{j=1}^{n_{1}} \phi(h_{j}^{l-1}(x')) + \sigma_b)
+= \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}} \nabla_{\theta^{\leq l-1}} \phi(h_{j}^{l-1}(x)) \nabla_{\theta^{\leq l-1}} \phi(h_{j}^{l-1}(x'))) + \sigma_b^2
+$$
+
+By central limit theorem(CLT), if $n_l \to \infty$, it will converge.
+
+$$
+= \sigma_w^2 E_{h_{j}^{l-1}(x), h_{j}^{l-1}(x') \sim \mathcal{N}(0, \dot{K}_{xx'}^{l-1})} [\nabla_{\theta^{\leq l-1}} \phi(h_{j}^{l-1}(x)) \nabla_{\theta^{\leq l-1}} \phi(h_{j}^{l-1}(x'))] + \sigma_b^2
+$$
+
+$$
+\dot{K}_{xx'}^{l-1} = 
+\begin{bmatrix}
+    \dot{k}^{l-1}(x, x) & \dot{k}^{l-1}(x, x') \\
+    \dot{k}^{l-1}(x', x) & \dot{k}^{l-1}(x', x')
+\end{bmatrix}
 $$
