@@ -308,7 +308,7 @@ $$
 $$
 
 $$
-k^{L}(x_1, x_2) = \Gamma(K_{x_1 x_2}^{L}) = \sigma_w^2 E_{u, v \sim \mathcal{N}(0, K_{}^{L-1})}[\phi(u) \phi(v)] + \sigma_b^2 
+k^{L}(x_1, x_2) = \Gamma(K_{x_1 x_2}^{L-1}) = \sigma_w^2 E_{u, v \sim \mathcal{N}(0, K_{}^{L-1})}[\phi(u) \phi(v)] + \sigma_b^2 
 $$
 
 $$
@@ -664,6 +664,10 @@ $$
 + \nabla_{h^{L-1}(x)} h^{L}(x)^{\top} \dot{k}^{L-1}(x, x') \nabla_{h^{L-1}(x')} h^{L}(x')
 $$
 
+$$
+= n_L \Gamma(K_{xx'}^{L-1}) + \dot{k}^{L-1}(x, x') \dot{\Gamma}(K_{xx'}^{L-1})
+$$
+
 ---
 
 ### The First Term
@@ -699,6 +703,10 @@ $$
 $$
 
 $$
+= \Gamma(K_{xx'}^{l-1})
+$$
+
+$$
 K_{xx'}^{l-1} = 
 \begin{bmatrix}
     k^{l-1}(x, x) & k^{l-1}(x, x') \\
@@ -722,10 +730,42 @@ $$
 \nabla_{h^{l-1}(x')} (\frac{\sigma_w}{\sqrt{n_{l}}} \sum_{j=1}^{n_{l}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x')) + \sigma_b \beta_{i}^{l})
 $$
 
+Due to $\nabla_{h^{l-1}(x)} h^{l}(x)^{\top} = [\nabla_{h_{1}^{l-1}(x)} h^{l}(x), \nabla_{h_{2}^{l-1}(x)} h^{l}(x), ..., \nabla_{h_{n_l}^{l-1}(x)} h^{l}(x)] \in \mathbb{R}^{1 \times n_l}$, $\nabla_{h^{l-1}(x)} h^{l}(x)^{\top} \nabla_{h^{l-1}(x')} h^{l}(x')$ is an inner product.
+
 $$
 = \dot{k}^{l-1}(x, x') \frac{\sigma_w^2}{n_{l}} (\sum_{j=1}^{n_{l}} w_{i, j}^{l} \nabla_{h^{l-1}(x)} \phi(h_{j}^{l-1}(x)) w_{i, j}^{l} \nabla_{h^{l-1}(x')} \phi(h_{j}^{l-1}(x')))
 $$
 
 $$
 = \dot{k}^{l-1}(x, x') \frac{\sigma_w^2}{n_{l}} (\sum_{j=1}^{n_{l}} w_{i, j}^{l} \nabla_{h^{l-1}(x)} \phi(h_{j}^{l-1}(x)) w_{i, j}^{l} \nabla_{h^{l-1}(x')} \phi(h_{j}^{l-1}(x')))
+$$
+
+With central limit theorem(CLT), we can take an expectation over the equation. Since $w_{i, j}^{l}$ is independent to $h_{j}^{l-1}(x)$ and $h_{j}^{l-1}(x')$, we can separate the expectation $E[w_{i, j}^{l} w_{i, j}^{l}]$.
+
+$$
+= \dot{k}^{l-1}(x, x') \sigma_w^2 
+E_{w_{i, j}^{l} \sim \mathcal{N}(0, 1)}[w_{i, j}^{l} w_{i, j}^{l}] 
+E_{h_{j}^{l-1}(x), h_{j}^{l-1}(x') \sim \mathcal{N}(0, \dot{K}_{xx'}^{l-1})}[\nabla_{h^{l-1}(x)} \phi(h_{j}^{l-1}(x))  \nabla_{h^{l-1}(x')} \phi(h_{j}^{l-1}(x'))]
+$$
+
+$$
+= \dot{k}^{l-1}(x, x') \sigma_w^2 
+E_{h_{j}^{l-1}(x), h_{j}^{l-1}(x') \sim \mathcal{N}(0, \dot{K}_{xx'}^{l-1})}[\nabla_{h^{l-1}(x)} \phi(h_{j}^{l-1}(x))  \nabla_{h^{l-1}(x')} \phi(h_{j}^{l-1}(x'))]
+$$
+
+$$
+= \dot{k}^{l-1}(x, x') \sigma_w^2 
+E_{u,v \sim \mathcal{N}(0, K_{xx'}^{l-1})}[\nabla_{u} \phi(u)  \nabla_{v} \phi(v)]
+$$
+
+$$
+= \dot{k}^{l-1}(x, x') \dot{\Gamma}(K_{xx'}^{l-1})
+$$
+
+$$
+K_{xx'}^{l-1} = 
+\begin{bmatrix}
+    k^{l-1}(x, x) & k^{l-1}(x, x') \\
+    k^{l-1}(x', x) & k^{l-1}(x', x')
+\end{bmatrix}
 $$

@@ -8,17 +8,17 @@ paginate: true
 class: lead
 ---
 
-# Student-T Process Instead of Gaussian Process for Empirical Kernel
+# Student-T Process Instead of Gaussian Process for NTK
 
 資工21 周聖諺
 
 ---
 
-## Infinite-Width Neural Network & SGD
+## Motivation
 
-According to the paper **"Deep learning versus kernel learning: an empirical study of loss landscape geometry and the time evolution of the Neural Tangent Kernel"**(presented by 袁哥), infinite-width NTK gives a poor prediction on the loss of the finite-width neural network during training and, chaotic sensitivity of basin fate to **SGD choices** early in training.
+According to the paper **"Deep learning versus kernel learning: an empirical study of loss landscape geometry and the time evolution of the Neural Tangent Kernel"**(presented by 袁哥), infinite-width NTK gives a **poor prediction** on the loss of the **finite-width neural network during training** and, **final basin** chosen by a child highly **sensitive to SGD noise** and the NTK **involves very rapidly**.
 
-### Why not just add some random noise to the NTK?
+### Why not just add some random noise to the NTK, to simulate the unstable NTK?
 
 With **inverse Wishart distribution** $\Sigma \sim \mathcal{IW}(\nu, K)$ where the degree of freedom $\nu > 2$ and $K$ is positive definite, we can generate a random matrix $\Sigma$ with expectation $\mathbb{E}[\Sigma] = \frac{K}{\nu - 2}$. 
 
@@ -110,14 +110,14 @@ $\hat{K}_{22} = K_{22} - K_{21} K_{11}^{-1} K_{12}$
 
 ![width:600px](./stp-ntk/stp-ntk.png)
 
-We've already known, if $\nu = \infty$, the student-T process will converge to Gaussian process. In the above figure, we compare the result of **fitting a $\sin()$ function with $\mathcal{TP}$ and $\mathcal{GP}$ respectively**. The **left** part of above figure shows the **training/testing progress of fitting**. The right part is the value of $\nu$ during training progress.
+We've already known, if $\nu = \infty$, the student-T process will converge to Gaussian process. In the above figure, we compare the result of **fitting a $\sin()$ function with $\mathcal{TP}$(blue) and $\mathcal{GP}$(yellow) respectively**. The **left** part of above figure shows the **training/testing progress of fitting**. The right part is the value of $\nu$ during training progress.
 
-As the **blue line** shows above(left part), as the **training progress goes**, **the $\nu$ gets lower**. It shows that we can **control $\nu$ of $\mathcal{TP}$ to achieve a better fitting**.
+As the **blue line** shows above(left part), as the **training progress goes**, **the $\nu$ gets lower**. It shows that we can **control $\nu$ of $\mathcal{TP}$ to achieve a better fitting(closer to black line, real NN training)**.
 
 ---
 
 ## Conclusion
 
 - During **training progress**, the **$\nu$ gets lower**.
-- By controlling the value of $\nu$ of $\mathcal{TP}$ we can get a **better prediction on the training loss** rather than $\mathcal{GP}$ 
+- By controlling the value of $\nu$ of $\mathcal{TP}$, we can get a **more accurate prediction on the training loss** rather than $\mathcal{GP}$ 
 - If the NTK follows the $\mathcal{TP}$,  the **bigger training dataset**, the **larger degree of freedom of the posterior**.
