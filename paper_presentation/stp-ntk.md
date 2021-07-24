@@ -46,10 +46,14 @@ $$
 y \sim \mathcal{TP}(\phi, K, \nu)
 $$
 
-The hyperparameter $\nu$ is called **degrees of freedom**, it can control the covariance of the output $cov(y) = \frac{\nu}{\nu - 2} K$. Thus, the relation between $\mathcal{TP}$ and $\mathcal{GP}$ is 
+The hyperparameter $\nu$ is called **degrees of freedom**, it can control the covariance of the output $cov(y) = \frac{\nu}{\nu - 2} K$. Thus, when $\nu \to \infty$, $\mathcal{TP}$ will converge to $\mathcal{GP}$ in distribution.
 
 $$
-\mathcal{GP}(\phi, K) = \lim_{\nu \to \infty} \mathcal{TP}(\phi, K, \nu)
+P(X) = \lim_{\nu \to \infty} P(Y)
+$$
+
+$$
+X \sim \mathcal{GP}(\phi, K), \quad Y \sim \mathcal{TP}(\phi, K, \nu), \quad 
 $$
 
 ---
