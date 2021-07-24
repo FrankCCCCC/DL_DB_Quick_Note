@@ -1,5 +1,8 @@
-NTK Proof
-=========
+# Neural Tangent Kernel Derivation
+
+By SY Chou, 2021, Jul
+
+---
 
 $$
 f(x, \theta) = \sigma(wx + b) \quad  w, b \in \theta
@@ -155,11 +158,11 @@ $$
 For $i$-th entry of the $l$-th layer, with data point $x$, we can derive the expectation of the entry.
 
 $$
-E[h_{i}^{l}(x)] = E[\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} a_{j}^{l-1} + \sigma_b \beta_{i}^{1}]
+E[h_{i}^{l}(x)] = E[\frac{\sigma_w}{\sqrt{n_{l-1}}} \sum_{j=1}^{n_{l-1}} w_{i, j}^{l} a_{j}^{l-1} + \sigma_b \beta_{i}^{l}]
 $$
 
 $$
-= \frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} E[w_{i, j}^{1}] a_{j}^{l-1} + \sigma_b E[\beta_{i}^{1}] = 0
+= \frac{\sigma_w}{\sqrt{n_{l-1}}} \sum_{j=1}^{n_{l-1}} E[w_{i, j}^{l}] a_{j}^{l-1} + \sigma_b E[\beta_{i}^{l}] = 0
 $$
 
 Thus, for any entry on the any layer, the expectation is $E[h_{i}^{l}(x)] = 0 , \forall i, l$.
@@ -183,78 +186,78 @@ $$
 $$
 
 $$
-= E[(\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} x_{j} + \sigma_b \beta_{i}^{1}) (\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} x_{j}' + \sigma_b \beta_{i}^{1})]
+= E[(\frac{\sigma_w}{\sqrt{n_{0}}} \sum_{j=1}^{n_{0}} w_{i, j}^{1} x_{j} + \sigma_b \beta_{i}^{1}) 
+(\frac{\sigma_w}{\sqrt{n_{0}}} \sum_{j=1}^{n_{0}} w_{i, j}^{1} x_{j}' + \sigma_b \beta_{i}^{1})]
 $$
 
 $$
-= E[\frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}} w_{i, j}^{1} x_{j}) (\sum_{k=1}^{n_{1}} w_{i, k}^{1} x_{k}')) 
+= E[\frac{\sigma_w^2}{n_{0}} (\sum_{j=1}^{n_{0}} w_{i, j}^{1} x_{j}) (\sum_{k=1}^{n_{0}} w_{i, k}^{1} x_{k}')) 
 + (\sigma_b \beta_{i}^{1}) (\sigma_b \beta_{i}^{1}) 
-+ \frac{\sigma_w}{\sqrt{n_{1}}} (\sigma_b \beta_{i}^{1} \sum_{j=1}^{n_{1}} w_{i, j}^{1} x_{j}) 
-+ \frac{\sigma_w}{\sqrt{n_{1}}} (\sigma_b \beta_{i}^{1} \sum_{j=1}^{n_{1}} w_{i, j}^{1} x_{j}')]
++ \frac{\sigma_w}{\sqrt{n_{0}}} (\sigma_b \beta_{i}^{1} \sum_{j=1}^{n_{0}} w_{i, j}^{1} x_{j}) 
++ \frac{\sigma_w}{\sqrt{n_{0}}} (\sigma_b \beta_{i}^{1} \sum_{j=1}^{n_{0}} w_{i, j}^{1} x_{j}')]
 $$
 
 $$
-= \frac{\sigma_w^2}{n_{1}} (E[\sum_{j=k}^{n_{1}} w_{i, j}^{1} x_{j} w_{i, k}^{1} x_{k}'] + E[\sum_{j \neq k}^{n_{1}} w_{i, j}^{1} x_{j} w_{i, k}^{1} x_{k}'])
+= \frac{\sigma_w^2}{n_{0}} (E[\sum_{j=k}^{n_{0}} w_{i, j}^{1} x_{j} w_{i, k}^{1} x_{k}'] 
++ E[\sum_{j \neq k}^{n_{0}} w_{i, j}^{1} x_{j} w_{i, k}^{1} x_{k}'])
 + \sigma_b^2 E[(\beta_{i}^{1})^2]
-+ \frac{\sigma_w \sigma_b}{\sqrt{n_{1}}} ( E[\beta_{i}^{1}] E[\sum_{j=1}^{n_{1}} w_{i, j}^{1} x_{j}]) 
-+ \frac{\sigma_w \sigma_b}{\sqrt{n_{1}}} ( E[\beta_{i}^{1}] E[\sum_{j=1}^{n_{1}} w_{i, j}^{1} x_{j}']) 
++ \frac{\sigma_w \sigma_b}{\sqrt{n_{0}}} ( E[\beta_{i}^{1}] E[\sum_{j=1}^{n_{0}} w_{i, j}^{1} x_{j}]) 
++ \frac{\sigma_w \sigma_b}{\sqrt{n_{0}}} ( E[\beta_{i}^{1}] E[\sum_{j=1}^{n_{0}} w_{i, j}^{1} x_{j}']) 
 $$
 
-Since $E[\beta_{i}^{1}] = E[w_{i, j}^{l}] = 0$, thus we can derive the
-following formula.
+Since $E[\beta_{i}^{1}] = E[w_{i, j}^{l}] = 0$, thus we can derive the following formula.
 
 $$
-= \frac{\sigma_w^2}{n_{1}} (\sum_{j=k}^{n_{1}} E[w_{i, j}^{1} w_{i, k}^{1}] x_{j} x_{k}' + \sum_{j \neq k}^{n_{1}} E[w_{i, j}^{1} w_{i, k}^{1}] x_{j} x_{k}')
+= \frac{\sigma_w^2}{n_{0}} (\sum_{j=k}^{n_{0}} E[w_{i, j}^{1} w_{i, k}^{1}] x_{j} x_{k}' 
++ \sum_{j \neq k}^{n_{0}} E[w_{i, j}^{1} w_{i, k}^{1}] x_{j} x_{k}')
 + \sigma_b^2 (Var[\beta_{i}^{1}] + E[\beta_{i}^{1}]^{2})
 $$
 
-Since
-$w_{i, j}^{1}, w_{i, k}^{1} \overset{i.i.d}{\sim} \mathcal{N}(0, 1)$,
-thus,
-$E[w_{i, j}^{1} w_{i, k}^{1}] = E[w_{i, j}^{1}] E[w_{i, k}^{1}] = 0$.
-Also, $Var[\beta_{i}^{1}] = 1$.
+Since $w_{i, j}^{1}, w_{i, k}^{1} \overset{i.i.d}{\sim} \mathcal{N}(0, 1)$, thus, $E[w_{i, j}^{1} w_{i, k}^{1}] = E[w_{i, j}^{1}] E[w_{i, k}^{1}] = 0$. Also, $Var[\beta_{i}^{1}] = 1$.
 
 $$
-= \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}} (Var[w_{i, j}^{1}] + E[w_{i, j}^{1}]^{2}) x_{j} x_{k}')
+= \frac{\sigma_w^2}{n_{0}} (\sum_{j=1}^{n_{0}} (Var[w_{i, j}^{1}] + E[w_{i, j}^{1}]^{2}) x_{j} x_{k}')
 + \sigma_b^2
 $$
 
 $$
-= \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}}  x_{j} x_{k}')
+= \frac{\sigma_w^2}{n_{0}} (\sum_{j=1}^{n_{0}}  x_{j} x_{k}')
 + \sigma_b^2
 $$
 
 $$
-= \frac{\sigma_w^2}{n_{1}} x^{\top} x'
+= \frac{\sigma_w^2}{n_{0}} x^{\top} x'
 + \sigma_b^2
 $$
 
-**Consider the different entries.**
+**Case 2: Consider the different entries.**
 
 $$
 k_{i \neq j}^{1}(x, x') = Cov[h_{i}^{1}(x), h_{j}^{1}(x')], \ i \neq j
 $$
 
 $$
-= E[(\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{k=1}^{n_{1}} w_{i, k}^{1} x_{k} + \sigma_b \beta_{i}^{1}) (\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{k'=1}^{n_{1}} w_{j, k'}^{1} x_{k'}' + \sigma_b \beta_{j}^{1})]
+= E[(\frac{\sigma_w}{\sqrt{n_{0}}} \sum_{k=1}^{n_{0}} w_{i, k}^{1} x_{k} 
++ \sigma_b \beta_{i}^{1}) (\frac{\sigma_w}{\sqrt{n_{0}}} \sum_{k'=1}^{n_{0}} w_{j, k'}^{1} x_{k'}' 
++ \sigma_b \beta_{j}^{1})]
 $$
 
 $$
-= \frac{\sigma_w^2}{n_{1}} (E[\sum_{k=1}^{n_{1}} \sum_{k'=1}^{n_{1}} w_{i, k}^{1} x_{k} w_{j, k'}^{1} x_{k'}'])
+= \frac{\sigma_w^2}{n_{0}} (E[\sum_{k=1}^{n_{0}} \sum_{k'=1}^{n_{0}} w_{i, k}^{1} x_{k} w_{j, k'}^{1} x_{k'}'])
 + \sigma_b^2 E[\beta_{i}^{1} \beta_{j}^{1}]
-+ \frac{\sigma_w \sigma_b}{\sqrt{n_{1}}} ( E[\beta_{i}^{1}] E[\sum_{k=1}^{n_{1}} w_{i, k}^{1} x_{k}]) 
-+ \frac{\sigma_w \sigma_b}{\sqrt{n_{1}}} ( E[\beta_{j}^{1}] E[\sum_{k'=1}^{n_{1}} w_{j, k'}^{1} x_{k'}']) 
++ \frac{\sigma_w \sigma_b}{\sqrt{n_{0}}} ( E[\beta_{i}^{1}] E[\sum_{k=1}^{n_{0}} w_{i, k}^{1} x_{k}]) 
++ \frac{\sigma_w \sigma_b}{\sqrt{n_{0}}} ( E[\beta_{j}^{1}] E[\sum_{k'=1}^{n_{0}} w_{j, k'}^{1} x_{k'}']) 
 $$
 
 $$
-= \frac{\sigma_w^2}{n_{1}} (\sum_{k=1}^{n_{1}} \sum_{k'=1}^{n_{1}} E[w_{i, k}^{1}] E[w_{j, k'}^{1}] x_{k} x_{k'}']) = 0
+= \frac{\sigma_w^2}{n_{0}} (\sum_{k=1}^{n_{0}} \sum_{k'=1}^{n_{0}} E[w_{i, k}^{1}] E[w_{j, k'}^{1}] x_{k} x_{k'}']) = 0
 $$
 
 ### The Covariance Of The Deeper Layers
 
 Till now, we've derived the covariance of the first layer, now we can dive into the case of deeper layers. Similarly, we discuss the 2 cases.
 
-**Consider the different entries.**
+**Case 1: Consider the different entries.**
 
 For $i$-th entry of the $l$-th layer, with data point $x$ and $x'$, we can derive the covariance $k_{i \neq j}^{l}(x, x')$ of the different entries.
 
@@ -263,25 +266,26 @@ k_{i \neq j}^{l}(x, x') = Cov[h_{i}^{l}(x), h_{j}^{l}(x')], \ i \neq j
 $$
 
 $$
-= E[(\frac{\sigma_w}{\sqrt{n_{l}}} \sum_{k=1}^{n_{l}} w_{i, k}^{l} \phi(h_{k}^{l}(x)) + \sigma_b \beta_{i}^{l}) (\frac{\sigma_w}{\sqrt{n_{l}}} \sum_{k'=1}^{n_{l}} w_{j, k'}^{l}  \phi(h_{k'}^{l}(x')) + \sigma_b \beta_{j}^{l})]
+= E[(\frac{\sigma_w}{\sqrt{n_{l-1}}} \sum_{k=1}^{n_{l-1}} w_{i, k}^{l} \phi(h_{k}^{l-1}(x)) + \sigma_b \beta_{i}^{l}) 
+(\frac{\sigma_w}{\sqrt{n_{l-1}}} \sum_{k'=1}^{n_{l-1}} w_{j, k'}^{l}  \phi(h_{k'}^{l-1}(x')) + \sigma_b \beta_{j}^{l})]
 $$
 
 $$
-= \frac{\sigma_w^2}{n_{l}} (E[\sum_{k=1}^{n_{l}} \sum_{k'=1}^{n_{l}} w_{i, k}^{l} \phi(h_{k}^{l}(x)) w_{j, k'}^{l} \phi(h_{k'}^{l}(x'))])
+= \frac{\sigma_w^2}{n_{l-1}} (E[\sum_{k=1}^{n_{l-1}} \sum_{k'=1}^{n_{l-1}} w_{i, k}^{l} \phi(h_{k}^{l-1}(x)) w_{j, k'}^{l} \phi(h_{k'}^{l-1}(x'))])
 + \sigma_b^2 E[\beta_{i}^{l} \beta_{j}^{l}]
-+ \frac{\sigma_w \sigma_b}{\sqrt{n_{l}}} ( E[\beta_{i}^{l}] E[\sum_{k=1}^{n_{l}} w_{i, k}^{l} \phi(h_{k}^{l}(x))]) 
-+ \frac{\sigma_w \sigma_b}{\sqrt{n_{l}}} ( E[\beta_{j}^{l}] E[\sum_{k'=1}^{n_{l}} w_{j, k'}^{l} \phi(h_{k'}^{l}(x'))]) 
++ \frac{\sigma_w \sigma_b}{\sqrt{n_{l-1}}} (E[\beta_{i}^{l}] E[\sum_{k=1}^{n_{l-1}} w_{i, k}^{l} \phi(h_{k}^{l-1}(x))]) 
++ \frac{\sigma_w \sigma_b}{\sqrt{n_{l-1}}} (E[\beta_{j}^{l}] E[\sum_{k'=1}^{n_{l-1}} w_{j, k'}^{l} \phi(h_{k'}^{l-1}(x'))]) 
 $$
 
 $$
-= \frac{\sigma_w^2}{n_{l}} (\sum_{k=1}^{n_{l}} \sum_{k'=1}^{n_{l}} E[w_{i, k}^{l}] E[w_{j, k'}^{l}] \phi(h_{k}^{l}(x)) \phi(h_{k'}^{l}(x'))]) = 0
+= \frac{\sigma_w^2}{n_{l-1}} (\sum_{k=1}^{n_{l-1}} \sum_{k'=1}^{n_{l-1}} E[w_{i, k}^{l}] E[w_{j, k'}^{l}] \phi(h_{k}^{l-1}(x)) \phi(h_{k'}^{l-1}(x'))]) = 0
 $$
 
 We've got the covariance of different entries $k_{i \neq j}^{l}(x, x')$
 of sample $x$ and $x'$ is 0. Thus, we can conclude that different
 entries are independent.
 
-**Consider the same entries.**
+**Case 2: Consider the same entries.**
 
 $$
 k^{l}(x, x') = Cov[h_{i}^{l}(x), h_{i}^{l}(x')]
@@ -296,19 +300,20 @@ $$
 $$
 
 $$
-= E[(\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} \phi(h_{j}^{l-1}(x)) + \sigma_b \beta_{i}^{1}) (\frac{\sigma_w}{\sqrt{n_{1}}} \sum_{j=1}^{n_{1}} w_{i, j}^{1} \phi(h_{j}^{l-1}(x')) + \sigma_b \beta_{i}^{1})]
+= E[(\frac{\sigma_w}{\sqrt{n_{l-1}}} \sum_{j=1}^{n_{l-1}} w_{i, j}^{1} \phi(h_{j}^{l-1}(x)) + \sigma_b \beta_{i}^{1}) (\frac{\sigma_w}{\sqrt{n_{l-1}}} \sum_{j=1}^{n_{l-1}} w_{i, j}^{1} \phi(h_{j}^{l-1}(x')) + \sigma_b \beta_{i}^{1})]
 $$
 
 $$
-= \frac{\sigma_w^2}{n_{l}} (E[\sum_{j=k}^{n_{l}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x)) w_{i, k}^{l} \phi(h_{j}^{l-1}(x'))] 
+= \frac{\sigma_w^2}{n_{l-1}} (E[\sum_{j=k}^{n_{l-1}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x)) w_{i, k}^{l} \phi(h_{j}^{l-1}(x'))] 
 + E[\sum_{j \neq k}^{n_{l}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x)) w_{i, k}^{l} \phi(h_{j}^{l-1}(x'))])
 + \sigma_b^2 E[(\beta_{i}^{l})^2]
-+ \frac{\sigma_w \sigma_b}{\sqrt{n_{l}}} ( E[\beta_{i}^{l}] E[\sum_{j=1}^{n_{l}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x))]) 
-+ \frac{\sigma_w \sigma_b}{\sqrt{n_{l}}} ( E[\beta_{i}^{l}] E[\sum_{j=1}^{n_{l}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x'))]) 
+\newline
++ \frac{\sigma_w \sigma_b}{\sqrt{n_{l-1}}} (E[\beta_{i}^{l}] E[\sum_{j=1}^{n_{l-1}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x))]) 
++ \frac{\sigma_w \sigma_b}{\sqrt{n_{l-1}}} ( E[\beta_{i}^{l}] E[\sum_{j=1}^{n_{l-1}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x'))]) 
 $$
 
 $$
-= \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}}  \phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x')))
+= \frac{\sigma_w^2}{n_{l-1}} (\sum_{j=1}^{n_{l-1}}  \phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x')))
 + \sigma_b^2
 $$
 
@@ -329,15 +334,19 @@ random variables $\zeta$ and $Z$ respectively.
 
 **@ Need Proof: Connection between CLT and infinite width**
 
-When $n_l \to \infty$, apply central limit theorem(CLT)
+When $n_{l-1} \to \infty$, apply central limit theorem(CLT)
 
 $$
-k^{l}(x, x') = \lim_{n_{l} \to \infty} \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{1}}  \phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x')))
+k^{l}(x, x') = \lim_{n_{l-1} \to \infty} \frac{\sigma_w^2}{n_{l-1}} (\sum_{j=1}^{n_{l-1}}  \phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x')))
 + \sigma_b^2 
-\newline
+$$
+
+$$
 = \sigma_w^2 E_{h_{j}^{l-1}(x), h_{j}^{l-1}(x') \sim \mathcal{N}(0, K_{x, x'}^{l-1})}[\phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x'))] + \sigma_b^2 
-\newline
-= \sigma_w^2 E_{u, v \sim \mathcal{N}(0, K_{}^{l-1})}[\phi(u) \phi(v)] + \sigma_b^2 
+$$
+
+$$
+= \sigma_w^2 E_{u, v \sim \mathcal{N}(0, K_{xx'}^{l-1})}[\phi(u) \phi(v)] + \sigma_b^2 
 $$
 
 $$
@@ -349,7 +358,7 @@ K_{xx'}^{l-1} =
 $$
 
 $$
-k^1(x, x') = \frac{\sigma_w^2}{n_{1}} x^{\top} x' + \sigma_b^2
+k^1(x, x') = \frac{\sigma_w^2}{n_{0}} x^{\top} x' + \sigma_b^2
 $$
 
 Define an operator $\Gamma$, for a positive semi-definite matrix
@@ -748,7 +757,7 @@ $$
 $$
 
 where the function$\dot{k}^{L}(x, x') = \nabla_{\theta} f(x, \theta^{(0)})^{\top} \nabla_{\theta} f(x', \theta^{(0)})$
-is the kernel function of NTK. For the gradient $\nabla_{\theta} f(x, \theta) \in \mathbb{R}^{S \times 1}$
+is the kernel function of NTK. For the gradient $\nabla_{\theta} f(x, \theta) \in \mathbb{R}^{S \times 1}$ of a single output network, define the kernel function.
 
 $$
 \dot{k}^{L}(x, x') = \nabla_{\theta} f(x, \theta^{(0)})^{\top} \nabla_{\theta} f(x', \theta^{(0)})
@@ -758,43 +767,48 @@ $$
 = \nabla_{\theta^{\leq L}} h^{L}(x)^{\top} \nabla_{\theta^{\leq L}} h^{L}(x')
 $$
 
-Since$\nabla_{\theta^{L}} h^{L}(x)^{\top} = [\nabla_{\theta^{L}} h^{L}(x), \ \nabla_{\theta^{\leq L-1}} h^{L}(x)]$,
+Divide the network along the depth of the layers $\nabla_{\theta^{L}} h^{L}(x)^{\top} = [\nabla_{\theta^{L}} h_{1}^{L}(x), \ \nabla_{\theta^{\leq L-1}} h^{L}(x)]$,
 
 $$
-= \nabla_{\theta^{L}} h^{L}(x)^{\top} \nabla_{\theta^{L}} h^{L}(x') 
+= \nabla_{\theta^{L}} h_{1}^{L}(x)^{\top} \nabla_{\theta^{L}} h_{1}^{L}(x') 
 + \nabla_{\theta^{\leq L-1}} h^{L}(x)^{\top} \nabla_{\theta^{\leq L-1}} h^{L}(x')
 $$
 
-Since
-$\nabla_{\theta^{L}} h^{L}(x)^{\top} = [\nabla_{\theta_{1}^{L}} h_{1}^{L}(x), \ \nabla_{\theta_{2}^{L}} h_{2}^{L}(x), ... \ , \nabla_{\theta_{n_L}^{L}} h_{n_L}^{L}(x)] \in \mathbb{R}^{1 \times n_L}$,
-the inner product of the vector can be written as a form of summation.
-Note that $\theta_{i}^{\leq l}$ represents the $i$-th entry of the
+Since $\nabla_{\theta^{L}} h^{L}(x)^{\top} = [\nabla_{\theta_{1}^{L}} h_{1}^{L}(x), \ \nabla_{\theta_{2}^{L}} h_{2}^{L}(x), ... \ , \nabla_{\theta_{n_L}^{L}} h_{n_L}^{L}(x)] \in \mathbb{R}^{1 \times n_L}$, the inner product of the vector can be written as a form of summation. Note that $\theta_{i}^{\leq l}$ represents the $i$-th entry of the
 $l$-th layer.
 
 $$
-= \sum_{i=1}^{n_L} \nabla_{\theta_{i}^{L}} h_{i}^{L}(x)^{\top} \nabla_{\theta_{i}^{L}} h_{i}^{L}(x')
+= \nabla_{\theta_{1}^{L}} h_{1}^{L}(x)^{\top} \nabla_{\theta_{1}^{L}} h_{1}^{L}(x')
 + (\nabla_{\theta^{\leq L-1}} h^{L-1}(x) \nabla_{h^{L-1}(x)} h^{L}(x))^{\top} (\nabla_{\theta^{\leq L-1}} h^{L-1}(x') \nabla_{h^{L-1}(x')} h^{L}(x'))
 $$
 
 $$
-= \sum_{i=1}^{n_L} \nabla_{\theta_{i}^{L}} h_{i}^{L}(x)^{\top} \nabla_{\theta_{i}^{L}} h_{i}^{L}(x')
+= \nabla_{\theta_{1}^{L}} h_{1}^{L}(x)^{\top} \nabla_{\theta_{1}^{L}} h_{1}^{L}(x')
 + \nabla_{h^{L-1}(x)} h^{L}(x)^{\top} \nabla_{\theta^{\leq L-1}} h^{L-1}(x)^{\top} \nabla_{\theta^{\leq L-1}} h^{L-1}(x') \nabla_{h^{L-1}(x')} h^{L}(x')
 $$
 
 $$
-= \sum_{i=1}^{n_L} \nabla_{\theta_{i}^{L}} h_{i}^{L}(x)^{\top} \nabla_{\theta_{i}^{L}} h_{i}^{L}(x')
+= \nabla_{\theta_{1}^{L}} h_{1}^{L}(x)^{\top} \nabla_{\theta_{1}^{L}} h_{1}^{L}(x')
 + \nabla_{h^{L-1}(x)} h^{L}(x)^{\top} \dot{k}^{L-1}(x, x') \nabla_{h^{L-1}(x')} h^{L}(x')
 $$
 
 $$
-= n_L \Gamma(K_{xx'}^{L-1}) + \dot{k}^{L-1}(x, x') \dot{\Gamma}(K_{xx'}^{L-1})
+= k^{L}(x, x') + \dot{k}^{L-1}(x, x') \dot{\Gamma}(K_{xx'}^{L-1})
 $$
 
-------------------------------------------------------------------------
+$$
+K_{xx'}^{l-1} = 
+\begin{bmatrix}
+    k^{l-1}(x, x) & k^{l-1}(x, x') \\
+    k^{l-1}(x', x) & k^{l-1}(x', x')
+\end{bmatrix}
+$$
+
+In the following section, we'll dive into the detail of the recurrent structure of the NTK.
 
 ### The First Term
 
-Derive the inner product of gradient at $i$-th entry.
+In general, derive the inner product of gradient at $i$-th entry.
 
 $$
 \nabla_{\theta_{i}^{l}} h_{i}^{l}(x)^{\top} \nabla_{\theta_{i}^{l}} h_{i}^{l}(x') 
@@ -822,15 +836,27 @@ $$
 By central limit theorem(CLT), if $n_l \to \infty$, it will converge.
 
 $$
-= \sigma_w^2 E_{h_{j}^{l-1}(x), h_{j}^{l-1}(x') \sim \mathcal{N}(0, K_{xx'}^{l-1})}[\phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x'))] + \sigma_b^2
+= \sigma_w^2 (E_{h_{j}^{l-1}(x), h_{j}^{l-1}(x') \sim \mathcal{N}(0, K_{xx'}^{l-1})}[\phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x'))] 
+\newline
++ E_{h_{j}^{l-1}(x), h_{j'}^{l-1}(x') \sim \mathcal{N}(0, K_{xx'}^{l-1}), j \neq j'}[\phi(h_{j}^{l-1}(x)) \phi(h_{j'}^{l-1}(x'))]) 
++ \sigma_b^2
 $$
 
 $$
-= \sigma_w^2 E_{u, v \sim \mathcal{N}(0, K_{xx'}^{l-1})}[\phi(u) \phi(v)] + \sigma_b^2
+= \sigma_w^2 E_{u, v \sim \mathcal{N}(0, K_{xx'}^{l-1})}[\phi(u) \phi(v)] 
++ E_{u', v' \sim \mathcal{N}(0, K_{xx'}^{l-1})}[\phi(u') \phi(v')]
++ \sigma_b^2
+$$
+
+Because different entries are independent, thus $E_{u', v' \sim \mathcal{N}(0, K_{xx'}^{l-1})}[\phi(u') \phi(v')] = 0$.
+
+$$
+= \sigma_w^2 E_{u, v \sim \mathcal{N}(0, K_{xx'}^{l-1})}[\phi(u) \phi(v)]
++ \sigma_b^2
 $$
 
 $$
-= \Gamma(K_{xx'}^{l-1})
+= k^{L}(x, x') = \Gamma(K_{xx'}^{l-1})
 $$
 
 $$
@@ -902,3 +928,4 @@ K_{xx'}^{l-1} =
     k^{l-1}(x', x) & k^{l-1}(x', x')
 \end{bmatrix}
 $$
+
