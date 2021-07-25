@@ -1,4 +1,4 @@
-# Proof of Gaussian Process
+# The Derivation Of The Posterior Of Gaussian Process 
 
 For a multivariate Gaussian random vector $X \in \mathbb{R}^{w}$
 
@@ -88,7 +88,7 @@ $$
 
 $$
 = E[(X_1 - E[X_1]) (X_1 - E[X_1])^{\top}] 
-+ E[(X_2 - E[X_2]) (X_2 - E[X_2])^{\top}] 
++ E[(X_2 - E[X_2]) (X_2 - E[X_2])^{\top}] \\
 + E[(X_1 - E[X_1]) (X_2 - E[X_2])^{\top}] 
 + E[(X_2 - E[X_2]) (X_1 - E[X_1])^{\top}]
 $$

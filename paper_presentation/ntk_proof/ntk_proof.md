@@ -38,10 +38,9 @@ $$
 = 2(f(x, \theta) - y) \nabla_{\theta} f(x,\theta_0)
 $$
 
-------------------------------------------------------------------------
+---
 
-Abstract
---------
+## Abstract
 
 To understand what is the neural tangent kernel(NTK), there are 3
 important result that need to remember.
@@ -58,14 +57,10 @@ important result that need to remember.
     we can optimize the infinite-width network just like optimizing a
     linear regression and solve it by ODE.
 
-Combine these 3 points, NTK is a kernel that can kernelize the neural
-network architecture and it provides a closed-form solution of the
-kernel for anytime. Thus, We can compute the NTK at the end of training
-without actual training and compute the posterior and the prediction of
-the testing data with Bayesian inference.
+Combine these 3 points, NTK is a kernel that can kernelize the neural network architecture and it provides a closed-form solution of the kernel for anytime. Thus, We can compute the NTK at the end of training without actual training and compute the posterior and the prediction of the testing data with Bayesian inference.
 
-Infinite-Width Neural Network As Gaussian Process
--------------------------------------------------
+## Infinite-Width Neural Network As Gaussian Process
+
 
 ### Define A Neural Network
 
@@ -82,9 +77,13 @@ $f(x, \theta), \ x \in \mathcal{X}$ as following
 
 $$
 h^{1} = W^{1} x + b^{1}
-\newline
+$$
+
+$$
 h^{l+1} = W^{l+1} a^l + b^{l+1} =  W^{l+1} \phi(h^l) + b^{l+1}
-\newline
+$$
+
+$$
 \hat{y} = f(x, \theta) = h^{L}
 $$
 
@@ -104,9 +103,13 @@ $\hat{\mathcal{Y}} = f(\mathcal{X}, \theta) \in \mathbb{R}^{N}$.
 
 $$
 W_{i,j}^{l+1} = \frac{\sigma_w}{\sqrt{n_{l+1}}} w_{i,j}^{l+1}, \quad b_{i}^{l+1} = \sigma_b \beta_{i}^{l+1} 
-\newline
+$$
+
+$$
 w_{i,j}^{l+1}, \beta_{i}^{l+1} \overset{i.i.d}{\sim} \mathcal{N}(0, 1)
-\newline
+$$
+
+$$
 \forall l, i, j \quad 1 \leq l \leq L, \quad 1 \leq i \leq n_{l+1}, \quad 1 \leq j \leq n_{l}
 $$
 
@@ -119,9 +122,13 @@ Combine them.
 $$
 h_{i}^{l+1} 
 = W_{i}^{l+1} a^{l} + b_{i}^{l+1}
-\newline
+$$
+
+$$
 = \sum_{j=1}^{n_{l+1}} W_{i, j}^{l+1} a_{j}^{l} + b_{i}^{l+1}
-\newline
+$$
+
+$$
 = \frac{\sigma_w}{\sqrt{n_{l+1}}} \sum_{j=1}^{n_{l+1}} w_{i, j}^{l+1} \phi(h_{j}^{l}) + \sigma_b \beta_{i}^{l+1}
 $$
 
@@ -134,7 +141,9 @@ Let $\theta^{l+1}$ denote as the all parameters of the layer $l+1$.
 
 $$
 \theta^{l + 1} = vec({W^{l+1}, b^{l+1}}) \in \mathbb{R}^{n_{l+1} \times (n_{l} + 1)}
-\newline
+$$
+
+$$
 \theta = vec(\cup_{l=1}^{L} \theta^l) \in \mathbb{R}^{S \times 1}
 $$
 
@@ -200,7 +209,7 @@ $$
 $$
 = \frac{\sigma_w^2}{n_{0}} (E[\sum_{j=k}^{n_{0}} w_{i, j}^{1} x_{j} w_{i, k}^{1} x_{k}'] 
 + E[\sum_{j \neq k}^{n_{0}} w_{i, j}^{1} x_{j} w_{i, k}^{1} x_{k}'])
-+ \sigma_b^2 E[(\beta_{i}^{1})^2]
++ \sigma_b^2 E[(\beta_{i}^{1})^2] \\
 + \frac{\sigma_w \sigma_b}{\sqrt{n_{0}}} ( E[\beta_{i}^{1}] E[\sum_{j=1}^{n_{0}} w_{i, j}^{1} x_{j}]) 
 + \frac{\sigma_w \sigma_b}{\sqrt{n_{0}}} ( E[\beta_{i}^{1}] E[\sum_{j=1}^{n_{0}} w_{i, j}^{1} x_{j}']) 
 $$
@@ -244,7 +253,7 @@ $$
 
 $$
 = \frac{\sigma_w^2}{n_{0}} (E[\sum_{k=1}^{n_{0}} \sum_{k'=1}^{n_{0}} w_{i, k}^{1} x_{k} w_{j, k'}^{1} x_{k'}'])
-+ \sigma_b^2 E[\beta_{i}^{1} \beta_{j}^{1}]
++ \sigma_b^2 E[\beta_{i}^{1} \beta_{j}^{1}] \\
 + \frac{\sigma_w \sigma_b}{\sqrt{n_{0}}} ( E[\beta_{i}^{1}] E[\sum_{k=1}^{n_{0}} w_{i, k}^{1} x_{k}]) 
 + \frac{\sigma_w \sigma_b}{\sqrt{n_{0}}} ( E[\beta_{j}^{1}] E[\sum_{k'=1}^{n_{0}} w_{j, k'}^{1} x_{k'}']) 
 $$
@@ -272,7 +281,7 @@ $$
 
 $$
 = \frac{\sigma_w^2}{n_{l-1}} (E[\sum_{k=1}^{n_{l-1}} \sum_{k'=1}^{n_{l-1}} w_{i, k}^{l} \phi(h_{k}^{l-1}(x)) w_{j, k'}^{l} \phi(h_{k'}^{l-1}(x'))])
-+ \sigma_b^2 E[\beta_{i}^{l} \beta_{j}^{l}]
++ \sigma_b^2 E[\beta_{i}^{l} \beta_{j}^{l}] \\
 + \frac{\sigma_w \sigma_b}{\sqrt{n_{l-1}}} (E[\beta_{i}^{l}] E[\sum_{k=1}^{n_{l-1}} w_{i, k}^{l} \phi(h_{k}^{l-1}(x))]) 
 + \frac{\sigma_w \sigma_b}{\sqrt{n_{l-1}}} (E[\beta_{j}^{l}] E[\sum_{k'=1}^{n_{l-1}} w_{j, k'}^{l} \phi(h_{k'}^{l-1}(x'))]) 
 $$
@@ -306,8 +315,7 @@ $$
 $$
 = \frac{\sigma_w^2}{n_{l-1}} (E[\sum_{j=k}^{n_{l-1}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x)) w_{i, k}^{l} \phi(h_{j}^{l-1}(x'))] 
 + E[\sum_{j \neq k}^{n_{l}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x)) w_{i, k}^{l} \phi(h_{j}^{l-1}(x'))])
-+ \sigma_b^2 E[(\beta_{i}^{l})^2]
-\newline
++ \sigma_b^2 E[(\beta_{i}^{l})^2] \\
 + \frac{\sigma_w \sigma_b}{\sqrt{n_{l-1}}} (E[\beta_{i}^{l}] E[\sum_{j=1}^{n_{l-1}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x))]) 
 + \frac{\sigma_w \sigma_b}{\sqrt{n_{l-1}}} ( E[\beta_{i}^{l}] E[\sum_{j=1}^{n_{l-1}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x'))]) 
 $$
@@ -361,6 +369,8 @@ $$
 k^1(x, x') = \frac{\sigma_w^2}{n_{0}} x^{\top} x' + \sigma_b^2
 $$
 
+### Neural Network Gaussian Process(NNGP)
+
 Define an operator $\Gamma$, for a positive semi-definite matrix
 $\Sigma \in \mathbb{R}^{2 \times 2}$
 
@@ -368,10 +378,10 @@ $$
 \Gamma(\Sigma) = \sigma_w^2 E_{u, v \sim \mathcal{N}(0, \Sigma)}[\phi(u) \phi(v)] + \sigma_b^2 
 $$
 
-With $\Gamma$, the NNGP kernel $\Sigma_{\mathcal{X}}^{L}$.
-
+The **NNGP** kernel $\Sigma_{\mathcal{X}}^{L}$ of training  dataset $\mathcal{X}_N$ and testing dataset $\mathcal{X}_M$. 
+ 
 $$
-\Sigma_{\mathcal{X}}^{L} = 
+\Sigma_{NM}^{L} = 
 \begin{bmatrix}
     k^{L}(x_1, x_1) & k^{L}(x_1, x_2) &... \ k^{L}(x_1, x_N) \\
     k^{L}(x_2, x_1) & k^{L}(x_2, x_2) &... \ k^{L}(x_2, x_N) \\
@@ -380,6 +390,12 @@ $$
     . & . & .\\
     k^{L}(x_N, x_1) & k^{L}(x_N, x_2) &... \ k^{L}(x_N, x_N) \\
 \end{bmatrix}
+$$
+
+$$
+k^{1}(x, x')
+= \frac{\sigma_w^2}{n_{0}} x^{\top} x'
++ \sigma_b^2
 $$
 
 $$
@@ -394,18 +410,42 @@ K_{x_1 x_2}^{l} =
 \end{bmatrix}
 $$
 
-Infinite-Width Neural Network As A Linear Model
------------------------------------------------
+Plug the covariance matrix into the Gaussian process.
+
+$$
+\left[
+    \begin{matrix}
+        \hat{\mathcal{Y}}_N \\
+        \hat{\mathcal{Y}}_M
+    \end{matrix}
+\right]
+\sim
+\mathcal{N}(
+\left[
+    \begin{matrix}
+        0_N \\
+        0_M
+    \end{matrix}
+\right]
+,
+\left[
+    \begin{matrix}
+        \Sigma_{NN}^{L}, & \Sigma_{NM}^{L} \\
+        \Sigma_{MN}^{L}, & \Sigma_{MM}^{L}
+    \end{matrix}
+\right]
+)
+$$
+
+where $\hat{\mathcal{Y}}_N \in \mathbb{R}^{N \times 1}$ and $\hat{\mathcal{Y}}_M \in \mathbb{R}^{M \times 1}$ are the prediction based on training dataset $\mathcal{X}_{N}$ and testing dataset $\mathcal{X}_{M}$ respectively. $0_N \in \mathbb{R}^{N \times 1}$ and $0_M \in \mathbb{R}^{M \times 1}$ are both zero vectors. 
+
+## Infinite-Width Neural Network As A Linear Model
 
 ### Linear Model
 
 ![](img/w_changing_training.png)
 
-As we've shown in the previous post, the parameters of the neural
-network change more slightly while the width of the network gets larger.
-In the other words, the neural network **remains almost unchanged during
-training.** As a result, the parameters $\theta^{(T)} \in \mathbb{R}^{}$
-of neural network after training $T$ steps will be very close to the
+As we've shown in the previous post, the parameters of the neural network change more slightly while the width of the network gets larger. In the other words, the neural network **remains almost unchanged during training.** As a result, the parameters $\theta^{(T)} \in \mathbb{R}^{}$ of neural network after training $T$ steps will be very close to the
 initial parameters $\theta^{(0)}$.
 
 $$
@@ -417,8 +457,7 @@ network $f(x, \cdot)$.
 
 ### Taylor Expansion
 
-Since the parameters of the infinite-width neural network only change
-slightly, thus, we can expand the neural network with Taylor expansion.
+Since the parameters of the infinite-width neural network only change slightly, thus, we can expand the neural network with Taylor expansion.
 
 Taylor expansion
 
@@ -432,29 +471,22 @@ $$
 g(x) \approx \ g(a) + \frac{d g(a)}{dx} (x - a)
 $$
 
-We denote the parameters of the neural network at training step $t$ as
-$\theta^{(t)}$. Then, expand the neural network $f(x, \theta^{(t)})$ at
-training step $t$ with data point $x$.
+We denote the parameters of the neural network at training step $t$ as $\theta^{(t)}$. Then, expand the neural network $f(x, \theta^{(t)})$ at training step $t$ with data point $x$.
 
 $$
-\hat{y}^{(t)} = f(x, \theta^{(t)}) 
-\newline
+\hat{y}^{(t)} = f(x, \theta^{(t)}) \\
 \approx  f_{lin}(x, \theta^{(t)})
 = f(x, \theta^{(0)}) + \nabla_{\theta} f(x, \theta^{(0)})(\theta^{(t)} - \theta^{(0)}), \ \forall t
 $$
 
-where $\hat{y}^{(t)}$ is the prediction of the data point $x$ from the
-network at training step $t$. The divergence
-$\nabla_{\theta} f(x, \theta^{(0)}) \in \mathbb{R}^{N \times S}$ is a
-**Jacobian matrix**.
+where $\hat{y}^{(t)}$ is the prediction of the data point $x$ from the network at training step $t$. The divergence $\nabla_{\theta} f(x, \theta^{(0)}) \in \mathbb{R}^{N \times S}$ is a **Jacobian matrix**.
 
 As for the whole dataset $\mathcal{X}$, the predictions
 $\hat{\mathcal{Y}}^{(t)}$
 
 $$
 \hat{\mathcal{Y}}^{(t)} 
-= f(\mathcal{X}, \theta^{(t)}) 
-\newline
+= f(\mathcal{X}, \theta^{(t)}) \\
 \approx  f_{lin}(x, \theta^{(t)})
 = f(\mathcal{X}, \theta^{(0)}) + \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})(\theta^{(t)} - \theta^{(0)}), \ \forall t
 $$
@@ -541,12 +573,18 @@ Then, we can expand $\nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)})$
 with Taylor expansion.
 
 $$
-\nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)}) 
-\newline
+\nabla_{\theta} f_{lin}(\mathcal{X}, \theta^{(t)})
+$$
+
+$$
 = \nabla_{\theta}(f(\mathcal{X}, \theta^{(0)}) + \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})(\theta^{(t)} - \theta^{(0)})) 
-\newline
+$$
+
+$$
 = \nabla_{\theta}(f(\mathcal{X}, \theta^{(0)}) + \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})\theta^{(t)} - \nabla_{\theta} f(\mathcal{X}, \theta^{(0)})\theta^{(0)}) 
-\newline
+$$
+
+$$
 =\nabla_{\theta} f(\mathcal{X}, \theta^{(0)})
 $$
 
@@ -572,8 +610,7 @@ where
 $T^{(0)}_{\mathcal{X} \mathcal{X}} \in \mathbb{R}^{|\mathcal{D}| \times |\mathcal{D}|}$
 is the **Neural Tangent Kernel(NTK)**
 
-Gradient Flow Of MSE As A Linear Regression
--------------------------------------------
+## Gradient Flow Of MSE As A Linear Regression
 
 ### Mean Square Error(MSE)
 
@@ -714,8 +751,7 @@ $$
 = \eta \nabla_{\theta} f(\mathcal{X}, \theta^{(t)}) \nabla_{f(\mathcal{X}, \theta^{(t)})} \mathcal{L}^{(t)}(\mathcal{X}, \mathcal{Y})
 $$
 
-Now, since the ODE $\dot{\theta}(t)$ is linear, it has cloesd form
-solution
+Now, since the ODE $\dot{\theta}(t)$ is linear, it has closed form solution
 
 $$
 \dot{\theta}(t)
@@ -815,29 +851,28 @@ $$
 $$
 
 $$
-= \nabla_{\theta_{i}^{l}} (\frac{\sigma_w}{\sqrt{n_{l}}} \sum_{j=1}^{n_{l}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x)) + \sigma_b \beta_{i}^{l})^{\top}
-\nabla_{\theta_{i}^{l}} (\frac{\sigma_w}{\sqrt{n_{l}}} \sum_{j=1}^{n_{l}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x')) + \sigma_b \beta_{i}^{l})
+= \nabla_{\theta_{i}^{l}} (\frac{\sigma_w}{\sqrt{n_{l-1}}} \sum_{j=1}^{n_{l-1}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x)) + \sigma_b \beta_{i}^{l})^{\top}
+\nabla_{\theta_{i}^{l}} (\frac{\sigma_w}{\sqrt{n_{l-1}}} \sum_{j=1}^{n_{l-1}} w_{i, j}^{l} \phi(h_{j}^{l-1}(x')) + \sigma_b \beta_{i}^{l})
 $$
 
 $$
-= [\frac{\sigma_w}{\sqrt{n_{l}}} \sum_{j=1}^{n_{l}} \phi(h_{j}^{l-1}(x)), \ \sigma_b]
-[\frac{\sigma_w}{\sqrt{n_{l}}} \sum_{j=1}^{n_{l}} \phi(h_{j}^{l-1}(x')), \ \sigma_b]^{\top}
+= [\frac{\sigma_w}{\sqrt{n_{l-1}}} \sum_{j=1}^{n_{l-1}} \phi(h_{j}^{l-1}(x)), \ \sigma_b]
+[\frac{\sigma_w}{\sqrt{n_{l-1}}} \sum_{j=1}^{n_{l-1}} \phi(h_{j}^{l-1}(x')), \ \sigma_b]^{\top}
 $$
 
 Since they are identical entries($i$-th), we can combine them into
 single term.
 
 $$
-= \frac{\sigma_w^2}{n_{1}} (\sum_{j=1}^{n_{l}} \phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x')) 
-+ \sum_{j \neq j'}^{n_{l}} \phi(h_{j}^{l-1}(x)) \phi(h_{j'}^{l-1}(x'))) 
+= \frac{\sigma_w^2}{n_{1-1}} (\sum_{j=1}^{n_{l-1}} \phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x')) 
++ \sum_{j \neq j'}^{n_{l-1}} \phi(h_{j}^{l-1}(x)) \phi(h_{j'}^{l-1}(x'))) 
 + \sigma_b^2
 $$
 
 By central limit theorem(CLT), if $n_l \to \infty$, it will converge.
 
 $$
-= \sigma_w^2 (E_{h_{j}^{l-1}(x), h_{j}^{l-1}(x') \sim \mathcal{N}(0, K_{xx'}^{l-1})}[\phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x'))] 
-\newline
+= \sigma_w^2 (E_{h_{j}^{l-1}(x), h_{j}^{l-1}(x') \sim \mathcal{N}(0, K_{xx'}^{l-1})}[\phi(h_{j}^{l-1}(x)) \phi(h_{j}^{l-1}(x'))] \\
 + E_{h_{j}^{l-1}(x), h_{j'}^{l-1}(x') \sim \mathcal{N}(0, K_{xx'}^{l-1}), j \neq j'}[\phi(h_{j}^{l-1}(x)) \phi(h_{j'}^{l-1}(x'))]) 
 + \sigma_b^2
 $$
@@ -928,4 +963,64 @@ K_{xx'}^{l-1} =
     k^{l-1}(x', x) & k^{l-1}(x', x')
 \end{bmatrix}
 $$
+
+### The Inner Product Of The Derivative Activation Function
+
+#### ReLU Activation Function
+
+The ReLU activation function is $\phi_{relu}(x) =\max(0, x)$ and the derivative is 
+
+$$
+\frac{d \phi_{relu}(x)}{d x} = H(x)
+$$
+
+where $H(x)$ is Heaviside function.
+
+$$
+H(x) = 
+\left\{
+    \begin{matrix}
+        1, \ x > 0 \\
+        0, \ x \leq 0
+    \end{matrix}
+\right.
+$$
+
+Then, we can derive the kernel of the derivative ReLU which we won't cover in this article. For more detail, please refer to the original paper "Kernel Method for Deep Learning" on NIPS'09.
+
+Then, the kernel of the ReLU function
+
+$$
+\nabla_{x} \phi_{relu}(x) \nabla_{y} \phi_{relu}(y) = \frac{1}{2 \pi} J_0(\theta_{xy}), 
+\quad J_0(\theta_{xy}) = \pi - \theta_{xy}
+$$
+
+$$
+\phi_{relu}(x) \phi_{relu}(y) = \frac{1}{2 \pi} J_1(\theta_{xy}), 
+\quad J_1(\theta_{xy}) = \sin \theta_{xy} + (\pi - \theta_{xy}) \cos \theta_{xy}
+$$
+
+where $\theta{xy}$ is the angle between $x$ and $y$.
+
+$$
+\theta_{xy} = \arccos \frac{x \cdot y}{||x|| \ ||y||}
+$$
+
+#### Erf Activation Function
+
+$$
+\phi_{erf}(x) \phi_{erf}(y) 
+= \frac{2}{\pi} \sin^{-1} \frac{2 x \cdot y}{\sqrt{(1 + 2x \cdot c)(1 + 2y \cdot y)}}
+$$
+
+$$
+\nabla_{x} \phi_{erf}(x) \nabla_{y} \phi_{erf}(y) 
+= \frac{4}{\pi} \sin^{-1} det(I + 2 \Sigma)^{- \frac{1}{2}}
+$$
+
+Also, the derivation won't cover in this article. For more detail, please refer to the paper "Computing with infinite networks" on NIPS'97
+
+## Trained Neural Network As Gaussian Process
+
+
 
