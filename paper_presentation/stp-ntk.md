@@ -16,8 +16,89 @@ class: lead
 
 ## Motivation
 
-According to the paper **"Deep learning versus kernel learning: an empirical study of loss landscape geometry and the time evolution of the Neural Tangent Kernel"**(presented by 袁哥), infinite-width NTK gives a **poor prediction** on the loss of the **finite-width neural network during training** and, **final basin** chosen by a child highly **sensitive to SGD noise** and the NTK **involves very rapidly**.
+According to the paper **"Deep learning versus kernel learning: an empirical study of loss landscape geometry and the time evolution of the Neural Tangent Kernel"**(presented by 袁哥), 
 
+- Problem: Infinite-width NTK gives a **poor prediction** on the loss of the **finite-width neural network during training** 
+
+- Reason: **Final basin(of the loss surface)** chosen by a child highly **sensitive to SGD noise** and the NTK **involves very rapidly**.
+
+Solution: Model the **noise** of the NTK with **Student-T process**
+
+---
+
+Recall 
+
+- Hierarchical Exploration of Loss Landscape through Parents and Children
+- Error Barrier Between Spawned Children During Training
+- Visualization of The Function Space Motion During Training
+- Kernel Distance During Training
+
+---
+
+## Hierarchical Exploration of Loss Landscape through Parents and Children
+
+- In this process, a parent network is trained from initialization to a spawning time $t_{s}$, yielding a parent weight trajectory $\{ w_{t} \}_{t=0}^{t_{s}}$.
+
+- At the spawn time $t_{s}$, several copies of the parent network are made, and these so-called children are then training with independent minibatch stochasticity, yielding different child weight trajectories $\{ w_{t}^{t_{s}, a} \}_{t=t_{s}}^{T}$, where $a$ indexes the children, and $T$ is the final training time.
+
+---
+
+## Visualization of The Function Space Motion During Training
+
+### Function Distance
+
+- To compute the distance between the two functions $f_{w}$ and $f_{w_{0}}$, parameterized by weights $w$ and $w_{0}$, we would ideally like to calculate the **degree of disagreement between their outputs averaged over the whole input space $x$**.
+
+- Let $S$ test denote the test set. Then,
+
+$$
+||f_{w}(x) - f_{w'}(x)||_{S^{test}} = \frac{1}{Z |S_{x}^{test}|} \sum_{x \in S_{x}^{test}} (f_{w}(x) \neq f_{w'}(x))1
+$$
+
+Where $S_{x}^{test}$ are test inputs and $Z$ is normalizing constant.
+
+---
+
+- T-SNE visualization of parent and children evolution in the function space with different spawn epoch.
+- The trajectories of the children are highly **sensitive to SGD noise**
+
+![](stp-ntk/vis_funct_space_motion_during_training.png)
+
+---
+
+## Error Barrier Between Spawned Children During Training
+
+-  Compute the error barrier between children along a linear path interpolating between them in weight space.
+- Let $w_{t}^{\alpha} = \alpha w_{t} + (1 - \alpha) w_{t}'$, where $w_{t}$ and $w_{t}'$ are the weight of 2 children networks, spawn from some iteration $t_{s}$, and $\alpha \in [0, 1]$. 
+- At various $t_s$ we compute $\max_{\alpha \in [0, 1]} \hat{R}_{S}(w_{t}^{\alpha}) - \frac{1}{2}(\hat{R}_{S}(w_{t}) + \hat{R}_{S}(w_{t}'))$, which we call the **error barrier**.
+
+
+---
+
+![width:900px](stp-ntk/error_barrier.png)
+
+the error barrier drops rapidly within a few epochs in panel B,
+
+---
+
+## Kernel Distance During Training
+
+For finite width networks, the kernel $\kappa_{t}(S) = \kappa_{w_{t}}(S)$ changes with training time $t$. Define the kernel distance as
+
+
+$$
+S(w, w') = 1 - \frac{Tr(\kappa_{w}(S) \kappa_{w'}^{T}(S))}{\sqrt{Tr(\kappa_{w}(S) \kappa_{w}^{T}(S))} \sqrt{Tr(\kappa_{w'}(S) \kappa_{w'}^{T}(S))}}
+$$
+
+---
+
+![width:800px](stp-ntk/kernel_dist.png)
+
+Panel E shows that function, kernel and ReLU distances between children at the end of training also drop as a function of spawn time.
+
+---
+
+# Main Idea
 ### Why not just add some random noise to the NTK, to simulate the unstable NTK?
 
 With **inverse Wishart distribution** $\Sigma \sim \mathcal{IW}(\nu, K)$ where the degree of freedom $\nu > 2$ and $K$ is positive definite, we can generate a random matrix $\Sigma$ with expectation $\mathbb{E}[\Sigma] = \frac{K}{\nu - 2}$. 
@@ -87,7 +168,7 @@ Y_2
     K_{11} & K_{12}\\
     K_{21} & K_{22}
     \end{pmatrix}
-)
+, \nu)
 $$
 
 ---
