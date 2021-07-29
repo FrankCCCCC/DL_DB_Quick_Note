@@ -22,11 +22,11 @@ According to the paper **"Deep learning versus kernel learning: an empirical stu
 
 - Reason: **Final basin(of the loss surface)** chosen by a child highly **sensitive to SGD noise** and the NTK **involves very rapidly**.
 
-Solution: Model the **noise** of the NTK with **Student-T process**
+My Idea: Model the **noise** of the NTK with **Student-T process**
 
 ---
 
-Recall 
+To argue that NTK is sensitive to SGD noise and changes rapidly in the early stage of training, recall 
 
 - Hierarchical Exploration of Loss Landscape through Parents and Children
 - Error Barrier Between Spawned Children During Training
@@ -82,6 +82,8 @@ the error barrier drops rapidly within a few epochs in panel B,
 ---
 
 ## Kernel Distance During Training
+
+### Kernel Distance
 
 For finite width networks, the kernel $\kappa_{t}(S) = \kappa_{w_{t}}(S)$ changes with training time $t$. Define the kernel distance as
 
@@ -206,3 +208,7 @@ As the **blue line** shows above(left part), as the **training progress goes**, 
 - During **training progress**, the **$\nu$ gets lower**.
 - By controlling the value of $\nu$ of $\mathcal{TP}$, we can get a **more accurate prediction on the training loss** rather than $\mathcal{GP}$ 
 - If the NTK follows the $\mathcal{TP}$,  the **bigger training dataset**, the **larger degree of freedom of the posterior**.
+
+---
+
+# Thanks For Listening
