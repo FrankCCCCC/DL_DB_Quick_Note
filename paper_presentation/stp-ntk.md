@@ -47,7 +47,7 @@ To argue that NTK is sensitive to SGD noise and changes rapidly in the early sta
 
 ### Function Distance
 
-- To compute the distance between the two functions $f_{w}$ and $f_{w_{0}}$, parameterized by weights $w$ and $w_{0}$, we would ideally like to calculate the **degree of disagreement between their outputs averaged over the whole input space $x$**.
+- To compute the distance between the two functions $f_{w}$ and $f_{w'}$, parameterized by weights $w$ and $w_{0}$, we would ideally like to calculate the **degree of disagreement between their outputs averaged over the whole input space $x$**.
 
 - Let $S$ test denote the test set. Then,
 
