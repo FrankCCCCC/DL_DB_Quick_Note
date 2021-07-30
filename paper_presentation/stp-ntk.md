@@ -20,17 +20,19 @@ According to the paper **"Deep learning versus kernel learning: an empirical stu
 
 - Problem: Infinite-width NTK gives a **poor prediction** on the loss of the **finite-width neural network during training** 
 
-- Reason: **Final basin(of the loss surface)** chosen by a child highly **sensitive to SGD noise** and the NTK **involves very rapidly**.
+- Reason 1: **Final basin(of the loss surface)** chosen by a NN is highly **sensitive to SGD noise** and **is determined in the early stage of training**.
 
-My Idea: Model the **noise** of the NTK with **Student-T process**
+- Reason 2: The empirical NTK of a NN **involves very rapidly in the early stage of training** and becomes stable after the final basin fate is determined.
+
+**My Idea**: Model the **noise** to the NTK with **Student-T process**
 
 ---
 
 To argue that NTK is sensitive to SGD noise and changes rapidly in the early stage of training, recall 
 
 - Hierarchical Exploration of Loss Landscape through Parents and Children
-- Error Barrier Between Spawned Children During Training
 - Visualization of The Function Space Motion During Training
+- Error Barrier Between Spawned Children During Training
 - Kernel Distance During Training
 
 ---
@@ -64,12 +66,14 @@ Where $S_{x}^{test}$ are test inputs and $Z$ is normalizing constant.
 
 ![](stp-ntk/vis_funct_space_motion_during_training.png)
 
+ResNet20 on CIFAR100, total training epoch: 200
+
 ---
 
 ## Error Barrier Between Spawned Children During Training
 
 -  Compute the error barrier between children along a linear path interpolating between them in weight space.
-- Let $w_{t}^{\alpha} = \alpha w_{t} + (1 - \alpha) w_{t}'$, where $w_{t}$ and $w_{t}'$ are the weight of 2 children networks, spawn from some iteration $t_{s}$, and $\alpha \in [0, 1]$. 
+- Let $w_{t}^{\alpha} = \alpha w_{t} + (1 - \alpha) w_{t}'$ where $w_{t}$ and $w_{t}'$ are the weight of 2 children networks, spawn from some iteration $t_{s}$, and $\alpha \in [0, 1]$. 
 - At various $t_s$ we compute $\max_{\alpha \in [0, 1]} \hat{R}_{S}(w_{t}^{\alpha}) - \frac{1}{2}(\hat{R}_{S}(w_{t}) + \hat{R}_{S}(w_{t}'))$, which we call the **error barrier**.
 
 
