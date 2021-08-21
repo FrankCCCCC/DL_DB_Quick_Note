@@ -64,7 +64,7 @@ Where $S_{x}^{test}$ are test inputs and $Z$ is normalizing constant.
 - T-SNE visualization of parent and children evolution in the function space with different spawn epoch.
 - The trajectories of the children are highly **sensitive to SGD noise**
 
-![](stp-ntk/vis_funct_space_motion_during_training.png)
+![](img/vis_funct_space_motion_during_training.png)
 
 ResNet20 on CIFAR100, total training epoch: 200
 
@@ -79,7 +79,7 @@ ResNet20 on CIFAR100, total training epoch: 200
 
 ---
 
-![width:900px](stp-ntk/error_barrier.png)
+![width:900px](img/error_barrier.png)
 
 the error barrier drops rapidly within a few epochs in panel B,
 
@@ -98,7 +98,7 @@ $$
 
 ---
 
-![width:800px](stp-ntk/kernel_dist.png)
+![width:800px](img/kernel_dist.png)
 
 Panel E shows that function, kernel and ReLU distances between children at the end of training also drop as a function of spawn time.
 
@@ -147,7 +147,7 @@ $$
 
 ## Student-T Process 
 
-![width:900px](stp-ntk/bivariate_stp_gp.png)
+![width:900px](img/bivariate_stp_gp.png)
 
 Degrees of freedom is the number of values in the final calculation of a statistic that are free to vary.
 
@@ -199,7 +199,7 @@ $\hat{K}_{22} = K_{22} - K_{21} K_{11}^{-1} K_{12}$
 
 ## Experiment
 
-![width:600px](./stp-ntk/stp-ntk.png)
+![width:600px](./img/img.png)
 
 We've already known, if $\nu = \infty$, the student-T process will converge to Gaussian process. In the above figure, we compare the result of **fitting a $\sin()$ function with $\mathcal{TP}$(blue) and $\mathcal{GP}$(yellow) respectively**. The **left** part of above figure shows the **training/testing progress of fitting**. The right part is the value of $\nu$ during training progress.
 

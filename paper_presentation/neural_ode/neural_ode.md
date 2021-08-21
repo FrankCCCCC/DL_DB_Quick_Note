@@ -120,4 +120,12 @@ $$
 
 ---
 
-![](imgs/algo.png)
+![](img/algo.png)
+
+---
+
+![](img/fig4_exp_vs_cnf.png)
+
+---
+
+![](img/fig5_exp_vs_nf.png)

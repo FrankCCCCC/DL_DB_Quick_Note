@@ -315,7 +315,7 @@ $$
 
 ---
 
-![bg contain left](towards_characterizing_divergence_in_deep_q-Learning/algo.png)
+![bg contain left](img/algo.png)
 
 # Algorithm
 
@@ -350,8 +350,8 @@ The larger off-diagonal entries, the higher row ratio.
 
 ---
 
-![bg contain](towards_characterizing_divergence_in_deep_q-Learning/exp_ant_width.png)
-![bg contain](towards_characterizing_divergence_in_deep_q-Learning/exp_ant_depth.png)
+![bg contain](img/exp_ant_width.png)
+![bg contain](img/exp_ant_depth.png)
 
 ---
 
@@ -362,19 +362,19 @@ The larger off-diagonal entries, the higher row ratio.
 
 ---
 
-![](towards_characterizing_divergence_in_deep_q-Learning/exp_all_perform.png)
+![](img/exp_all_perform.png)
 
 In some of experiments, PreQN outperform than TD3 and SAC. PreQN is more stable trivially.
 
 ---
 
-![bg 80%](towards_characterizing_divergence_in_deep_q-Learning/exp_all2_perform.png)
+![bg 80%](img/exp_all2_perform.png)
 
 PreQN seems great. 
 
 ---
 
-![bg 80%](towards_characterizing_divergence_in_deep_q-Learning/exp_all1_perform.png)
+![bg 80%](img/exp_all1_perform.png)
 
 But some of experiments are not.
 
