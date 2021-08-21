@@ -66,6 +66,8 @@ $$
 \frac{\partial \log p(z(t))}{\partial t} = - tr(\frac{d h(t)}{d z(t)})
 $$
 
+Don't need to compute **Determinant** and **Trace** only cost $\mathcal{O}(N)$
+
 ---
 
 # Continuous Layers
@@ -80,7 +82,7 @@ $$
 h_{t+1} = h_t + f(h_t, t)
 $$
 
-where $t \in \{ 0, ..., T\}$ and $h_t \in \mathbb{R}^{D}$.These iterative updates can be seen as an **Euler discretization** of a continuous transformation.
+where $t \in \{ 0, ..., T\}$ and $h_t \in \mathbb{R}^{D}$ is the hidden state at depth $t$.These iterative updates can be seen as an **Euler discretization** of a continuous transformation.
 
 What happens as we **add more layers and take smaller steps?** In the limit, we parameterize the continuous dynamics of hidden units using an ODE specified by a neural network
 
@@ -88,7 +90,7 @@ $$
 \frac{d h(t)}{d t} = f(h(t), t, \theta)
 $$
 
-Define input as $h(0)$ and the output as $h(T)$
+Where $h_t = h(t)$ represents the hidden state at depth t, and input as $h(0)$ and the output as $h(T)$
 
 ---
 
@@ -100,25 +102,31 @@ $$
 z({t_1}) = z({t_0}) + \int_{t=t_0}^{t_1} f(z(t), t, \theta) dt
 $$
 
-The loss $L(z(t_1))$ along the depth $t_1$
+Define loss function as $L()$, given the hidden state(layer output) $z(t_1)$ at layer $t_1$
 
 $$
 L(z(t_1)) = L(z({t_0}) + \int_{t=t_0}^{t_1} f(z(t), t, \theta) dt) = L(ODESolve(z(t_0), f, t_0, t_1, \theta))
 $$
 
+We see the ODE solver as a black box, which can compute the result of $z(t)$ when given the proper initial states and ODEs.
+
 ---
 
-With adjoint method, we can derive the gradient along the depth $t$, called **adjoint state** $a(t) = \frac{\partial L}{\partial z(t)}$.
+With **adjoint sensitivity method**, we can derive the gradient along the hidden state $z(t)$, called **adjoint state** $a(t) = \frac{\partial L}{\partial z(t)}$. The dynamic of the adjoint state is
 
 $$
 \frac{a(t)}{dt} = -a(t)^{\top} \frac{\partial f(z(t), t, \theta)}{\partial z}
 $$
+
+With adjoint state, we can derive the gradient for the parameters $\theta$ as 
 
 $$
 \frac{dL}{d\theta} = - \int_{t=t_1}^{t_0} a(t)^{\top} \frac{f(z(t), t, \theta)}{d\theta} dt
 $$
 
 ---
+
+# Algorithm
 
 ![](img/algo.png)
 
