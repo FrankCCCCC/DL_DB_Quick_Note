@@ -26,6 +26,43 @@ Citation 370
 
 [PDF Highlight](./DEEP%20NEURAL%20NETWORKS%20AS%20GAUSSIAN%20PROCESSES.pdf)
 
+Propose NNGP.
+
+### Generalization bounds of stochastic gradient descent for wide and deep neural networks
+
+ICML 2019
+
+Citation 129
+
+[Paper](http://proceedings.mlr.press/v97/allen-zhu19a.html)
+
+[PDF Highlight](./stochastic_gradient/Generalization%20bounds%20of%20stochastic%20gradient%20descent%20for%20wide%20and%20deep%20neural%20networks..pdf)
+
+Propose **Neural Tangent Random Feature (NTRF)**.
+
+
+### A Convergence Theory for Deep Learning via Over-Parameterization
+
+ICML 2019
+
+Citation 619
+
+[Paper](http://proceedings.mlr.press/v97/allen-zhu19a.html)
+
+[PDF Highlight](./A%20Convergence%20Theory%20for%20Deep%20Learning%20via%20Over-Parameterization.pdf)
+
+The paper shows that NTK might not represent all learning capacity of the DNN.
+
+### Learning and Generalization in Overparameterized Neural Networks, Going Beyond Two Layers
+
+NIPS 2019
+
+Citation 391
+
+[Paper](https://proceedings.neurips.cc/paper/2019/hash/62dad6e273d32235ae02b7d321578ee8-Abstract.html)
+
+[PDF Highlight](./Learning%20and%20Generalization%20in%20Overparameterized%20Neural%20Networks,%20Going%20Beyond%20Two%20Layers.pdf)
+
 ---
 
 ## Reference
@@ -46,3 +83,4 @@ Citation 370
 - [Chang Liu - Gradient Flow](http://ml.cs.tsinghua.edu.cn/~changliu/static/Gradient-Flow.pdf)
 - [When are Neural Networks more powerful than Neural Tangent Kernels?](https://blog.einstein.ai/beyond-ntk/)
 - [Neural networks are fundamentally Bayesian](https://towardsdatascience.com/neural-networks-are-fundamentally-bayesian-bee9a172fad8)
+- [知乎 - Neural Contextual Bandits with UCB-based Explor...](https://zhuanlan.zhihu.com/p/262608477)
