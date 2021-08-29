@@ -63,6 +63,24 @@ Citation 391
 
 [PDF Highlight](./Learning%20and%20Generalization%20in%20Overparameterized%20Neural%20Networks,%20Going%20Beyond%20Two%20Layers.pdf)
 
+### On Exact Computation with an Infinitely WideNeural Net
+
+[Paper](https://arxiv.org/abs/1904.11955)
+
+[PDF Highlight](./On%20Exact%20Computation%20with%20an%20Infinitely%20Wide%20Neural%20Net.pdf)
+
+Citation 344
+
+Propose **Convolutional Neural Tangent Kernel(CNTK)**.
+
+### Neural Tangent Kernel:Convergence and Generalization in Neural Networks
+
+[Paper](https://arxiv.org/abs/1806.07572)
+
+[PDF Highlight](./Neural%20Tangent%20Kernel%20Convergence%20and%20Generalization%20in%20Neural%20Networks.pdf)
+
+Propose **Neural Tangent Kernel(NTK)**.
+
 ---
 
 ## Reference
