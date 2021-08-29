@@ -51,7 +51,7 @@ Citation 619
 
 [PDF Highlight](./A%20Convergence%20Theory%20for%20Deep%20Learning%20via%20Over-Parameterization.pdf)
 
-The paper shows that NTK might not represent all learning capacity of the DNN.
+
 
 ### Learning and Generalization in Overparameterized Neural Networks, Going Beyond Two Layers
 
@@ -80,6 +80,22 @@ Propose **Convolutional Neural Tangent Kernel(CNTK)**.
 [PDF Highlight](./Neural%20Tangent%20Kernel%20Convergence%20and%20Generalization%20in%20Neural%20Networks.pdf)
 
 Propose **Neural Tangent Kernel(NTK)**.
+
+### Neural Contextual Bandits with UCB-based Exploration
+
+It propose a way to use NTK features for UCB exploration/exploitation.
+
+### What Can ResNet Learn Efficiently, Going Beyond Kernels?
+
+NIPS 2019
+
+Citation 75
+
+[Full Paper(Version 3)](https://arxiv.org/abs/1905.10337)
+
+[NIPS Version](https://papers.nips.cc/paper/2019/hash/5857d68cd9280bc98d079fa912fd6740-Abstract.html)
+
+The paper shows that NTK might not represent all learning capacity of the DNN.
 
 ---
 
