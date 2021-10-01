@@ -1,61 +1,50 @@
-# 劇變中的歷史與思想 - 從帝國到共和、民主的激盪
+# Seems Great
 
-四種烏托邦
+## Off-Policy Deep Reinforcement Learning without Exploration
 
-海上大學
+ICML'19
 
-- 軟/硬：體制內/革命
-- 小/大：
-- 面向過去/未來：
-- 立即實現/不要立即實現：
+Citation 316
 
-## 回到過去的烏托邦
+## Conservative Q-Learning for Offline Reinforcement Learning
 
-餓鄉記：回到貧窮/古早的人類社會
+NIPS'20
 
-求志社：
-- 共養兒女
-- 平均分米
+Citation 120
 
-## 面向未來的烏托邦
+## Deep Equilibrium Models
 
-- 清末西方科學、進化論、共產思想進到中國 +
-- 加上傳統的資源
-= 
-- 康有為 人類公法、大同書
-- 譚嗣同 仁學
-  - 人死亡以後化成乙太，會再回來
-  - 仁
-  - 同種，大家變成白人
-  - 對毛影響很大，多贊成
+NIPS'19
 
+Citation 132
 
-## 心得
+## FL-NTK: A Neural Tangent Kernel-based Framework for Federated Learning Convergence Analysis
 
-幾本上清末的各種烏托邦思想，相當明顯，仍舊相當不成熟。
+ICML'21
 
-很明顯的，普遍失敗。以現代觀點而言，沒顧及到
+Citation 2
 
-與現代的關聯？
+## Finding trainable sparse networks through Neural Tangent Transfer
 
+ICML'20
 
+Citation 6
 
-# 牛頓與煉金術
+## Neural Kernels Without Tangents
 
-師從於波耳
+ICML'20
 
-當過鑄幣局長
-- 將模具統一規格，限制買賣
-- 對金本位的貢獻
+Citation 37
 
-對煉金術的研究一直被隱藏，後來被凱因斯挖出來整理並發表
+## Neural Processes
 
-煉金術來自於阿拉伯文的 Al-Kimya ，意為來自埃及
+ICML'18
 
-8-10 大量煉金術大師著作被翻譯與傳授
+Citation 236
 
-## 第五元素: 以太
+## Proving the Lottery Ticket Hypothesis: Pruning is All You Need
 
- 煉金術師
+ICML'20
 
- 此次演講很好的再次闡述了惠格式史觀與
+Citation 52
+
