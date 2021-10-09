@@ -50,6 +50,12 @@ class: lead
 
 ---
 
+# Input Kernel
+
+![width:800px](img/input.png)
+
+---
+
 # Convolution Kernel
 
 ![width:800px](img/convolution.png)
@@ -74,3 +80,63 @@ class: lead
 
 ---
 
+# Gaussian Kernel
+
+![width:800px](img/gaussian.png)
+
+---
+
+# Algorithm
+
+![width:800px](img/algo.png)
+
+---
+
+# Experiment Setup
+
+## MNIST, CIFAR-10, CIFAR-10.1, CIFAR-100 Dataset
+
+Myrtle5, 7, 10 with ReLU kernel
+
+ZCA whitening preprocessing
+
+Flip data augmentation to our kernel method by flipping ev
+
+Kernel ridge regression with respect to one-hot labels
+
+## 90 UCI Dataset
+
+Myrtle5, 7, 10 with Gaussian kernel
+
+Hinge loss with libSVM
+
+---
+
+# MNIST
+
+![width:800px](img/mnist.png)
+
+---
+
+# CIFAR-10
+
+Evaluate on 10,000 test images from CIFAR-10 and the additional 2,000 "harder" test images from CIFAR-10.1
+
+![bg right 100%](img/cifar10.png)
+
+---
+
+# Subsampled CIFAR-10
+
+- Subsampled datasets are class balanced
+- Network with the same architecture as compositional kernel severely underperforms both the compositional kernel and NTK in the low data regime
+- After adding batch normalization, the network outperforms both compositional kernel and the NTK
+
+![bg right 100%](img/cifar10_subsample.png)
+
+---
+# Conclusion
+
+- Provide a promising starting point for designing practical, high performance, domain specific kernel functions
+- Some notion of **compositionality and hierarchy** may be necessary to build kernel predictors that match the performance of neural networks
+- **NTKs** themselves may **not actually provide particularly useful guides** to the practice of kernel methods.
