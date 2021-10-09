@@ -96,19 +96,27 @@ class: lead
 
 ## MNIST, CIFAR-10, CIFAR-10.1, CIFAR-100 Dataset
 
-Myrtle5, 7, 10 with ReLU kernel
+- Myrtle5, 7, 10 with ReLU kernel
 
-ZCA whitening preprocessing
+- ZCA whitening preprocessing
 
-Flip data augmentation to our kernel method by flipping ev
+- Flip data augmentation to our kernel method by flipping every example in the training set across the vertical axis
 
-Kernel ridge regression with respect to one-hot labels
+- Kernel ridge regression with respect to one-hot labels
+
+---
 
 ## 90 UCI Dataset
 
-Myrtle5, 7, 10 with Gaussian kernel
+- Myrtle5, 7, 10 with Gaussian kernel
 
-Hinge loss with libSVM
+- Hinge loss with libSVM
+
+## Architecture
+
+All architectures that can be represented as a list of operations from the set {conv3, pool2, relu} as the "Myrtle" family. The right one is **Myrtle7** and the left on is **Myrtle10**
+
+![bg right 100%](img/myrtles.png)
 
 ---
 
@@ -118,9 +126,27 @@ Hinge loss with libSVM
 
 ---
 
+# CIFAR-100
+
+![width:800px](img/cifar100.png)
+
+---
+
+# 90 UCI
+
+![](img/uci.png)
+
+- **Friedman rank**: The ranking metric reports the average ranking of a given classifier compared to all other classifiers on datasets. The lower, the better.
+- **P90/P95**: The percentage of datasets on which the classifier achieves more than 90%/95% of the maximum achievable accuracy. The higher, the better.
+- **PMA**: The average percentage of the maximum accuracy of the classifier for datasets. The higher, the better.
+
+---
+
 # CIFAR-10
 
-Evaluate on 10,000 test images from CIFAR-10 and the additional 2,000 "harder" test images from CIFAR-10.1
+- Evaluate on 10,000 test images from CIFAR-10 and the additional 2,000 "harder" test images from CIFAR-10.1
+- For all kernel results on CIFAR-10, we gained an improvement of roughly 0.5% with **Leave-One-Out tilting** and **ZCA augmentation** techniques.
+- A substantial drop in accuracy for the compositional kernel without ZCA preprocessing.
 
 ![bg right 100%](img/cifar10.png)
 
@@ -129,7 +155,7 @@ Evaluate on 10,000 test images from CIFAR-10 and the additional 2,000 "harder" t
 # Subsampled CIFAR-10
 
 - Subsampled datasets are class balanced
-- Network with the same architecture as compositional kernel severely underperforms both the compositional kernel and NTK in the low data regime
+- Network with the same architecture as compositional kernel severely underperforms both the compositional kernel and NTK in the low data regime
 - After adding batch normalization, the network outperforms both compositional kernel and the NTK
 
 ![bg right 100%](img/cifar10_subsample.png)
@@ -140,3 +166,5 @@ Evaluate on 10,000 test images from CIFAR-10 and the additional 2,000 "harder" t
 - Provide a promising starting point for designing practical, high performance, domain specific kernel functions
 - Some notion of **compositionality and hierarchy** may be necessary to build kernel predictors that match the performance of neural networks
 - **NTKs** themselves may **not actually provide particularly useful guides** to the practice of kernel methods.
+- We may underscores the importance of proper preprocessing for kernel methods
+- There still performance gaps between kernel methods and neural networks and the reasons remain unknown.
