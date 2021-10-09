@@ -10,6 +10,13 @@ class: lead
 
 # Neural Kernel Without Tangents
 
+**ICML'20 Citation: 37**
+
+Vaishaal Shankar, Alex Fang, Wenshuo Guo,  Sara Fridovich-Keil, Ludwig Schmidt, Jonathan Ragan-Kelley, Benjamin Recht
+
+UC Berkeley, MIT
+
+
 ---
 
 # Motivation
@@ -43,6 +50,8 @@ class: lead
 ![](img/myrtle5.png)
 
 ---
+
+# Methodology
 
 - **Bag of features** is simply a generalization of a matrix or tensor: whereas a matrix is an indexed list of vectors, a bag of features is a collection of elements in a Hilbert space $\mathcal{H}$ with a finite, structured index set $\mathcal{B}$. 
 - EX: we can consider an image to be a bag of features where the index set $\mathcal{B}$ is the pixel’s row and column location and $\mathcal{H}$ is $\mathbb{R}^3$: at every pixel location, there is a corresponding vector in $\mathbb{R}^3$.
