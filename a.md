@@ -48,3 +48,8 @@ ICML'20
 
 Citation 52
 
+## Graph Neural Tangent Kernel: Fusing Graph Neural Networks with Graph Kernels
+
+NIPS'19
+
+Citation 79
