@@ -195,3 +195,12 @@ All architectures that can be represented as a list of operations from the set *
 - **NTKs** themselves may **not actually provide particularly useful guides** to the practice of kernel methods.
 - We may underscores the importance of proper preprocessing for kernel methods
 - There **still performance gaps between kernel methods and neural networks** and the reasons remain unknown.
+
+---
+
+# Reference
+
+- [Preprocessing for deep learning: from covariance matrix to image whitening](https://hadrienj.github.io/posts/Preprocessing-for-deep-learning/)
+- [知乎 - CNN数值——ZCA](https://zhuanlan.zhihu.com/p/22148777)
+- [NIPS'09 Kernel Methods for Deep Learning](https://papers.nips.cc/paper/2009/hash/5751ec3e9a4feab575962e78e006250d-Abstract.html)
+- [ICLR'20 Harnessing the Power of Infinitely Wide Deep Nets on Small-data Tasks](https://iclr.cc/virtual_2020/poster_rkl8sJBYvH.html)
