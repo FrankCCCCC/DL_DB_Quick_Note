@@ -4,8 +4,19 @@ theme: default
 paginate: true
 # _class: invert
 # color: white
-# backgroundColor: black
 class: lead
+style: |
+  h1 {
+    color: #3d3d3d
+  }
+# style: |
+#   section {
+#     background-color: #ffffff;
+#   }
+#   h1 {
+#     font-size: 50px;
+#     color: #2a2a2a;
+#   }
 ---
 
 # Neural Kernel Without Tangents
@@ -54,8 +65,12 @@ UC Berkeley, MIT
 # Methodology
 
 - **Bag of features** is simply a generalization of a matrix or tensor: whereas a matrix is an indexed list of vectors, a bag of features is a collection of elements in a Hilbert space $\mathcal{H}$ with a finite, structured index set $\mathcal{B}$. 
-- EX: we can consider an image to be a bag of features where the index set $\mathcal{B}$ is the pixel’s row and column location and $\mathcal{H}$ is $\mathbb{R}^3$: at every pixel location, there is a corresponding vector in $\mathbb{R}^3$.
-- 
+- EX: we can consider an **image** to be a bag of features where the **index set $\mathcal{B}$ is the pixel’s row and column location** and **$\mathcal{H}$ is $\mathbb{R}^3$: at every pixel location, there is a corresponding vector encoding RGB in $\mathbb{R}^3$**.
+- Given two bags of features with the same $(\mathcal{B}, \mathcal{H})$, we define the kernel function
+
+$$k(\mathbf{X}, a, \mathbf{Z}, b) = \langle \mathbf{X}_a, \mathbf{Z}_b \rangle$$
+
+It defines a **kernel matrix between two bags of features**: we compute the kernel function for each pair of indices in $\mathcal{B} \times \mathcal{B}$ to form a **$|\mathcal{B}| \times |\mathcal{B}|$ matrix**
 
 ---
 
@@ -86,6 +101,8 @@ UC Berkeley, MIT
 # ReLU Kernel
 
 ![width:800px](img/relu2.png)
+
+It's the same as the **arccosine kernel** used in NTK. Refers to [NIPS'09 Kernel Methods for Deep Learning](https://papers.nips.cc/paper/2009/hash/5751ec3e9a4feab575962e78e006250d-Abstract.html)
 
 ---
 
@@ -123,7 +140,7 @@ UC Berkeley, MIT
 
 ## Architecture
 
-All architectures that can be represented as a list of operations from the set {conv3, pool2, relu} as the "Myrtle" family. The right one is **Myrtle7** and the left on is **Myrtle10**
+All architectures that can be represented as a list of operations from the set **{conv3, pool2, relu}** as the **"Myrtle" family**. The right one is **Myrtle7** and the left on is **Myrtle10**
 
 ![bg right 100%](img/myrtles.png)
 
@@ -164,7 +181,8 @@ All architectures that can be represented as a list of operations from the set {
 # Subsampled CIFAR-10
 
 - Subsampled datasets are class balanced
-- Network with the same architecture as compositional kernel severely underperforms both the compositional kernel and NTK in the low data regime
+- **Compositional kernel and NTK in the low data regime**
+- **Network** with the same architecture as compositional kernel severely **underperforms both the compositional kernel and NTK in the low data regime**
 - After adding batch normalization, the network outperforms both compositional kernel and the NTK
 
 ![bg right 100%](img/cifar10_subsample.png)
@@ -176,4 +194,4 @@ All architectures that can be represented as a list of operations from the set {
 - Some notion of **compositionality and hierarchy** may be necessary to build kernel predictors that match the performance of neural networks
 - **NTKs** themselves may **not actually provide particularly useful guides** to the practice of kernel methods.
 - We may underscores the importance of proper preprocessing for kernel methods
-- There still performance gaps between kernel methods and neural networks and the reasons remain unknown.
+- There **still performance gaps between kernel methods and neural networks** and the reasons remain unknown.
