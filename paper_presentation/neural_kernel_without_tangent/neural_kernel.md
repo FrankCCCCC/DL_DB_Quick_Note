@@ -74,6 +74,10 @@ It defines a **kernel matrix between two bags of features**: we compute the kern
 
 ---
 
+$$\mathbb{E}[\sum_{c=1}^{D_4} \Psi(U)[i, j, k, c] \Psi(U)[l, , k, c]$$
+
+---
+
 # Input Kernel
 
 ![width:800px](img/input.png)
@@ -111,7 +115,8 @@ It's the same as the **arccosine kernel** used in NTK. Refers to [NIPS'09 Kernel
 ![width:800px](img/gaussian.png)
 
 ---
-
+$$\mathbb{E}[\sum_{c=1}^{D_4} \Psi(U)[i, j, k, c] \Psi(U)[l, m, n, c]] = k_{relu}(c_w(k_0(U)))[i, j, k, l, m, n]$$
+---
 # Algorithm
 
 ![width:800px](img/algo.png)

@@ -119,3 +119,8 @@ Denote $N$ as the number of training samples. Let $\alpha = 0.3$ and $k = 15$ so
 ![width:1000px](img/experiment2.png)
 
 when $\alpha \lt \beta$, the base signal is larger than the composite signal, so indeed ResNet can perform hierachical learning; in contrast, when $\alpha \gt \beta$, learning the composite signal becomes practically impossible.
+
+---
+
+PAC Learning Theory
+P10. Target function
