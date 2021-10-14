@@ -74,10 +74,6 @@ It defines a **kernel matrix between two bags of features**: we compute the kern
 
 ---
 
-$$\mathbb{E}[\sum_{c=1}^{D_4} \Psi(U)[i, j, k, c] \Psi(U)[l, , k, c]$$
-
----
-
 # Input Kernel
 
 ![width:800px](img/input.png)
@@ -115,7 +111,19 @@ It's the same as the **arccosine kernel** used in NTK. Refers to [NIPS'09 Kernel
 ![width:800px](img/gaussian.png)
 
 ---
+
+# Related to Neural Network
+
+Let a simple convolution layer as
+
+$$\Psi(U) = relu(W * U)$$
+
+Where $W \in \mathbb{R}^{(2w + 1) \times (2w + 1) \times D_3 \times D_4}$ is a weight tensor and $U \in \mathbb{R}^{N \times D_1 \times D_2 \times D_3}$ is the input, which can be $N$ images. Suppose the entries of $W$ are appropriately **scaled random Gaussian variables**. We can evaluate the following **expectation according to the calculation**
+
 $$\mathbb{E}[\sum_{c=1}^{D_4} \Psi(U)[i, j, k, c] \Psi(U)[l, m, n, c]] = k_{relu}(c_w(k_0(U)))[i, j, k, l, m, n]$$
+
+
+
 ---
 # Algorithm
 
