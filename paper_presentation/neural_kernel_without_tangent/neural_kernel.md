@@ -122,7 +122,7 @@ Where $W \in \mathbb{R}^{(2w + 1) \times (2w + 1) \times D_3 \times D_4}$ is a w
 
 $$\mathbb{E}[\sum_{c=1}^{D_4} \Psi(U)[i, j, k, c] \Psi(U)[l, m, n, c]] = k_{relu}(c_w(k_0(U)))[i, j, k, l, m, n]$$
 
-
+Refers to [NIPS'16 Toward Deeper Understanding of Neural Networks: The Power of Initialization and a Dual View on Expressivity](https://proceedings.neurips.cc/paper/2016/hash/abea47ba24142ed16b7d8fbf2c740e0d-Abstract.html)
 
 ---
 # Algorithm

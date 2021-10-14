@@ -14,7 +14,7 @@ style: |
 
 # What Can ResNet Learn Efficiently, Going Beyond Kernels?
 
-NIPS'19, Citation: 77
+**NIPS'19, Citation: 77**
 
 Zeyuan Allen-Zhu, Yuanzhi Li
 
@@ -37,10 +37,30 @@ In other words, can kernel method fully represent the learning capacity of a neu
 
 ---
 
+# PAC Learnability
+
+- **How to measure the learnability of a model with a given target function?** That is, does a model learn the target function(concept class) or not?
+- We can see the **target function(concept class)** as a generator $y_i = g(x_i)$ that **generates the dataset** $\{ \mathcal{X}, \mathcal{Y}\}, \ x_i \in \mathcal{X}, y_i \in \mathcal{Y} \ \forall i \in N$, the features are drawn from an arbitrary distribution $\mathcal{X} \in \mathcal{D}$, and the labels are **binary** $y_i \in \{\ 0, 1\}$.
+- With **Hoeffding's inequality**, for a given training dataset $\{ \mathcal{X}, \mathcal{Y}\}$ with $N$ samples, we can guarantee that 
+
+$$Pr(||f(\mathcal{X}) - \mathbb{E}[f(X)]||_2^2 \gt \epsilon) \le 2 e^{-2 \epsilon^2 N}$$
+
+where $X \in \mathcal{D}$ and $Y = f(X)$ are random variables. $\epsilon$ is the error.
+
+---
+
+# PAC Learnability
+
+## Formal Definition
+
+Let $\mathcal{C}$ be a class of **boolean functions** $f : \{0, 1\}^n \to \{ 0, 1\}$. We say that **$\mathcal{C}$ is PAC-learnable if there exists an algorithm $\mathcal{L}$ such that for every $f \in \mathcal{C}$, for any probability distribution $\mathcal{D}$**, for any (where $0 < \epsilon \leq \frac{1}{2}$), for any $\delta$ (where $0 \leq \delta < 1$) algorithm $\mathcal{L}$ on input $\epsilon$ and $\delta$ and a set of random examples picked from any probability distribution $\mathcal{D}$ **outputs at least with a probability $1 − \delta$, concept $h$ such that error $(h, f) \leq \epsilon$**.
+
+---
+
 # Main Idea
 
 - For neural networks with **ReLU** activations, we show without any distributional assumption, a **three-layer residual network (ResNet)** can (improperly) learn a **concept class that includes three-layer ResNets of smaller size and smooth activations**, and the generalization error is also small if polynomially many training examples are given while the network is trained by SGD.
-- Then prove that for **some $\delta \in (0, 1)$, with $N = O(\delta^{-2})$ training samples**, neural networks can efficiently **achieve generalization error $\delta$ for this concept class over any distribution**; in contrast, there exists a simple distributions such that **any kernel method cannot have generalization error better than $\sqrt{\delta}$ for this class cannot have generalization error better than $\sqrt{\delta}$ for this class**.
+- Then prove that for **some $\delta \in (0, 1)$, with $N = O(\delta^{-2})$ training samples**, neural networks can efficiently **achieve generalization error $\delta$ for this concept class over any distribution**; in contrast, there exists a simple distributions such that **any kernel method cannot have generalization error better than $\sqrt{\delta}$ for this class.
 - Also prove a computation complexity advantage of neural networks with respect to linear regression over arbitrary feature mappings as well.
 
 
@@ -102,7 +122,7 @@ The **running time of SGD** is **polynomial in $\text{poly}(C_{\mathcal{G}}, C_{
 
 # Experiment
 
-- Generate **feature vectors $x \in \{−1, 1\}^{30}$** that are **uniformly sampled at random**, and labels are generated from a **target function $\mathcal{H}(x) = \mathcal{F}(x) + \alpha \mathcal{G}(\mathcal{F}(x)) \in \mathbb{R}^{15}$** satisfying $\mathcal{F}(x) = (x_{1}x_{2},..., x_{29}x_{30})$ and $\mathcal{G}_i(y) = (−1)^i y_1 y_2 y_3 y_4$ for all $i = 1, 2,..., 15$.  In other words, $\mathcal{F}$ is a **degree-2 parity function** over **30 dimensions**, and $\mathcal{G}$ is a **degree-4 parity function** over **15 dimensions**.
+- Generate **feature vectors $x \in \{−1, 1\}^{30}$** that are **uniformly sampled at random**, and labels are generated from a **target function $\mathcal{H}(x) = \mathcal{F}(x) + \alpha \mathcal{G}(\mathcal{F}(x)) \in \mathbb{R}^{15}$** satisfying $\mathcal{F}(x) = (x_{1}x_{2}, x_{3}x_{4},..., x_{29}x_{30}), \ \mathcal{F}: \mathbb{R}^{30} \to \mathbb{R}^{15}$ and $\mathcal{G}_i(y) = (−1)^i y_1 y_2 y_3 y_4, \ \mathcal{G}: \mathbb{R}^{15} \to \mathbb{R}^{15}$ for all $i = 1, 2,..., 15$.  In other words, $\mathcal{F}$ is a **degree-2 parity function** over **30 dimensions**, and $\mathcal{G}$ is a **degree-4 parity function** over **15 dimensions**.
 
 - SGD optimizer of pytorch, with **momentum 0.9**, **mini-batch size 50**. We carefully run each algorithm with respect to learning rates and **weight decay parameters** in the set $\{10^{−k}, 2 \cdot 10^{−k}, 5 \cdot 10^{−k}: k \in \mathbb{Z} \}$, and present the **best one in terms of testing accuracy**. In each parameter setting, we run **SGD for 800 epochs**, and **decrease the learning rate by 10 on epoch 400**.
 ---
@@ -119,8 +139,3 @@ Denote $N$ as the number of training samples. Let $\alpha = 0.3$ and $k = 15$ so
 ![width:1000px](img/experiment2.png)
 
 when $\alpha \lt \beta$, the base signal is larger than the composite signal, so indeed ResNet can perform hierachical learning; in contrast, when $\alpha \gt \beta$, learning the composite signal becomes practically impossible.
-
----
-
-PAC Learning Theory
-P10. Target function
