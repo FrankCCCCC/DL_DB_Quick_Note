@@ -47,6 +47,8 @@ $$Pr(||f(\mathcal{X}) - \mathbb{E}[f(X)]||_2^2 \gt \epsilon) \le 2 e^{-2 \epsilo
 
 where $X \in \mathcal{D}$ and $Y = f(X)$ are random variables. $\epsilon$ is the error.
 
+<!-- 怎麼 -->
+
 ---
 
 # PAC Learnability

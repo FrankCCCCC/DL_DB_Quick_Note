@@ -84,11 +84,18 @@ It defines a **kernel matrix between two bags of features**: we compute the kern
 
 ![width:800px](img/convolution.png)
 
+<!-- 先內積，後相加 -->
+---
+
+![width:800px](img/conv_man.jpg)
+
 ---
 
 # Average Pooling Kernel
 
 ![width:800px](img/avg_pooling.png)
+
+<!-- 先內積，後取平均 -->
 
 ---
 
@@ -103,6 +110,14 @@ It defines a **kernel matrix between two bags of features**: we compute the kern
 ![width:800px](img/relu2.png)
 
 It's the same as the **arccosine kernel** used in NTK. Refers to [NIPS'09 Kernel Methods for Deep Learning](https://papers.nips.cc/paper/2009/hash/5751ec3e9a4feab575962e78e006250d-Abstract.html)
+
+---
+
+# Heaviside Function
+
+![width:600px](img/heaviside_fn.svg)
+
+The derivative of the ReLU function is Heaviside function. First we can compute the kernel of the Heaviside function and then integrate it, we can get the kernel of the ReLU function.
 
 ---
 
