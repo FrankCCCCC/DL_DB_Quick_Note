@@ -82,4 +82,8 @@ DeepMind
 
 ICML'21 Spotlight
 
-![ICML'18 IMITATION LEARNING TUTORIAL](https://sites.google.com/view/icml2018-imitation-learning/home)
+# Reference
+
+- [ICML'18 IMITATION LEARNING TUTORIAL](https://sites.google.com/view/icml2018-imitation-learning/home)
+- [CSDN imitation learning 前沿论文](https://blog.csdn.net/hjw756517/article/details/88254072)
+- [计算机视觉领域如何从别人的论文里获取自己的idea？（转）](https://www.jianshu.com/p/6fd86ed8c208)
