@@ -1,3 +1,11 @@
+# What Matters for Adversarial Imitation Learning?
+
+Manu Orsini, Anton Raichuk, Léonard Hussenot, Damien Vincent, Robert Dadashi, Sertan Girgin, Matthieu Geist, Olivier Bachem, Olivier Pietquin, Marcin Andrychowicz
+
+Google Research, Brain Team
+
+A survey of adversarial imitation learning.
+
 # Mastering Atari Games with Limited Data
 
 Weirui Ye, Shaohuai Liu, Thanard Kurutach, Pieter Abbeel, Yang Gao
@@ -81,6 +89,75 @@ Andrew Jaegle 1 Yury Sulsky 1 Arun Ahuja 1 Jake Bruce 1 Rob Fergus 1 Greg Wayne
 DeepMind
 
 ICML'21 Spotlight
+
+# Learning Plannable Representations with Causal InfoGAN
+
+Thanard Kurutach, Aviv Tamar, Ge Yang, Stuart Russell, Pieter Abbeel
+
+UC Berkeley,  University of Chicago
+
+NIPS'18
+
+Citation: 116
+
+# Sample-efficient Adversarial Imitation Learning from Observation
+
+Faraz Torabi, Sean Geiger, Garrett Warnell, Peter Stone
+
+ICML'19
+
+Citation: 10
+
+# InfoGAIL: Interpretable Imitation Learning from Visual Demonstrations
+
+Yunzhu Li, Jiaming Song, Stefano Ermon
+
+MIT, Stanford University
+
+NIPS'17
+
+Citation: 237
+
+# Robust Imitation of Diverse Behaviors
+
+Ziyu Wang, Josh Merel, Scott Reed, Greg Wayne, Nando de Freitas, Nicolas Heess
+
+DeepMind
+
+arXiv'17
+
+Citation: 146
+
+# Reinforcement Learning from Imperfect Demonstrations
+
+Yang Gao, Huazhe Xu, Ji Lin, Fisher Yu, Sergey Levine, Trevor Darrell
+
+UC Berkeley, Tsinghua University
+
+ICML'18
+
+Citation: 154
+
+# Imitation Learning from Imperfect Demonstration
+
+Yueh-Hua Wu, Nontawat Charoenphakdee, Han Bao, Voot Tangkaratt, Masashi Sugiyama
+
+National Taiwan University, RIKEN Center
+for Advanced Intelligence Project, The University of Tokyo
+
+ICML'19
+
+Citation: 44
+
+# Guided Cost Learning Deep Inverse Optimal Control via Policy Optimization
+
+Chelsea Finn, Sergey Levine, Pieter Abbeel
+
+UC Berkeley
+
+ICML'16
+
+Citation: 673
 
 # Reference
 

@@ -23,7 +23,7 @@ style: |
 
 $$
 \arg \min_{\theta_{G}} \max_{\theta_{D}} \mathbb{E}_{x \sim \mathcal{P}_{data}}[\log D(x)] + 
-\mathbb{E}_{z \sim \mathcal{P}_{noise}}[\log D(1 - G(x))]
+\mathbb{E}_{z \sim \mathcal{P}_{noise}}[\log (1 - D(G(z)))]
 \quad \quad \quad \tag{1}
 $$
 
