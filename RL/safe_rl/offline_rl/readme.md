@@ -90,6 +90,17 @@ Citation: ?
 
 Refers to [知乎 论文分享：Uncertainty-Based Offline Reinforcement Learning with Diversified Q-Ensemble](https://zhuanlan.zhihu.com/p/426453859)
 
+# Offline Reinforcement Learning with Fisher Divergence Critic Regularization
+
+Ilya Kostrikov, Jonathan Tompson, Rob Fergus, Ofir Nachum
+
+New York University, Google Research, Google DeepMind
+
+Citation: 20
+
+Refers to [知乎 [Offline RL]Fisher Divergence Critic Regularization](https://zhuanlan.zhihu.com/p/425655819)
+
+
 # Reference
 
 - [离线强化学习（一）](https://zhuanlan.zhihu.com/p/414497708)
