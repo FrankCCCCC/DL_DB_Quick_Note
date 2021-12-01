@@ -87,9 +87,9 @@ $$
 
 ---
 
-# Stable Convergence
+# Our Contribution: Solved Failure to Convergence
 
-The image quality is consistent with the loss. As the **loss decreases, the image quality is improved**.
+**In our experiment**, the image quality is consistent with the loss. As the **loss decreases, the image quality is improved**.
 
 ![w:1000 center](img/convergence.png)
 
@@ -103,9 +103,9 @@ Our method(**GA-FNTK**) **fits to multi-modal distribution perfectly**, rather t
 
 ---
 
-# Gradient Vanish
+# Our Contribution: Solved Gradient Vanish
 
-Decision boundary of the discriminator and the corresponding gradients for the generator $\mathbf{Z}^n$ in (a) GANs and (b) GA-NTK on 1D toy dataset. The blue points are real data points and the red ones are fake. The discriminator output 1 for the real data points and 0 for the fake ones(fig (a) red line). The **gradients(fig (a) blue line) vanishes while the the data points are far away from the decision boundary**.
+**In our experiment**, decision boundary of the discriminator and the corresponding gradients for the generator $\mathbf{Z}^n$ in (a) GANs and (b) GA-NTK on 1D toy dataset. The blue points are real data points and the red ones are fake. The discriminator output 1 for the real data points and 0 for the fake ones(fig (a) red line). The **gradients(fig (a) blue line) vanishes while the the data points are far away from the decision boundary**.
 
 The **gray dashed lines indicate the gradients for $\mathbf{Z}^n$ from different element networks of the ensemble discriminator in GA-NTK**.
 
@@ -114,6 +114,16 @@ The **gray dashed lines indicate the gradients for $\mathbf{Z}^n$ from different
 
 ---
 
-# Compare GA-CNTK & GANs
+# Compare GA-NTK & GANs Baseline
+
+FID: The **lower**, the **better image quality**
+AM-SSIM: The **lower**, the **better creativity**
+**Our method outperform than other widely-used GANs in small dataset**
+
+![w:700 center](img/color_table.png)
+
+---
+
+We use only **256** training images on CelebA, CIFAR10, MNIST datasets.
 
 ![w:600 center](img/puzzle.png)
