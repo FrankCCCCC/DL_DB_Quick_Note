@@ -145,3 +145,6 @@ PlaNet的改良版
 - [UM IFT 6085: Theoretical principles for deep learning](http://mitliagkas.github.io/ift6085-dl-theory-class/)
 - [Waterloo University CS885 Spring: Reinforcement Learning](https://cs.uwaterloo.ca/~ppoupart/teaching/cs885-spring20/)
 - [Caltech CS 159: Data-Driven Algorithm Design](https://sites.google.com/view/cs-159-spring-2020/)
+- [ICML'2020 Causal Reinforcement Learning](https://icml.cc/Conferences/2020/Schedule?showEvent=5752)
+- [ICML'2020 Model-Based Methods in Reinforcement Learning](https://icml.cc/Conferences/2020/Schedule?showEvent=5749)
+- [ICML'21 Unsupervised Learning for Reinforcement Learning](https://icml.cc/Conferences/2021/Schedule?showEvent=10843)

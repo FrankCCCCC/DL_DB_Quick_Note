@@ -51,3 +51,7 @@ AAAI'17
 Citation 32
 
 [PDF HIGHLIGHT](./Scalable%20Recollections%20for%20Continual%20Lifelong%20Learning.pdf)
+
+# Reference
+
+- [ICML'21 Continual Learning with Deep Architectures](https://icml.cc/virtual/2021/tutorial/10833#collapse-sl-11011)

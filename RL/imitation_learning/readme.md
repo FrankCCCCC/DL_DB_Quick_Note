@@ -18,6 +18,56 @@ Citation: ?
 
 Propose EfficientZero. An improvement based on MuZero.
 
+# Robust Imitation of Diverse Behaviors
+
+Ziyu Wang, Josh Merel, Scott Reed, Greg Wayne, Nando de Freitas, Nicolas Heess
+
+DeepMind
+
+arXiv'17
+
+Citation: 146
+
+# Reinforcement Learning from Imperfect Demonstrations
+
+Yang Gao, Huazhe Xu, Ji Lin, Fisher Yu, Sergey Levine, Trevor Darrell
+
+UC Berkeley, Tsinghua University
+
+ICML'18
+
+Citation: 154
+
+# Imitation Learning from Imperfect Demonstration
+
+Yueh-Hua Wu, Nontawat Charoenphakdee, Han Bao, Voot Tangkaratt, Masashi Sugiyama
+
+National Taiwan University, RIKEN Center
+for Advanced Intelligence Project, The University of Tokyo
+
+ICML'19
+
+Citation: 44
+
+# Imitation by Predicting Observations
+
+Andrew Jaegle 1 Yury Sulsky 1 Arun Ahuja 1 Jake Bruce 1 Rob Fergus 1 Greg Wayne
+
+DeepMind
+
+ICML'21 Spotlight
+
+# Safe Imitation Learning via Fast Bayesian Reward Inference from Preferences
+
+Daniel S. Brown, Russell Coleman, Ravi Srinivasan, Scott Niekum
+
+The University of Texas at Austin
+
+ICML'20
+
+Citation: 24
+
+# GAIL
 # Generative Adversarial Imitation Learning
 
 Jonathan Ho, Stefano Ermon
@@ -82,14 +132,6 @@ Citation: 9
 
 Combine Neural ODE and imitation learning.
 
-# Imitation by Predicting Observations
-
-Andrew Jaegle 1 Yury Sulsky 1 Arun Ahuja 1 Jake Bruce 1 Rob Fergus 1 Greg Wayne
-
-DeepMind
-
-ICML'21 Spotlight
-
 # Learning Plannable Representations with Causal InfoGAN
 
 Thanard Kurutach, Aviv Tamar, Ge Yang, Stuart Russell, Pieter Abbeel
@@ -118,37 +160,6 @@ NIPS'17
 
 Citation: 237
 
-# Robust Imitation of Diverse Behaviors
-
-Ziyu Wang, Josh Merel, Scott Reed, Greg Wayne, Nando de Freitas, Nicolas Heess
-
-DeepMind
-
-arXiv'17
-
-Citation: 146
-
-# Reinforcement Learning from Imperfect Demonstrations
-
-Yang Gao, Huazhe Xu, Ji Lin, Fisher Yu, Sergey Levine, Trevor Darrell
-
-UC Berkeley, Tsinghua University
-
-ICML'18
-
-Citation: 154
-
-# Imitation Learning from Imperfect Demonstration
-
-Yueh-Hua Wu, Nontawat Charoenphakdee, Han Bao, Voot Tangkaratt, Masashi Sugiyama
-
-National Taiwan University, RIKEN Center
-for Advanced Intelligence Project, The University of Tokyo
-
-ICML'19
-
-Citation: 44
-
 # Guided Cost Learning Deep Inverse Optimal Control via Policy Optimization
 
 Chelsea Finn, Sergey Levine, Pieter Abbeel
@@ -158,6 +169,16 @@ UC Berkeley
 ICML'16
 
 Citation: 673
+
+# A Bayesian Approach to Generative Adversarial Imitation Learning
+
+Wonseok Jeon, Seokin Seo, Kee-Eung Kim
+
+School of Computing, KAIST, Republic of Korea, PROWLER.io
+
+NIPS'18
+
+Citation: 19
 
 # Reference
 

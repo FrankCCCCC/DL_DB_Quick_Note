@@ -275,3 +275,7 @@ For the following figure, it shows the mask distance drawn from different epoch 
 
 ### Initialization and Regularization of Factorized Neural Layers
 [PDF Highlight](./Initialization%20and%20Regularization%20of%20Factorized%20Neural%20Layers.pdf)
+
+# Reference
+
+- [ICML'21 Sparsity in Deep Learning: Pruning + growth for efficient inference and training in neural networks](https://www.youtube.com/watch?v=H7-p3OWPpEI)

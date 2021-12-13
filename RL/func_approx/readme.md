@@ -44,6 +44,8 @@ NIPS'03
 
 Citation: 293
 
+Gaussian process regression with RL.
+
 # Reinforcement learning with Gaussian processes
 
 Yaakov Engel, Shie Mannor, Ron Meir
