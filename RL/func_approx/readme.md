@@ -78,6 +78,52 @@ ICML'14
 
 Citation: 52
 
+# Deterministic Bellman Residual Minimization
+
+Ehsan Saleh, Nan Jiang
+
+University of Illinois at Urbana-Champaign
+
+NIPS'19 Workshop
+
+Citation: 4
+
+# Should one compute the Temporal Difference fix point or minimize the Bellman Residual? The unified oblique projection view
+
+Bruno Scherrer 
+
+INRIA Lorraine
+
+ICML'10
+
+Citation: 92
+
+# A Kernel Loss for Solving the Bellman Equation
+
+Yihao Feng, Lihong Li, Qiang Liu
+
+UT Austin, Google Research
+
+NIPS'19
+
+Citation: 34
+
+# Learning near-optimal policies with Bellman-residual minimization based fitted policy iteration and a single sample path
+
+András Antos, Csaba Szepesvári, Rémi Munos 
+
+Citation: 364
+
+# SBEED: Convergent Reinforcement Learning with Nonlinear Function Approximation
+
+Bo Dai, Albert Shaw, Lihong Li, Lin Xiao, Niao He, Zhen Liu, Jianshu Chen, Le Song
+
+Georgia Institute of Technology, Google Inc., Microsoft Research, University of Illinois at Urbana Champaign, Tencent AI Lab
+
+ICML'18
+
+Citation: 165
 # Reference
 
 - [DAVID SILVER RL Course](https://www.davidsilver.uk/teaching/)
+- [David Silver强化学习公开课中文讲解及实践 知乎](https://www.zhihu.com/column/reinforce)

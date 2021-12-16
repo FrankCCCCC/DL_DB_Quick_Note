@@ -8,6 +8,8 @@ Nature'21
 
 Citation: 65
 
+# Quantum tangent kernel
+
 # Reference
 
 - [ICML'20 Quantum Machine Learning : Prospects and Challenges](https://icml.cc/virtual/2020/invited-talk/7941)
