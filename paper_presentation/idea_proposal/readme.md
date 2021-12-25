@@ -248,11 +248,12 @@ $$
 
 - Since the loss is defined as MSE. We can **use NTK-GP compute the agent without training.**
 - Can be applied on **both offline RL and real-time situation**, since it **don't need to train the agent iteratively.**
+- **Don't need to search the next sampling point in the high dimensional space like Bayesian optimization.**
 - The next reward-to-go is predicted and we only need to give the first reward-to-go.
 
 # Disadvantage
 
-- If we want to extend the Decision Transformer to stochastic MDP, we need to work around the estimation of $\hat{R}_t$ in stochastic MDP and stochastic policy.
+- If we want to extend the Decision Transformer to stochastic MDP, we need to **work around the estimation of $\hat{R}_t$ in stochastic MDP and stochastic policy.**
 
 ---
 
