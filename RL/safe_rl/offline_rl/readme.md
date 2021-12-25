@@ -42,7 +42,7 @@ NIPS'19
 
 Citation: 228
 
-Propose Bootstrapping Error Accumulation Reduction(BEAR).
+Propose Bootstrapping Error Accumulation Reduction(BEAR). IPM based policy constraint.
 
 # Behavior Regularized Offline Reinforcement Learning
 
@@ -66,7 +66,7 @@ NIPS'20
 
 Citation: 159
 
-Propose Conservative Q-Learning(CQL)
+Propose Conservative Q-Learning(CQL). Pessimistic Value Functions
 
 # BRAC+: Improved Behavior Regularized Actor Critic for Offline Reinforcement Learning
 
