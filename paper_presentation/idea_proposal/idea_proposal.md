@@ -52,7 +52,8 @@ style: |
 - Decision Transformer + NTK
 
 ## Imitation Learning
-<!-- - GA-NTK + GAIL -->
+- GA-NTK + GAIL
+- Behavior Cloning + NTK
 
 ## NLP
 
