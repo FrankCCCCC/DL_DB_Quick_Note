@@ -243,11 +243,25 @@ $$
 
 ---
 
+# D4RL Dataset
+
+![](img/d4rl.png)
+
+Halfcheetah-v2, Hopper-v2, Walker2d-v2 and Swimmer-v2 tasks environment
+
+---
+
 # Performance
 
 ![](img/transformer_rl_atari.png)
 
 - In Qbert, DT is extremely poor, since Qbert has highly stochastic environment.
+
+---
+
+# QBert
+
+![](img/qbert.jpg)
 
 ---
 
@@ -270,9 +284,8 @@ $$
 # Advantage
 
 - Since the loss is defined as MSE. We can **use NTK-GP compute the agent without training.**
-- Can be applied on **both offline RL and real-time situation**, since it **don't need to train the agent iteratively.**
-- **Don't need to search the next sampling point in the high dimensional space like Bayesian optimization.**
-- Safe exploration? Avoid over-fitting(Bayesian) naturally. High sample efficiency.
+- Can be applied on **both offline RL and real-time situation**
+- Avoid over-fitting(Bayesian) naturally. High sample efficiency.
 - The next reward-to-go is predicted and we only need to give the first reward-to-go.
 
 # Disadvantage
@@ -282,6 +295,7 @@ $$
 ---
 
 # Imitation Learning
+
 ---
 
 # Generative Adversarial Imitation Learning(GAIL)
@@ -333,9 +347,11 @@ $$
 ## Advantages
   - Since NTK-GP is Bayesian, the action would be smoother than MLE, which is great for robotic tasks.
 
-<!-- $$
-J(\pi) = \mathbb{E}_{s \sim d_{\pi^*}} [|| \pi^*(\cdot | s) -  \pi(\cdot | s) ||] + \mathbb{E}_{}
-$$ -->
+It's trivial(stupid), but in ICLR'21 spotlight, Disagreement-Regularized Imitation Learning
+
+---
+
+![](img/dril.png)
 
 ---
 
