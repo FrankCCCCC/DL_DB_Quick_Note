@@ -44,7 +44,7 @@ style: |
 
 ## Background
 ## Experiences
-### 
+### Skill Set
 
 ---
 
@@ -52,7 +52,11 @@ style: |
 
 - Senior student major in **CS, NTHU**
 - **Graduate in 2022 with B.S.** degree(expected)
-- Entrepreneur and enthusiast in machine learning and large-scale systems.
+- Entrepreneur and enthusiast in **machine learning** and **large-scale systems**.
+- Developer of open source distributed database: **ElaSQL and VanillaDB**
+
+<!-- ![width:400px right](images/vanilladb_brand.png) -->
+<!-- ![width:400px left](images/elasql.png) -->
 
 
 ---
@@ -77,10 +81,11 @@ img[alt~="center"] {
 </style>
 # In Distributed Database Research Group
 
-- Design a **data pipeline** to collect features of distributed DBMS in **open source database project: ElaSQL and VanillaCore with Java**
-- Optimize / estimate transaction routing destination with ML model and PID control
-- The paper is under writing
-
+<!-- - Design a **data pipeline** to collect features of distributed DBMS in **open source database project: ElaSQL and VanillaDB with Java**. Optimize / estimate transaction routing destination with ML model and PID control -->
+- 2 main contribute to the open source database project: **ElaSQL and VanillaDB**.
+- Implement the **prototype of the "DependencyAnalyzer" component** with **Java**.
+- **Reproduce experiments of the paper** "MB2: Decomposed Behavior Modeling for Self-Driving Database Management Systems"
+<!-- - The paper is under writing -->
 
 ![width:800px center](images/db.png)
 
@@ -93,7 +98,7 @@ img[alt~="center"] {
 </style>
 # In Machine Learning  Research Group
 
-- Propose a **new image synthesis algorithm: GA-NTK**, which can **generate competitive images in comparison to GANs**, eg: WGAN, WGAN-GP, and SNGAN
+- Propose a **new image synthesis algorithm: GA-NTK**, which can **generate competitive images in comparison to GANs**, eg: WGAN...
 - reduce **bilevel optimization problem of GANs to single-level one**
 - The paper is under submission
 
@@ -107,8 +112,8 @@ img[alt~="center"] {
 }
 </style>
 # As Co-founder of LEAFHOPPER.IO
-
-- Build a traceability system for Dong-Ding Oolong tea in cooperate with Lu-Gu government.
+- Lead a **team of 7 people and negotiated with the local farmer.**
+- Build a **traceability system** for Dong-Ding Oolong tea in **cooperate with Lu-Gu government.**
 
 ![width:800px center](images/app.png)
 
@@ -118,13 +123,13 @@ img[alt~="center"] {
 
 - Machine Learning (1 paper under submission) & Distributed Database researches
 - Programming language
-  - Java, Python, C++, R
+  - **Java, Python, C++, R**
 - Frameworks
-  - React, Node.js, 
+  - **React, Node.js**
 - Deployment
-  - Kubernetes, Docker, GCP
+  - **Kubernetes, Docker, GCP**
 - DBMS
-  - PostgreSQL
+  - **PostgreSQL**
 
 ---
 
