@@ -85,7 +85,7 @@ img[alt~="center"] {
 <!-- - Design a **data pipeline** to collect features of distributed DBMS in **open source database project: ElaSQL and VanillaDB with Java**. Optimize / estimate transaction routing destination with ML model and PID control -->
 - 2 main contribute to the open source database project: **ElaSQL and VanillaDB**.
 - Implement the **prototype of the "DependencyAnalyzer" component** with **Java**.
-- **Reproduce experiments of the paper** "MB2: Decomposed Behavior Modeling for Self-Driving Database Management Systems"
+- **Reproduce experiments of the paper** "MB2: Decomposed Behavior Modeling for Self-Driving Database Management Systems" to **verify the feasibility** of the topic.
 - The paper is under writing
 
 ![width:700px center](images/db.png)
@@ -100,8 +100,8 @@ img[alt~="center"] {
 # In Machine Learning  Research Group
 
 - Propose a **new image synthesis algorithm: GA-NTK**, which can **generate competitive images in comparison to GANs with only 64 ~ 256 images**
-- Reduce **bilevel optimization problem of GANs to single-level one** and **stabilize the training progress of GANs.**
-- The paper is under submission
+- Reduce **bilevel optimization problem of GANs to single-level one**, **stabilize the training progress of GANs, and prevent vanish gradients.**
+- The paper is under **submission to CVPR 2022**
 
 ![width:800px center](images/ml.png)
 
@@ -113,8 +113,8 @@ img[alt~="center"] {
 }
 </style>
 # Co-Founder Of Student Startup LEAFHOPPER IO
-- Lead a **team of 7 people and negotiated with the local farmer.**
-- Build a **traceability system** and online selling platform for Dong-Ding Oolong tea in **cooperate with Lu-Gu government.**
+- Lead a **team of 7 people and negotiated with the local farmer in Lu-Gu township.**
+- Build a **traceability system** and online selling platform for Dong-Ding Oolong tea in **cooperate with Lu-Gu township government.**
 
 ![width:800px center](images/app.png)
 
