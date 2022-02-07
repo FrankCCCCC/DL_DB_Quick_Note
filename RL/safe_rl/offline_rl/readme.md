@@ -86,7 +86,7 @@ Seoul National University, Neural Processing Research Center, DeepMetrics
 
 NIPS'21
 
-Citation: ?
+Citation: 1
 
 Refers to [知乎 论文分享：Uncertainty-Based Offline Reinforcement Learning with Diversified Q-Ensemble](https://zhuanlan.zhihu.com/p/426453859)
 
