@@ -77,3 +77,85 @@ We aim to learn a policy $\pi$ from the history of trajectories $\mathcal{D} = \
 
 # Idea
 
+- Penalize the Q-function with the most pessimistic Q-network of the ensemble Q-network.
+
+Modify the following SAC objective
+
+$$
+\min_{\phi_{i}} \mathbb{E}_{\left(\mathbf{s}, \mathbf{a}, \mathbf{s}^{\prime}\right) \sim \mathcal{D}}\left[\left(Q_{\phi}(\mathbf{s}, \mathbf{a})-\left(r(\mathbf{s}, \mathbf{a})+\gamma \mathbb{E}_{\mathbf{a}^{\prime} \sim \pi_{\theta}\left(\cdot \mid \mathbf{s}^{\prime}\right)}\left[Q_{\phi^{\prime}}\left(\mathbf{s}^{\prime}, \mathbf{a}^{\prime}\right)\right]  - \beta \log \pi_{\theta}\left(\mathbf{a}^{\prime} \mid \mathbf{s}^{\prime}\right) \right)\right)^{2}\right]
+$$
+
+$$
+\max_{\theta} \mathbb{E}_{\mathbf{s} \sim \mathcal{D}, \mathbf{a} \sim \pi_{\theta}(\cdot \mid \mathbf{s})}\left[Q_{\phi}(\mathbf{s}, \mathbf{a})-\beta \log \pi_{\theta}(\mathbf{a} \mid \mathbf{s})\right]
+$$
+
+<!-- ![](./img/q_network_objective.png) -->
+
+To SAC-N
+
+$$
+\min_{\phi_{i}} \mathbb{E}_{s, a, s^{\prime} \sim \mathcal{D}}\left[\left(Q_{\phi_{i}}(s, a)-\left(r(s, a)+\gamma \mathbb{E}_{a^{\prime} \sim \pi_{\theta}\left(\cdot \mid s^{\prime}\right)}\left[\min _{j=1, \ldots, N} Q_{\phi_{j}^{\prime}}\left(s^{\prime}, a^{\prime}\right) - \beta \log \pi_{\theta}\left(a^{\prime} \mid s^{\prime}\right)\right]\right)\right)^{2}\right] \\
+$$
+
+$$
+\max_{\theta} \mathbb{E}_{s \sim \mathcal{D}, a \sim \pi_{\theta}(\cdot \mid s)}\left[\min _{j=1, \ldots, N} Q_{\phi_{j}}(s, a)-\beta \log \pi_{\theta}(a \mid s)\right]
+$$
+
+<!-- ![](./img/SAC-N.png) -->
+
+---
+
+# Idea
+
+And the authors surprisingly found that SAC-N will outperform than the SOTA offline-RL algorithm CQL when the number of ensemble is large enough.
+
+![](./img/SAC-N_vs_CQL.png)
+
+---
+
+# Idea
+
+- Obviously, the redundant Q-networks of SAC-N cost lots of computation. The authors aim to reduce the size of the ensemble Q-network while achieving the same performance.
+- The authors found that the performance of SAC-N is negatively correlated with the degree to which the input gradients of Q-functions $\nabla_a Q_{\phi_j} (s, a)$ are aligned, which increases with $N$.
+
+---
+
+# Evidence 1
+
+**The Q-value predictions for the OOD actions have a higher variance.**
+
+![](./img/SAC-N_OOD_props.png)
+
+---
+
+- Here we define the penalty from the clipping as 
+
+$$
+\mathbb{E}_{s \sim D,a \sim \pi(·|s)} \left[ \frac{1}{N} \sum_{j=1}^{N}Q_{\phi_j}(s, a) − \min_{j=1,...,N} Q_{\phi_j}(s, a) \right]
+$$
+
+- We also approximate the expected minimum of the realizations following the work of Royston
+
+$$
+\mathbb{E} \left[ \min_{j=1,...,N} Q_j(s, a) \right] \approx m(s, a) − \Phi^{−1} \left( \frac{N − \frac{\pi}{8}}{N − \frac{\pi}{4} + 1} \right) \sigma(s, a)
+$$
+
+Where we suppose $Q(s, a) \sim \mathcal{N}(m(s, a), \sigma(s, a))$ and $\Phi$ is the CDF of the standard Gaussian distribution.
+
+---
+
+# Evidence 2
+
+**The performance of the learned policy degrades significantly when the Q-functions share a similar local structure.**
+
+![width:500px](./img/cosine_similarity_avg_reward.png)
+
+---
+
+The minimum cosine similarity between the gradients of the Q-functions is
+
+$$
+\min_{i \neq j} \langle \nabla_a Q_{\phi_i} (s, a), \nabla_a Q_{\phi_j}(s, a) \rangle
+$$
+
+![width:800px](./img/diversification.png)
