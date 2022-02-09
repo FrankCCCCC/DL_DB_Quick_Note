@@ -205,7 +205,7 @@ img[alt~="center"] {
   margin: 0 auto;
 }
 </style>
-We can take $\text{Var}(Q_{\phi_j}(s, a + k w_2))$ as the variance of the Q value when we take an action which out of the behavioral policy action $a$ in the direction of $w_2$(OOD action). In terms out, the gradients of the Q-network ensemble $\nabla_a Q_{\phi_i}(s, a)$ align when the variance $\text{Var}(Q_{\phi_j}(s, a + k w_2))$ is small.
+We can take $\text{Var}(Q_{\phi_j}(s, a + k w_2))$ as the variance of the Q value when we take an action which out of the behavioral policy action $a$ in the direction of $w_2$(OOD action). In terms out, the gradients of the Q-network ensemble $\nabla_a Q_{\phi_i}(s, a)$ align when the variance $\text{Var}(Q_{\phi_j}(s, a + k w_2))$ is small. Thus, the penalty of the OOD action would be small.
 
 ---
 <style>
@@ -233,8 +233,126 @@ $$
 \min_{\phi} J_{ES}(Q_{\phi}) := \mathbb{E}_{s, a \sim \mathcal{D}} \left[ \langle \frac{1}{N} \sum_{i=1}^{N} \nabla_{a} Q_{\phi_i}(s, a), \frac{1}{N} \sum_{j=1}^{N} \nabla_{a} Q_{\phi_j}(s, a) \rangle  \right]
 $$
 
-Then, we reformulate the equation
+Then, we can reformulate the equation
 
 $$
 \min_{\phi} J_{ES}(Q_{\phi}) := \mathbb{E}_{s, a \sim \mathcal{D}} \left[ \frac{1}{N - 1} \sum_{1 \leq i \neq j \leq N} \langle \nabla_{a} Q_{\phi_i}(s, a), \nabla_{a} Q_{\phi_j}(s, a) \rangle  \right]
 $$
+
+---
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
+# Algorithm 
+
+![center width:800px](./img/EDAC_algo.png)
+
+---
+
+# Proof Sketch
+
+We use Taylor expansion to expand the Q function $Q_{\phi_j}(s, a + kw)$
+
+$$
+\text{Var}(Q_{\phi_j}(s, a + kw)) \approx \text{Var}(Q_{\phi_j}(s, a) + k \langle w, \nabla_a Q_{\phi_j}(s, a) \rangle)
+$$
+
+$$
+= \text{Var}(Q(s, a) + k \langle w, \nabla_a Q_{\phi_j}(s, a) \rangle)
+$$
+
+$$
+= k^2 \text{Var}(\langle w, \nabla_a Q_{\phi_j}(s, a) \rangle)
+$$
+
+$$
+= k^2 w^{T} \text{Var}(\nabla_a Q_{\phi_j}(s, a)) w
+$$
+
+$$
+\geq k^2 w_{\text{min}}^{T} \text{Var}(\nabla_a Q_{\phi_j}(s, a)) w_{\text{min}}
+$$
+
+$$
+= k^2 \lambda_{min}
+$$
+
+---
+
+![](./img/lemma1.png)
+
+![](./img/prop1.png)
+
+---
+
+Then, since the smallest eigenvalue is hard to compute, we compute the sum of the all eigenvalues of the covariance matrix $\text{Var}(\nabla_a Q_{\phi_j}(s, a))$ 
+
+$$
+\lambda_{\text{min}} \leq \frac{1}{|\mathcal{A}|} \sum_{j=1}^{|\mathcal{A}|} \lambda_j
+$$
+
+Since the total variance is the sum of all eigenvalues, we can derive
+
+$$
+= \frac{1}{|\mathcal{A}|} tr(\text{Var}(\nabla_a Q_{\phi_j}(s, a)))
+$$
+
+$$
+= \frac{1}{|\mathcal{A}|} (1 - ||\bar{q}||_2^2)
+$$
+
+$$
+= \frac{1}{|\mathcal{A}|} (1 - (\frac{1}{N^2} (\sum_{j=1}^{N} \langle q_j, q_j \rangle + \sum_{1 \leq i \neq j \leq N} \langle q_i, q_j \rangle)))
+$$
+
+---
+
+$$
+= \frac{1}{|\mathcal{A}|} (1 - (\frac{1}{N^2} (\sum_{j=1}^{N} \langle q_j, q_j \rangle + \sum_{1 \leq i \neq j \leq N} \langle q_i, q_j \rangle)))
+$$
+
+Let $\min_{i \neq j} \langle \nabla_a Q_{\phi_j}(s, a) , \nabla_a Q_{\phi_j}(s, a) \rangle = 1 - \epsilon$
+
+$$
+\leq \frac{1}{|\mathcal{A}|}(1 - (N + N (N - 1) (1 - \epsilon)))
+$$
+
+$$
+= \frac{1}{|\mathcal{A}|} \frac{N - 1}{N} \epsilon
+$$
+
+---
+
+Thus, 
+
+$$
+\text{Var}(\nabla_a Q_{\phi_j}(s, a + k w_{\text{min}}))
+$$
+
+$$
+= k^2 w_{\text{min}}^{T} \text{Var}(\nabla_a Q_{\phi_j}(s, a)) w_{\text{min}}
+$$
+
+$$
+= k^2 \lambda_{\text{min}}
+$$
+
+$$
+\leq \frac{1}{|\mathcal{A}|} \frac{N - 1}{N} k^2 \epsilon
+$$
+
+$$
+= \frac{1}{|\mathcal{A}|} \frac{N - 1}{N} k^2 (1 - \min_{i \neq j} \langle \nabla_a Q_{\phi_j}(s, a), \nabla_a Q_{\phi_j}(s, a) \rangle)
+$$
+
+Thus, instead of maximize the smallest eigenvalue $\max_{\phi} k^2 \lambda_{\text{min}}$, minimizing the cosine similarity of the gradients of the Q-networks is cheaper
+
+$$
+\min_{\phi} \mathbb{E}_{s, a \sim \mathcal{D}} \left[ \frac{1}{N - 1} \sum_{1 \leq i \neq j \leq N} \langle \nabla_a Q_{\phi_j}(s, a), \nabla_a Q_{\phi_j}(s, a) \rangle \right]
+$$
+
+---
+
