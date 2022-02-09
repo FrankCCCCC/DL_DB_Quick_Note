@@ -107,7 +107,7 @@ $$
 
 # Idea
 
-And the authors surprisingly found that SAC-N will outperform than the SOTA offline-RL algorithm CQL when the number of ensemble is large enough.
+And the authors surprisingly found that **SAC-N will outperform than the SOTA offline-RL algorithm "CQL" when the number of ensemble is large enough.**
 
 ![](./img/SAC-N_vs_CQL.png)
 
@@ -115,8 +115,8 @@ And the authors surprisingly found that SAC-N will outperform than the SOTA offl
 
 # Idea
 
-- Obviously, the redundant Q-networks of SAC-N cost lots of computation. The authors aim to reduce the size of the ensemble Q-network while achieving the same performance.
-- The authors found that the performance of SAC-N is negatively correlated with the degree to which the input gradients of Q-functions $\nabla_a Q_{\phi_j} (s, a)$ are aligned, which increases with $N$.
+- Obviously, **the redundant Q-networks of SAC-N cost lots of computation**. The authors aim to **reduce the size of the ensemble Q-network while achieving the same performance.**
+- The authors found that the **performance of SAC-N is negatively correlated with the degree to which the input gradients of Q-functions $\nabla_a Q_{\phi_j} (s, a)$ are aligned, which increases with $N$.**
 
 ---
 
@@ -128,13 +128,13 @@ And the authors surprisingly found that SAC-N will outperform than the SOTA offl
 
 ---
 
-- Here we define the penalty from the clipping as 
+- Here we define the **penalty from the clipping as**
 
 $$
 \mathbb{E}_{s \sim D,a \sim \pi(·|s)} \left[ \frac{1}{N} \sum_{j=1}^{N}Q_{\phi_j}(s, a) − \min_{j=1,...,N} Q_{\phi_j}(s, a) \right]
 $$
 
-- We also approximate the expected minimum of the realizations following the work of Royston
+- We also **approximate the expected minimum of the realizations** following the work of Royston
 
 $$
 \mathbb{E} \left[ \min_{j=1,...,N} Q_j(s, a) \right] \approx m(s, a) − \Phi^{−1} \left( \frac{N − \frac{\pi}{8}}{N − \frac{\pi}{4} + 1} \right) \sigma(s, a)
@@ -142,15 +142,13 @@ $$
 
 Where we suppose $Q(s, a) \sim \mathcal{N}(m(s, a), \sigma(s, a))$ and $\Phi$ is the CDF of the standard Gaussian distribution.
 
+The Q-value predictions for the **OOD actions have a higher variance** and the **size of the penalty and the standard deviation are highly correlated**.
+
 ---
 
 # Evidence 2
 
 **The performance of the learned policy degrades significantly when the Q-functions share a similar local structure.**
-
-![width:500px](./img/cosine_similarity_avg_reward.png)
-
----
 
 The minimum cosine similarity between the gradients of the Q-functions is
 
@@ -158,4 +156,30 @@ $$
 \min_{i \neq j} \langle \nabla_a Q_{\phi_i} (s, a), \nabla_a Q_{\phi_j}(s, a) \rangle
 $$
 
+![bg right width:500px](./img/cosine_similarity_avg_reward.png)
+
+---
+
+We can take $\text{Var}(Q_{\phi_j}(s, a + k w_2))$ as the variance of the Q value when we take an action which out of the behavioral policy action $a$ in the direction of $w_2$(OOD action). In terms out, the gradients of the Q-network ensemble $\nabla_a Q_{\phi_i}(s, a)$ align when the variance $\text{Var}(Q_{\phi_j}(s, a + k w_2))$ is small.
+
+---
+
+If $\text{Var}(Q_{\phi_j}(s, a + k w_2))$ is small, according to the approximation of the minimum Q-network ensemble is $\mathbb{E} \left[ \min_{j=1,...,N} Q_j(s, a) \right] \approx m(s, a) − \Phi^{−1} \left( \frac{N − \frac{\pi}{8}}{N − \frac{\pi}{4} + 1} \right) \sigma(s, a)$, the action $a + k w_2$ is not sufficiently penalized. 
+
 ![width:800px](./img/diversification.png)
+
+As a result, we now connect the inner product of the gradients of the Q-network(alignment) and the variance of the OOD action $\text{Var}(Q_{\phi_j}(s, a + k w_2))$.
+
+---
+
+Thus, we aim to enlarge the penalty of OOD action. As a result, we aim to diversify the gradients of the Q-network ensemble $\nabla_{a} Q_{\phi_i}(s, a)$
+
+$$
+\min_{\phi} J_{ES}(Q_{\phi}) := \mathbb{E}_{s, a \sim \mathcal{D}} \left[ \langle \frac{1}{N} \sum_{i=1}^{N} \nabla_{a} Q_{\phi_i}(s, a), \frac{1}{N} \sum_{j=1}^{N} \nabla_{a} Q_{\phi_j}(s, a) \rangle  \right]
+$$
+
+Then, we reformulate the equation
+
+$$
+\min_{\phi} J_{ES}(Q_{\phi}) := \mathbb{E}_{s, a \sim \mathcal{D}} \left[ \frac{1}{N - 1} \sum_{1 \leq i \neq j \leq N} \langle \nabla_{a} Q_{\phi_i}(s, a), \nabla_{a} Q_{\phi_j}(s, a) \rangle  \right]
+$$
