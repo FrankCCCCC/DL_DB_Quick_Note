@@ -4,7 +4,7 @@ theme: default
 paginate: true
 # _class: invert
 # color: white
-# class: lead
+class: lead
 # section.lead h1 {
 #   text-align: center;
 # }
@@ -50,7 +50,12 @@ style: |
 ### Seoul National University, Neural Processing Research Center, DeepMetrics
 
 ---
-
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
 # Offline RL
 
 ![width:1000px](img/offline_rl_small.png)
@@ -60,7 +65,12 @@ We aim to learn a policy $\pi$ from the history of trajectories $\mathcal{D} = \
 ![](img/offline_rl_algo.png)
 
 ---
-
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
 # Challenge 
 
 - Extrapolation Error
@@ -74,7 +84,12 @@ We aim to learn a policy $\pi$ from the history of trajectories $\mathcal{D} = \
     - But a trade-off between Optimality and Conservativeness.
 
 ---
-
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
 # Idea
 
 - Penalize the Q-function with the most pessimistic Q-network of the ensemble Q-network.
@@ -104,7 +119,12 @@ $$
 <!-- ![](./img/SAC-N.png) -->
 
 ---
-
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
 # Idea
 
 And the authors surprisingly found that **SAC-N will outperform than the SOTA offline-RL algorithm "CQL" when the number of ensemble is large enough.**
@@ -112,14 +132,24 @@ And the authors surprisingly found that **SAC-N will outperform than the SOTA of
 ![](./img/SAC-N_vs_CQL.png)
 
 ---
-
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
 # Idea
 
 - Obviously, **the redundant Q-networks of SAC-N cost lots of computation**. The authors aim to **reduce the size of the ensemble Q-network while achieving the same performance.**
 - The authors found that the **performance of SAC-N is negatively correlated with the degree to which the input gradients of Q-functions $\nabla_a Q_{\phi_j} (s, a)$ are aligned, which increases with $N$.**
 
 ---
-
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
 # Evidence 1
 
 **The Q-value predictions for the OOD actions have a higher variance.**
@@ -127,7 +157,12 @@ And the authors surprisingly found that **SAC-N will outperform than the SOTA of
 ![](./img/SAC-N_OOD_props.png)
 
 ---
-
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
 - Here we define the **penalty from the clipping as**
 
 $$
@@ -145,7 +180,12 @@ Where we suppose $Q(s, a) \sim \mathcal{N}(m(s, a), \sigma(s, a))$ and $\Phi$ is
 The Q-value predictions for the **OOD actions have a higher variance** and the **size of the penalty and the standard deviation are highly correlated**.
 
 ---
-
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
 # Evidence 2
 
 **The performance of the learned policy degrades significantly when the Q-functions share a similar local structure.**
@@ -159,19 +199,34 @@ $$
 ![bg right width:500px](./img/cosine_similarity_avg_reward.png)
 
 ---
-
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
 We can take $\text{Var}(Q_{\phi_j}(s, a + k w_2))$ as the variance of the Q value when we take an action which out of the behavioral policy action $a$ in the direction of $w_2$(OOD action). In terms out, the gradients of the Q-network ensemble $\nabla_a Q_{\phi_i}(s, a)$ align when the variance $\text{Var}(Q_{\phi_j}(s, a + k w_2))$ is small.
 
 ---
-
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
 If $\text{Var}(Q_{\phi_j}(s, a + k w_2))$ is small, according to the approximation of the minimum Q-network ensemble is $\mathbb{E} \left[ \min_{j=1,...,N} Q_j(s, a) \right] \approx m(s, a) − \Phi^{−1} \left( \frac{N − \frac{\pi}{8}}{N − \frac{\pi}{4} + 1} \right) \sigma(s, a)$, the action $a + k w_2$ is not sufficiently penalized. 
 
-![width:800px](./img/diversification.png)
+![center width:700px](./img/diversification.png)
 
 As a result, we now connect the inner product of the gradients of the Q-network(alignment) and the variance of the OOD action $\text{Var}(Q_{\phi_j}(s, a + k w_2))$.
 
 ---
-
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
 Thus, we aim to enlarge the penalty of OOD action. As a result, we aim to diversify the gradients of the Q-network ensemble $\nabla_{a} Q_{\phi_i}(s, a)$
 
 $$
