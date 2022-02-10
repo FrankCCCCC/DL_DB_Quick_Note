@@ -256,19 +256,28 @@ $$
 k^2 \lambda_{\text{min}} \leq \frac{k^2}{|\mathcal{A}|} \sum_{j=1}^{|\mathcal{A}|} \lambda_j
 $$
 
-Let $\min_{i \neq j} \langle \nabla_a Q_{\phi_j}(s, a) , \nabla_a Q_{\phi_j}(s, a) \rangle = 1 - \epsilon$, With Lemma 1 and proposition 1, we can derive
+Since **the total variance is equal to the sum of all eigenvalues**([reference](https://stats.stackexchange.com/questions/266864/why-is-the-sum-of-eigenvalues-of-a-pca-equal-to-the-original-variance-of-the-dat)), derive
+
+$$
+= \frac{1}{|\mathcal{A}|} \text{tr}(\text{Var}(\nabla_a Q_{\phi_j}(s, a)))
+$$
+
+![](./img/lemma1.png)
+
+With Lemma 1, we can derive
 
 $$
 = \frac{1}{|\mathcal{A}|} (1 - ||\bar{q}||_2^2)
 = \frac{1}{|\mathcal{A}|} (1 - \langle \frac{1}{N} \sum_{i=1}^{N} q_i, \frac{1}{N} \sum_{j=1}^{N} q_j \rangle)
 $$
 
+---
+
+Let $\min_{i \neq j} \langle \nabla_a Q_{\phi_j}(s, a) , \nabla_a Q_{\phi_j}(s, a) \rangle = 1 - \epsilon$. With proposition 1, we can derive
+
 $$
 \leq \frac{1}{|\mathcal{A}|} \frac{N - 1}{N} k^2 \epsilon
-$$
-
-$$
-
+= \frac{1}{|\mathcal{A}|} \frac{N - 1}{N} k^2 (1 - \min_{i \neq j} \langle \nabla_a Q_{\phi_j}(s, a), \nabla_a Q_{\phi_j}(s, a) \rangle)
 $$
 
 ---
