@@ -152,7 +152,7 @@ img[alt~="center"] {
 - The authors found that the **performance of SAC-N is negatively correlated with the degree to which the input gradients of Q-functions $\nabla_a Q_{\phi_j} (s, a)$ are aligned, which increases with $N$.**
 - Note that **out-of-distribution state** means **the probability of the state that appears in the dataset is lower than a given threshold**. similarly, **Out-of-distribution action means the rare actions given a state in the dataset.**
 
-Agent performance -> Variance of Q-network ensemble -> Diversification of the gradients of the Q-network
+Agent performance -> Variance of Q-value of OOD action -> Diversification of the gradients of the Q-network
 
 ---
 <style>
@@ -165,19 +165,10 @@ img[alt~="center"] {
 
 **The Q-value predictions for the OOD actions have a higher variance.**
 
-![](./img/SAC-N_OOD_props.png)
-
----
-<style>
-img[alt~="center"] {
-  display: block;
-  margin: 0 auto;
-}
-</style>
 - Here we define the **penalty from the clipping as**
 
 $$
-\mathbb{E}_{s \sim D,a \sim \pi(·|s)} \left[ \frac{1}{N} \sum_{j=1}^{N}Q_{\phi_j}(s, a) − \min_{j=1,...,N} Q_{\phi_j}(s, a) \right]
+\mathbb{E}_{s \sim D,a \sim \pi(\cdot|s)} \left[ \frac{1}{N} \sum_{j=1}^{N}Q_{\phi_j}(s, a) − \min_{j=1,...,N} Q_{\phi_j}(s, a) \right]
 $$
 
 - We also **approximate the expected minimum of the realizations** following the work of Royston
@@ -187,6 +178,16 @@ $$
 $$
 
 Where we suppose $Q(s, a) \sim \mathcal{N}(m(s, a), \sigma(s, a))$ and $\Phi$ is the CDF of the standard Gaussian distribution.
+
+---
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
+
+![](./img/SAC-N_OOD_props.png)
 
 The Q-value predictions for the **OOD actions have a higher variance** and the **size of the penalty and the standard deviation are highly correlated**.
 
@@ -259,7 +260,7 @@ $$
 Since **the total variance is equal to the sum of all eigenvalues**([reference](https://stats.stackexchange.com/questions/266864/why-is-the-sum-of-eigenvalues-of-a-pca-equal-to-the-original-variance-of-the-dat)), derive
 
 $$
-= \frac{1}{|\mathcal{A}|} \text{tr}(\text{Var}(\nabla_a Q_{\phi_j}(s, a)))
+= \frac{k^2}{|\mathcal{A}|} \text{tr}(\text{Var}(\nabla_a Q_{\phi_j}(s, a)))
 $$
 
 ![](./img/lemma1.png)
@@ -267,8 +268,8 @@ $$
 With Lemma 1, we can derive
 
 $$
-= \frac{1}{|\mathcal{A}|} (1 - ||\bar{q}||_2^2)
-= \frac{1}{|\mathcal{A}|} (1 - \langle \frac{1}{N} \sum_{i=1}^{N} q_i, \frac{1}{N} \sum_{j=1}^{N} q_j \rangle)
+= \frac{k^2}{|\mathcal{A}|} (1 - ||\bar{q}||_2^2)
+= \frac{k^2}{|\mathcal{A}|} (1 - \langle \frac{1}{N} \sum_{i=1}^{N} q_i, \frac{1}{N} \sum_{j=1}^{N} q_j \rangle)
 $$
 
 ---
@@ -455,12 +456,19 @@ $$
 
 ---
 
-![](./img/table2.png)
-
----
-
 ![](./img/table3.png)
 
 ---
 
+![](./img/table2.png)
+
+---
+
 ![](./img/dense_distance.png)
+
+---
+
+# Conclusion
+
+- SAC-N can be efficiently leveraged to construct an uncertainty-based offline RL method that outperforms previous methods on various datasets. 
+- we proposed Ensemble-Diversifying Actor-Critic (EDAC) that effectively reduces the required number of ensemble networks for quantifying and penalizing the epistemic uncertainty. 
