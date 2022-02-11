@@ -150,7 +150,7 @@ img[alt~="center"] {
 
 - Obviously, **the redundant Q-networks of SAC-N cost lots of computation**. The authors aim to **reduce the size of the ensemble Q-network while achieving the same performance.**
 - The authors found that the **performance of SAC-N is negatively correlated with the degree to which the input gradients of Q-functions $\nabla_a Q_{\phi_j} (s, a)$ are aligned, which increases with $N$.**
-- Note that **out-of-distribution state** means **the probability of the state that appears in the dataset is lower than a given threshold**. similarly, **Out-of-distribution action means the rare actions given a state in the dataset.**
+- Note that **out-of-distribution state** means **the probability of the state that appears in the dataset is lower than a given threshold**. Similarly, **Out-of-distribution action means the rare actions given a state in the dataset.**
 
 Agent performance -> Variance of Q-value of OOD action -> Diversification of the gradients of the Q-network
 
@@ -210,14 +210,14 @@ $$
 
 ![bg right width:500px](./img/cosine_similarity_avg_reward.png)
 
----
+<!-- ---
 <style>
 img[alt~="center"] {
   display: block;
   margin: 0 auto;
 }
 </style>
-We can take $\text{Var}(Q_{\phi_j}(s, a + k w_2))$ as the variance of the Q value when we take an action which out of the behavioral policy action $a$ in the direction of $w_2$(OOD action). In terms out, the gradients of the Q-network ensemble $\nabla_a Q_{\phi_i}(s, a)$ align when the variance $\text{Var}(Q_{\phi_j}(s, a + k w_2))$ is small. Thus, the penalty of the OOD action would be small.
+We can take $\text{Var}(Q_{\phi_j}(s, a + k w_2))$ as the variance of the Q value when we take an action which out of the behavioral policy action $a$ in the direction of $w_2$(OOD action). In terms out, the gradients of the Q-network ensemble $\nabla_a Q_{\phi_i}(s, a)$ align when the variance $\text{Var}(Q_{\phi_j}(s, a + k w_2))$ is small. Thus, the penalty of the OOD action would be small. -->
 
 ---
 
@@ -433,9 +433,7 @@ $$
 
 ---
 
-# Experiment
-
-## D4RL Dataset
+# Experiment - D4RL Dataset
 
 - expert: a fully trained online expert
 - medium: a suboptimal policy with approximately 1/3 the performance of the expert
