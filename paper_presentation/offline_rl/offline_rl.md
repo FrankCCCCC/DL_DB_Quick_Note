@@ -73,14 +73,14 @@ img[alt~="center"] {
 
 - Extrapolation Error
   
-  - Because the agent's policy isn't the same as the behavioral policy. The agent may overestimate unseen $Q^{\pi}(s, a)$, which gives a higher $Q^{\pi}(s, a)$ value than the optimal $Q^{\pi^*}(s, a)$ value .
+  - The agent may overestimate unseen $Q^{\pi}(s, a)$, which gives a higher $Q^{\pi}(s, a)$ value than the optimal $Q^{\pi^*}(s, a)$ value .
   - In the offline setting, the policy cannot correct such over-optimistic Q-values.
   
 ---
 
 - Solution
 
-    - If we add a regularizer to the equation in order to make the agent **(1) underestimate the $Q^{\pi}(s, a)$ value of unseen state-action pair $(s, a)$** or **(2) choose the state-action pair that closes to the state-action pair already in the history trajectory $\mathcal{D}$**, we can avoid the crazy actions that the agent may do.
+    - If we add a regularizer to the equation in order to make the agent **(1) underestimate the $Q^{\pi}(s, a)$ value of unseen action $a$ given a state $s$** or **(2) choose the action that closes to the action already in the history trajectory $\mathcal{D}$ given a state(in practice, choose the action that are higher than the a threshold probability from the action distribution)**, we can avoid the crazy actions that the agent may do.
     - But a trade-off between **Optimality and Conservativeness**.
 
 ![](img/offline_rl_algo.png)
@@ -150,9 +150,9 @@ img[alt~="center"] {
 
 - Obviously, **the redundant Q-networks of SAC-N cost lots of computation**. The authors aim to **reduce the size of the ensemble Q-network while achieving the same performance.**
 - The authors found that the **performance of SAC-N is negatively correlated with the degree to which the input gradients of Q-functions $\nabla_a Q_{\phi_j} (s, a)$ are aligned, which increases with $N$.**
-- Note that **out-of-distribution state** means **the probability of the state that appears in the dataset is lower than a given threshold**. Similarly, **Out-of-distribution action means the rare actions given a state in the dataset.**
+- Note that **out-of-distribution state** means **the probability of the state that appears in the dataset is lower than a given threshold**. Similarly, **Out-of-distribution action means the action that appears in the dataset is lower than a given threshold and state.** In the other hand, **in-distribution action** means **higher than the threshold**.
 
-Agent performance -> Variance of Q-value of OOD action -> Diversification of the gradients of the Q-network
+Argument: Agent performance -> Variance of Q-value of OOD action -> Diversification of the gradients of the Q-network
 
 ---
 <style>
