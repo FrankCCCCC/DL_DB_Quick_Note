@@ -101,6 +101,36 @@ Citation: 20
 Refers to [知乎 [Offline RL]Fisher Divergence Critic Regularization](https://zhuanlan.zhihu.com/p/425655819)
 
 
+# PerSim: Data-efficient Offline Reinforcement Learning with Heterogeneous Agents via Personalized Simulators
+
+Anish Agarwal, Abdullah Alomar, Varkey Alumootil, Devavrat Shah, Dennis Shen, Zhi Xu, Cindy Yang
+
+MIT
+
+NIPS'21
+
+Citation: 2
+
+# Deployment-Efficient Reinforcement Learning via Model-Based Offline Optimization
+
+Tatsuya Matsushima, Hiroki Furuta, Yutaka Matsuo, Ofir Nachum, Shixiang Shane Gu
+
+The University of Tokyo, Google Research
+
+ICLR'21
+
+Citation: 45
+
+# Policy Finetuning: Bridging Sample-Efficient Offline and Online Reinforcement Learning
+
+Tengyang Xie, Nan Jiang, Huan Wang, Caiming Xiong, Yu Bai
+
+UIUC, Salesforce Research
+
+NIPS'21
+
+Citation: 9
+
 # Reference
 
 - [离线强化学习（一）](https://zhuanlan.zhihu.com/p/414497708)
