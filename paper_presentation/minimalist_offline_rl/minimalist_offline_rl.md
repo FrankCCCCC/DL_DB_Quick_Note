@@ -109,6 +109,7 @@ Offline RL conquers these issues but yields other issues
 
 - Additional computation cost
 - Difficult to implement(includes many minor but matter code-level improvement)
+- Instable Performance of Trained Policies
 
 ---
 
@@ -138,6 +139,22 @@ img[alt~="center"] {
 
 ![center width:1000px](img/diversification.png)
 
+---
+
+- CQL: 
+  
+  - Make the expectation of the Q-value of the agent lower
+  - Make the expectation of the Q-value of the  behavior policy higher
+  
+  $$
+  \begin{array}{ccc}
+  \hat{Q}^{k+1} \leftarrow \arg \min_{\hat{Q}^{k}} \alpha (\mathbb{E}_{s \sim \mathcal{D}, a \sim \pi({a | s})} [Q(s, a)] - \mathbb{E}_{s \sim \mathcal{D}, a \sim \pi_{\beta}({a | s})} [Q(s, a)]) \\
+
+  + \frac{1}{2} \mathbb{E}_{s, a, s' \sim \mathcal{D}} \left[ \left( Q(s, a) - \mathcal{B} \hat{Q}^{k}(s, a) \right)^2 \right]
+  \end{array}
+  $$
+
+  - The algorithm yields a term $\log \sum_{a} \exp(Q(s, a))$, which has high variance in the high dimensional action space. It takes time to approximate accurately.
 ---
 <style>
 img[alt~="center"] {
@@ -170,6 +187,18 @@ img[alt~="center"] {
 }
 </style>
 
+# Issues of Offline RL 3: Instable Performance of Trained Policies
+
+![center width:1000px](img/eval_comp_exp_perc.png)
+
+---
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
+
 # Problem Formulation
 
 ### What's the minimalist adjustment to build an offline RL algorithm?
@@ -178,7 +207,96 @@ img[alt~="center"] {
 
 # Idea
 
-### Actually, we only need to add a *behavior cloning* to regularize the 
+#### 1. Add a *behavior cloning* regularizer
+
+There is no fundamental argument why minimizing one divergence or distance metric should be better than another. Thus, the paper chooses minimal modifications to a pre-existing deep RL algorithm.
+
+$$
+\pi = \arg \max_{\pi} \mathbb{E}_{(s,a) \sim \mathcal{D}} \left[ \lambda Q(s, \pi(s)) − (\pi(s) − a)^2 \right] 
+$$
+
+Where $\lambda$ is a hyperparameter to trade off between optimality and conservativeness. It is determined by 
+
+$$
+\lambda = \frac{\alpha}{\frac{1}{N} \sum_{(s_i, a_i)} |Q(s_i, a_i)|}
+$$
+
+Where $\alpha = 2.5$ is a constant.
+
+---
+
+#### 2. Normalize the state
+
+$$
+s_{i} = \frac{s_i − \mu_i}{\sigma_i + \epsilon}
+$$
+
+Where $\epsilon$ is a small normalization constant $10^{−3}$.
+
+---
+
+# Experiment - D4RL Dataset
+
+- expert: a fully trained online expert
+- medium: a suboptimal policy with approximately 1/3 the performance of the expert
+- medium-expert: a mixture of medium and expert policies
+- medium-replay: the replay buffer of a policy trained up to the performance of the medium agent
+- full-replay: the final replay buffer of the expert policy
+- 1M transitions
+
+![bg right:33% width:450px](./img/mujoco.png)
+
+---
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
+
+## D4RL Benchmark
+
+![center width:800px](img/table2_d4rl.png)
+
+---
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
+
+## D4RL Learning Curve
+
+![center width:800px](img/table2_d4rl_learning_curve.png)
+
+---
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
+
+## D4RL 1M Training Steps Runtime
+
+![center width:1000px](img/table3_run_time.png)
+
+- GeForce GTX 1080 GPU and an Intel Core i7-6700K CPU at 4.00GHz.
+- Train 1M steps
+- CQL, TD3+BC, and Fisher-BRC (Ours) are implemented in Pytorch
+
+---
+<style>
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+</style>
+
+## D4RL TD3+BC Remove State Normalization
+
+![center width:1000px](img/fig5_rm_state_norm.png)
 
 ---
 
@@ -187,3 +305,4 @@ Note:
 1. High-level Fisher-BRC?
 2. What's extrapolation error?
 3. What's the max over sampled actions?
+4. What's TD3?
