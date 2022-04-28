@@ -231,9 +231,9 @@ img[alt~="center"] {
 
 Modify from [TD3](https://arxiv.org/abs/1802.09477) algorithm, which is modified from DDPG
 
-- Double DQN: Avoid overestimate Q-value
+<!-- - Double DQN: Avoid overestimate Q-value
 - Delayed Update Target Network: Let the target network update later to increase stability.
-- Target Policy Smoothing: Add noise to the action to get more different sample points in the action space.
+- Target Policy Smoothing: Add noise to the action to get more different sample points in the action space. -->
 
 #### 1. Add a *behavior cloning* regularizer
 
