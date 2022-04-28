@@ -120,6 +120,16 @@ Offline RL conquers these issues but yields other issues
   - Take the actions that have high Q-value surely, which means avoid action that has high variance Q-value or low Q-value
   - Train $N$ Q-network and update them with the gradient of the most pessimistic network, which is the network gives lowest Q-value.
 
+$$
+\min_{\phi_{i}} \mathbb{E}_{s, a, s' \sim \mathcal{D}}\left[\left(Q_{\phi_{i}}(s, a)-\left(r(s, a)+\gamma \mathbb{E}_{a' \sim \pi_{\theta}\left(\cdot \mid s'\right)}\left[\min _{j=1, \ldots, N} Q_{\phi_{j}'}\left(s', a'\right) - \beta \log \pi_{\theta}\left(a' \mid s'\right)\right]\right)\right)^{2}\right] \\
+$$
+
+$$
+\max_{\theta} \mathbb{E}_{s \sim \mathcal{D}, a \sim \pi_{\theta}(\cdot \mid s)}\left[\min _{j=1, \ldots, N} Q_{\phi_{j}}(s, a)-\beta \log \pi_{\theta}(a \mid s)\right]
+$$
+
+Where $\phi$ is the parameters of the Q-network $Q_{\phi}$,  $\theta$ is the parameters of policy network $\pi_{\theta}$. The subscript $j$ means the $j$-th network.
+
 ---
 
 - EDAC
@@ -129,6 +139,9 @@ Offline RL conquers these issues but yields other issues
   - Idea: Minimize the similarity of the gradient $\nabla_{a}Q_{\phi_i}(s, a)$ between $N$ Q-networks $Q_{\phi_i}$.
   - But it still needs tens of Q-networks.
 
+$$
+\min_{\phi} J_{ES}(Q_{\phi}) := \mathbb{E}_{s, a \sim \mathcal{D}} \left[ \frac{1}{N - 1} \sum_{1 \leq i \neq j \leq N} \langle \nabla_{a} Q_{\phi_i}(s, a), \nabla_{a} Q_{\phi_j}(s, a) \rangle  \right]
+$$
 ---
 <style>
 img[alt~="center"] {
@@ -165,7 +178,16 @@ img[alt~="center"] {
 
 # Issues of Offline RL 2: Difficult to implement
 
-![center width:1000px](img/impl_comp.png)
+![center width:800px](img/table1_impl_comp.png)
+
+Architecture: 2 hidden MLP to 3
+
+Reward Bonus: Additional survival reward
+
+Max over sampled action: Sample 10 actions $a_1'$...$a_{10}'$, and take highest Q-value as target instead of expectation 
+$$\min_{\phi} \mathbb{E}_{s, a, s' \sim \mathcal{D}}\left[ \left(Q_{\phi}(s, a)-\left(r(s, a)+\gamma \mathbb{E}_{a' \sim \pi_{\theta}\left(\cdot \mid s'\right)}\left[ Q_{\phi}\left(s', a'\right)\right]\right)\right)^{2} \right]$$
+
+---
 
 ---
 <style>
@@ -175,7 +197,7 @@ img[alt~="center"] {
 }
 </style>
 
-![center width:1000px](img/impl_comp_exp_perc.png)
+![center width:1000px](img/fig1_impl_comp_exp_perc.png)
 
 Performance difference between with and without implementation changes
 
@@ -189,7 +211,7 @@ img[alt~="center"] {
 
 # Issues of Offline RL 3: Instable Performance of Trained Policies
 
-![center width:1000px](img/eval_comp_exp_perc.png)
+![center width:1000px](img/fig2_eval_comp_exp_perc.png)
 
 ---
 <style>
@@ -207,9 +229,13 @@ img[alt~="center"] {
 
 # Idea
 
-#### 1. Add a *behavior cloning* regularizer
+Modify from [TD3](https://arxiv.org/abs/1802.09477) algorithm, which is modified from DDPG
 
-There is no fundamental argument why minimizing one divergence or distance metric should be better than another. Thus, the paper chooses minimal modifications to a pre-existing deep RL algorithm.
+- Double DQN: Avoid overestimate Q-value
+- Delayed Update Target Network: Let the target network update later to increase stability.
+- Target Policy Smoothing: Add noise to the action to get more different sample points in the action space.
+
+#### 1. Add a *behavior cloning* regularizer
 
 $$
 \pi = \arg \max_{\pi} \mathbb{E}_{(s,a) \sim \mathcal{D}} \left[ \lambda Q(s, \pi(s)) − (\pi(s) − a)^2 \right] 
@@ -300,9 +326,41 @@ img[alt~="center"] {
 
 ---
 
+# Thank You For Listening
+---
+
 Note:
 
 1. High-level Fisher-BRC?
 2. What's extrapolation error?
 3. What's the max over sampled actions?
 4. What's TD3?
+
+---
+
+# Reference
+
+#### TD3
+
+- [李宏毅 - Double DQN](https://hackmd.io/@shaoeChen/Bywb8YLKS/https%3A%2F%2Fhackmd.io%2F%40shaoeChen%2FHyyXreFcB)
+- [【强化学习算法 21】TD3](https://zhuanlan.zhihu.com/p/47182584)
+- [强化学习基础 XIII: Twin Delayed DDPG TD3原理与实现](https://zhuanlan.zhihu.com/p/145621630)
+- [Addressing Function Approximation Error in Actor-Critic Methods](https://arxiv.org/abs/1802.09477)
+
+#### Fisher-BRC
+
+- [[Offline RL]Fisher Divergence Critic Regularization](https://zhuanlan.zhihu.com/p/425655819)
+- [Offline Reinforcement Learning with Fisher Divergence Critic Regularization](https://arxiv.org/abs/2103.08050)
+
+---
+
+#### CQL
+
+- [Offline RL(3): CQL](https://zhuanlan.zhihu.com/p/349771471)
+- [【论文笔记 5】Conservative Q-Learning](https://zhuanlan.zhihu.com/p/266528139)
+- [Conservative Q-Learning for Offline Reinforcement Learning](https://arxiv.org/abs/2006.04779)
+
+#### A Minimalist Approach to Offline Reinforcement Learning
+
+- [离线强化学习(Offline RL)系列3: (算法篇) TD3+BC 算法详解与实现（经验篇）](https://blog.csdn.net/gsww404/article/details/124058887)
+- [A Minimalist Approach to Offline Reinforcement Learning[TD3+BC]阅读笔记](https://zhuanlan.zhihu.com/p/450152373)
